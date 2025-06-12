@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Register</title>
+    <link rel="stylesheet" href="/css/cadastro.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Script do Turnstile CAPTCHA -->
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+</head>
+<body>
+
+<div class="container">
+    <h2>User Registration</h2>
+
+    <div th:if="${erro}" class="error">
+        <p th:text="${erro}"></p>
+    </div>
+
+    <form th:action="@{/cadastro}" th:object="${usuario}" method="post" id="registerForm">
+        <label for="username">Username:</label>
+        <input type="text" th:field="*{username}" id="username" required>
+
+        <label for="email">Email:</label>
+        <input type="email" th:field="*{email}" id="email" required>
+
+        <label for="senha">Password:</label>
+        <input type="password" th:field="*{senha}" id="senha" required>
+
+        <!-- Turnstile CAPTCHA -->
+        <div class="cf-turnstile" 
+             data-sitekey="0x4AAAAAABeuEKIL4oQVYiXR"
+             data-callback="onTurnstileSuccess"
+             data-error-callback="onTurnstileError"
+             data-expired-callback="onTurnstileExpired"></div>
+
+        <!-- Campo oculto para enviar o token do CAPTCHA -->
+        <input type="hidden" id="captcha-response" name="response" />
+
+        <button type="submit" id="submitBtn" disabled>Register</button>
+    </form>
+
+    <p>Already have an account? <a th:href="@{/login}">Login here</a></p>
+</div>
+
+<script src="/js/Register.js"></script>
+
+</body>
+</html>
+
+

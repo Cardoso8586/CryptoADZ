@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>CryptoAdz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta name="user-id" th:content="${usuario.id}" />
+  <!-- CSS Styles -->
+  <link rel="stylesheet" href="css/missoes.css" />
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/wallet.css">
+  <link rel="stylesheet" href="css/advertise.css" />
+  <link rel="stylesheet" href="css/anuncio.css" />
+  
+  
+</head>
+
+<body>
+
+  
+<div class="container">
+  <!-- ========== SIDEBAR MENU ========== -->
+  <nav class="sidebar">
+    <ul>
+      <li><a href="#" id="btnPerfil">👤 Profile</a></li>
+      <li><a href="#" id="btnVerAnuncios">👁 View Ads</a></li>
+      <li><a href="#" id="btnAnunciar">📢 Advertise</a></li>
+      <li><a href="#" id="btnRanking">👤 Ranking</a></li>
+      <li><a href="#" id="btnSwap">🔄 Swap</a></li>
+      <li><a href="#" id="btnWallet">💼 Wallet</a></li> <!-- New section -->
+      <li><a href="#" id="btnMissoes">🎯 Missões</a></li>
+
+    </ul>
+
+    <!-- Logout button -->
+    <form th:action="@{/logout}" method="post" style="margin: 0;">
+      <button class="logout">🚪 Logout</button>
+    </form>
+  </nav>
+
+  <!-- ========== MAIN CONTENT ========== -->
+  <main class="main-content-fixed">
+    <p class="crypto-adz">CryptoADZ!</p>
+    <p class="slogan-crypto-adz">Every click earns ADZ!</p>
+    <h1 class="saudacao-usuario">
+      <span id="saudacao" th:text="${saudacao}">Hello</span>,
+      <span id="nomeUsuario" th:text="${usuario.username}">User</span>
+    </h1>
+
+    <p class="token-info">
+      ADZ Tokens: <strong id="saldoTokens" th:text="${saldoTokens}">0.00</strong>
+    </p>
+  </main>
+
+  <!-- ========== AD LISTING ========== -->
+  <section id="VerAnuncios" class="conteudoPrincipal">
+    <p class="announcement-board">Announcement Board!</p>
+
+    <div>
+      <ul>
+        <li th:each="anuncio : ${anuncios}" class="anuncio-card">
+          <h3 th:text="${anuncio.titulo}">Title</h3>
+          <p th:text="${anuncio.descricao}">Description</p>
+
+          <!-- Value the user will earn -->
+          <p class="token-info">
+            You will earn
+            <span class="token-amount" th:text="${#numbers.formatDecimal(anuncio.tokensPorVisualizacao, 1, 'POINT', 2, 'POINT')}"></span>
+            ADZ tokens.
+          </p>
+
+          <!-- View time -->
+          <p id="contador-" th:attr="id=${'contador-' + anuncio.id}">
+            Time to wait: <span th:text="${anuncio.tempoVisualizacao != null ? anuncio.tempoVisualizacao : 30}"></span> seconds
+          </p>
+
+          <a href="#" th:attr="data-id=${anuncio.id}, data-url=${anuncio.url}, data-username=${usuario.username}" class="ver-anuncio" target="_blank" rel="noopener noreferrer"> Click here to view </a>
+        </li>
+      </ul>
+
+      <div class="paginacao">
+        <a th:href="@{'/dashboard?page=' + ${paginaAnterior}}" th:if="${paginaAtual > 0}">Previous</a>
+        <a th:href="@{'/dashboard?page=' + ${paginaProxima}}" th:if="${paginaAtual < totalPaginas - 1}">Next</a>
+        <p>Page <span th:text="${paginaAtual + 1}"></span> of <span th:text="${totalPaginas}"></span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== AD CREATION SECTION ========== -->
+  <section id="Anunciar" style="display:none; margin-top:20px;">
+    <ul></ul>
+    <p class="advertisement-call">Make Your Best Advertisement!</p>
+
+    <button id="btnMostrarForm">Create New Ad</button>
+ <p>You have created <span id="quantidadeSpan">0</span> ads.</p>
+
+  <script>
+    async function carregarQuantidadeDeAnuncios() {
+      console.log("Função chamada");
+
+      try {
+        const response = await fetch('/api/anuncio/meus-anuncios');
+        if (!response.ok) throw new Error("Erro");
+        const data = await response.json();
+        document.getElementById('quantidadeSpan').innerText = data.quantidade;
+      } catch (e) {
+        console.error(e);
+        document.getElementById('quantidadeSpan').innerText = "0";
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', carregarQuantidadeDeAnuncios);
+  
+  </script>
+
+    <form id="formAnuncio" style="display:none; margin-top:10px;">
+      <input type="hidden" id="anuncioId" name="anuncioId" value="">
+
+      <label for="titulo">Title:</label>
+      <input type="text" id="titulo" name="titulo" required>
+
+      <label for="descricao">Description:</label>
+      <textarea id="descricao" name="descricao" rows="4" required></textarea>
+
+      <label for="url">URL:</label>
+      <input type="url" id="url" name="url" required>
+
+      <label for="tempoVisualizacao">View Time (seconds):</label>
+      <select id="tempoVisualizacao" name="tempoVisualizacao" required>
+        <option value="">Select...</option>
+        <option value="10">10 seconds</option>
+        <option value="20">20 seconds</option>
+        <option value="30">30 seconds</option>
+        <option value="45">45 seconds</option>
+      </select>
+
+      <label for="maxVisualizacoes">Max Views:</label>
+      <input type="number" id="maxVisualizacoes" name="maxVisualizacoes" min="1" required>
+
+      <!-- DISPLAY PAYMENT CALCULATION -->
+      <div id="infoPagamento" style="margin-top:10px; font-weight:bold; color:blue;"></div>
+       
+      <button type="submit">Submit Ad</button>
+      <button type="button" id="btnCancelar">Cancel</button>
+    </form>
+
+    <div id="feedback"></div>
+  </section>
+
+  <!-- ========== WALLET SECTION ========== -->
+  <section id="Wallet" style="display: none;">
+    <h2>My Wallet</h2>
+
+    <div class="wallet-tabs">
+      <button class="wallet-tab" data-target="depositos">Deposits</button>
+      <button class="wallet-tab" data-target="retiradas">Withdrawals</button>
+    </div>
+
+    <div class="wallet-content">
+
+      <div class="wallet-section" id="depositos" style="display: none;">
+        <h3>Deposits</h3>
+        <form id="formDeposito">
+          <label for="valorDeposito">Amount:</label>
+          <input type="number" id="valorDeposito" required>
+          <button type="submit">Deposit</button>
+        </form>
+        <div id="historicoDepositos"></div>
+      </div>
+
+      <div class="wallet-section" id="retiradas" style="display: none;">
+        <h3>Withdrawals</h3>
+        <form id="formRetirada">
+          <label for="valorRetirada">Amount:</label>
+          <input type="number" id="valorRetirada" required>
+          <button type="submit">Withdraw</button>
+        </form>
+        <div id="historicoRetiradas"></div>
+      </div>
+    </div>
+  </section>
+  
+  
+<section id="secaoMissoes" style="display: none;">
+  <h2>🎯 Missões Diárias</h2>
+  <ul>
+    <li>
+      <strong>📺 Assistir um anúncio:</strong>
+      <span id="statusAssistir">❌</span>
+      <button id="btnColetarAssistir" onclick="reivindicarMissao('assistir')" style="display:none;">Reivindicar</button>
+    </li>
+    <li>
+      <strong>📢 Cadastrar um anúncio:</strong>
+      <span id="statusCadastro">❌</span>
+      <button id="btnColetarCadastrar" onclick="reivindicarMissao('cadastrar')" style="display:none;">Reivindicar</button>
+    </li>
+  </ul>
+  <p id="mensagemMissao"></p>
+</section>
+
+
+  </main>
+</div>
+
+<!-- ========== EXTERNAL SCRIPTS ========== -->
+<script src="/js/verificarBloqueio.js"></script>
+<script src="/js/atualizarSaldo.js"></script>
+<script src="/js/session-timeout.js"></script>
+<script src="/js/verAnuncios.js"></script>
+<script src="/js/advertise.js"></script>
+<script src="/js/dashboard-nav.js"></script>
+<script src="/js/wallet.js" defer></script>
+<script src="/js/slogans.js"></script>
+<script src="/js/mission.js"></script>
+</body>
+</html>
+
