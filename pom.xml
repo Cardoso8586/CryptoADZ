@@ -106,57 +106,28 @@
   </dependencies>
 
   <build>
-    <plugins>
+  <plugins>
+  <!-- Compilador Java -->
+  <plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>3.11.0</version>
+    <configuration>
+      <source>${java.version}</source>
+      <target>${java.version}</target>
+    </configuration>
+  </plugin>
 
-      <!-- Compilador Java -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.11.0</version>
-        <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
-        </configuration>
-      </plugin>
+  <!-- Plugin do Spring Boot (gera JAR executável) -->
+  <plugin>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-maven-plugin</artifactId>
+    <configuration>
+      <mainClass>com.cryptoadz.CryptoAdzApplication</mainClass>
+    </configuration>
+  </plugin>
+</plugins>
 
-      <!-- Plugin do Spring Boot -->
-      <plugin>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>${spring-boot.version}</version>
-        <configuration>
-          <mainClass>com.cryptoadz.CryptoAdzApplication</mainClass>
-        </configuration>
-      </plugin>
-
-      <!-- Geração de JAR com dependências -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-shade-plugin</artifactId>
-        <version>3.2.4</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals><goal>shade</goal></goals>
-          </execution>
-        </executions>
-      </plugin>
-
-
- <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <version>3.2.2</version> <!-- ou a versão mais recente -->
-            <configuration>
-                <archive>
-                    <manifest>
-                        <addClasspath>true</addClasspath>
-                        <mainClass>com.seupacote.SuaClassePrincipal</mainClass>
-                    </manifest>
-                </archive>
-            </configuration>
-        </plugin>
-    </plugins>
   </build>
 
 </project>
