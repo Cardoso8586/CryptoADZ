@@ -1,0 +1,278 @@
+
+
+
+/* ===== Estilos básicos do body ===== */
+body {
+  background-color: #f0f4f8; /* Fundo azul bem claro, combina com sidebar escura */
+  color: #333;               /* Cor padrão do texto */
+  margin-top: 130px;  
+       /* Espaço no topo para header fixo */
+   cursor: url('img/cursor.cur'), auto !important;
+}
+
+/* ===== Container principal com flexbox para sidebar e conteúdo ===== */
+.container {
+  display: flex;      /* Layout flexível em linha */
+  height: 100vh;      /* Altura total da viewport */
+}
+
+/* ===== Sidebar lateral ===== */
+.sidebar {
+  width: 180px;               /* Largura fixa reduzida da sidebar */
+  height: 100vh;              /* Altura total da tela */
+  background-color: #2c3e50; /* Cor azul escuro */
+  padding: 0px;              /* Espaçamento interno */
+  box-sizing: border-box;     /* Inclui padding na largura */
+  overflow-y: auto;           /* Barra de rolagem vertical se necessário */
+  color: white;               /* Cor do texto na sidebar */
+  z-index: 1000;              /* Fica acima de outros elementos */
+}
+
+/* Título dentro da sidebar */
+.sidebar h2 {
+  font-size: 18px;
+  margin-bottom: 20px;        /* Espaço abaixo do título */
+}
+
+/* Lista dentro da sidebar */
+.sidebar ul {
+  list-style: none;   /* Remove marcadores da lista */
+  padding-left: 5;    /* Remove espaçamento padrão */
+  margin: 20; 
+  font-size: 28px;         /* Remove margem padrão */
+}
+
+/* Itens da lista da sidebar */
+.sidebar ul li {
+  margin-bottom: 40px;  /* Espaço entre itens da lista */
+  color: #ecf0f1;      /* Cor clara para texto */
+  cursor: pointer;     /* Cursor de mãozinha para indicar clicável */
+}
+
+
+
+/* Caixa de informações de tokens */
+.token-info {
+  background-color: #f4faff;        /* Fundo azul claro */
+  border-left: 5px solid #3498db;  /* Barra azul */
+  padding: 12px 16px;
+  margin: 16px 0;
+  font-size: 1.1rem;
+  color: #2c3e50;
+  border-radius: 4px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Sombra leve */
+}
+
+/* Quantidade de tokens (destaque) */
+.token-amount {
+  color: #27ae60; /* Verde vibrante */
+  font-weight: bold;
+}
+
+/* Estilo específico para qualquer <p> com id começando com "contador-" */
+p[id^="contador-"] {
+  font-size: 1rem;
+  color: #e67e22;           /* Laranja forte para destaque */
+  font-weight: bold;
+  margin: 0.5rem 0 1rem 0;
+  padding: 8px 12px;
+  background-color: #fff3e0; /* Fundo laranja bem claro */
+  border: 2px solid #e67e22; /* Borda laranja */
+  border-radius: 6px;
+  width: fit-content;        /* Ajusta largura ao conteúdo */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  user-select: none;         /* Impede seleção do texto */
+}
+
+/* ===== Itens da sidebar ===== */
+.sidebar li {
+  margin: 20px 0; /* Espaço entre itens */
+}
+
+/* Links e botões logout da sidebar */
+.sidebar a, .logout {
+  color: white;          /* Texto branco */
+  text-decoration: none; /* Remove sublinhado */
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+/* Efeito hover para links e logout */
+.sidebar a:hover, .logout:hover {
+  text-decoration: underline;
+}
+
+/* Área principal do conteúdo */
+.main-content {
+  flex: 1;                   /* Ocupa o espaço restante */
+  padding: 30px;
+  background-color: white;
+  overflow-y: auto;          /* Rolagem vertical se necessário */
+}
+
+/* Conteúdo principal dentro da área principal */
+#conteudoPrincipal {
+  margin-top: 30px;
+  background-color: #ecf0f1; /* Cinza claro */
+  padding: 20px;
+  border-radius: 8px;        /* Cantos arredondados */
+}
+
+/* Seções do conteúdo - inicialmente escondidas */
+section {
+  display: none; /* Esconde todas as seções inicialmente */
+  padding: 20px;
+}
+
+/* Seção ativa exibida */
+section.active {
+  display: block;
+}
+
+/* Header fixo no topo da página */
+.main-content-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height:115px;  /* Altura menor que o padrão */
+  background-color: #2c3e50;
+  color: #ecf0f1;
+  padding: 5px 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  z-index: 9999;
+}
+/* saudacao-usuario*/
+.saudacao-usuario {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #222;
+  margin-top: 12px;
+  text-align: center;
+  background: linear-gradient(to right, #f8f9fa, #e9ecef);
+  padding: 20px 30px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+}
+
+.saudacao-usuario span#saudacao {
+  color: #0d6efd; /* Azul suave */
+}
+
+.saudacao-usuario span#nomeUsuario {
+  color: #198754; /* Verde moderno */
+  font-weight: bold;
+  margin-left: 6px;
+}
+
+/* Espaço para conteúdo não ficar atrás do header fixo */
+body {
+  margin-top: 130px; /* Ajuste para altura do header fixo */
+}
+
+/* ===== Paginação ===== */
+.paginacao {
+  display: flex;
+  justify-content: center; /* Centraliza os itens horizontalmente */
+  align-items: center;     /* Centraliza verticalmente */
+  gap: 1rem;               /* Espaçamento entre os itens */
+  flex-wrap: wrap;         /* Permite quebra de linha se necessário */
+  padding: 1rem;
+  background-color: #f9f9f9; /* Fundo claro */
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
+  font-family: Arial, sans-serif;
+  margin-top: 2rem;
+}
+
+/* Links da paginação */
+.paginacao a {
+  background-color: #007bff; /* Azul */
+  color: white;
+  padding: 0.6rem 1rem;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+}
+
+/* Efeito hover dos links */
+.paginacao a:hover {
+  background-color: #0056b3; /* Azul escuro */
+}
+
+/* Texto dentro da paginação */
+.paginacao p {
+  margin: 0;
+  font-size: 1rem;
+  color: #333;
+}
+
+/* token-info */
+.token-info {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 1.2rem;
+  color: #333;
+  background: linear-gradient(90deg, #f0f0f0, #ffffff);
+  padding: 10px 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  margin: 10px 0;
+  
+}
+
+.token-info strong {
+  color: #0d6efd; /* Azul elegante */
+  font-weight: 600;
+  background-color: #e7f0ff;
+  padding: 4px 8px;
+  border-radius: 8px;
+  margin-left: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.token-info strong:hover {
+  background-color: #d0e6ff;
+  color: #084298;
+}
+.crypto-adz {
+  position: absolute;
+  top: 10;
+  left: 70%;
+  transform: translateX(-50%);
+  font-size: 64px;
+  font-weight: 900;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(90deg, #00c9a7, #00ffe0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 10;
+  pointer-events: none;
+  margin: 0;
+  animation: pulse 2.5s infinite;
+}
+
+.slogan-crypto-adz {
+  position: absolute;
+  top: 70px; /* ajusta abaixo do logo */
+  left: 70%;
+  transform: translateX(-50%);
+  font-size: 20px;
+  color: #ffffffcc;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+  z-index: 9;
+  pointer-events: none;
+  font-style: italic;
+  letter-spacing: 0.5px;
+}
+
+
+
