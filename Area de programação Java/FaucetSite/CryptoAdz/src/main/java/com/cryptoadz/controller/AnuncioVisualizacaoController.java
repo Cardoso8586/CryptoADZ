@@ -98,7 +98,8 @@ public class AnuncioVisualizacaoController {
             boolean bloqueado = visualizacaoService.estaBloqueado(username, anuncioId);
             long tempoRestante = visualizacaoService.getTempoRestanteBloqueio(username, anuncioId); // em segundos
 
-            var response = new java.util.HashMap<String, Object>();
+            Map<String, Object> response = new java.util.HashMap<>();  /////    var response = new java.util.HashMap<String, Object>();
+
             response.put("bloqueado", bloqueado);
             response.put("tempoRestante", tempoRestante);
 
