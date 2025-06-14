@@ -111,30 +111,36 @@
     </dependency>
   </dependencies>
 
-  <build>
+ <build>
   <plugins>
-  <!-- Compilador Java -->
-  <plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-compiler-plugin</artifactId>
-    <version>3.11.0</version>
-    <configuration>
-      <source>${java.version}</source>
-      <target>${java.version}</target>
-    </configuration>
-  </plugin>
+    <!-- Compilador Java -->
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <version>3.11.0</version>
+      <configuration>
+        <source>${java.version}</source>
+        <target>${java.version}</target>
+      </configuration>
+    </plugin>
 
-  <!-- Plugin do Spring Boot (gera JAR executável) -->
-  <plugin>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-maven-plugin</artifactId>
-     <version>3.2.5</version> <!-- Ou a versão que você está usando -->
-    <configuration>
-      <mainClass>com.cryptoadz.CryptoAdzApplication</mainClass>
-    </configuration>
-  </plugin>
-</plugins>
-
-  </build>
+    <!-- Plugin do Spring Boot (gera JAR executável) -->
+    <plugin>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-maven-plugin</artifactId>
+      <version>3.2.5</version>
+      <configuration>
+        <mainClass>com.cryptoadz.CryptoAdzApplication</mainClass>
+      </configuration>
+      <executions>
+        <execution>
+          <goals>
+            <goal>repackage</goal>
+          </goals>
+        </execution>
+      </executions>
+    </plugin>
+  </plugins>
+</build>
 
 </project>
