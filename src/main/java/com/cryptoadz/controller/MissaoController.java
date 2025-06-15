@@ -13,6 +13,7 @@ import com.cryptoadz.service.MissaoService;
 
 @RestController
 @RequestMapping("/missoes")
+@CrossOrigin(origins = "https://cryptoadz-production.up.railway.app") 
 public class MissaoController {
 
     @Autowired

@@ -1,5 +1,7 @@
 package com.cryptoadz.config;
 
+import java.util.Arrays;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,11 +12,16 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @Configuration
 public class SecurityConfig {
 
+	
+	
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
@@ -39,11 +46,29 @@ public class SecurityConfig {
         return cfg.getAuthenticationManager();
     }
 
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList(
+            "https://cryptoadz-production.up.railway.app",
+            "http://localhost:8080"
+        ));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+        
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+    
+    
     // 4) definir as regras de segurança e injetar o provedor
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-        
+      
+            .cors(cors -> cors.configurationSource(corsConfigurationSource())) // aqui habilita o CORS e indica a configuração
             .authenticationProvider(authenticationProvider())
             .authorizeHttpRequests(auth -> auth
             		.requestMatchers(
@@ -94,6 +119,8 @@ public class SecurityConfig {
                 .expiredUrl("/login?expired")
             )
             
+          
+
             
             .csrf().disable();
 
