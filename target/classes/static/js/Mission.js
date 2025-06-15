@@ -113,6 +113,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  
+  const API_URL = "https://cryptoadz-production.up.railway.app";
 
   function carregarStatusMissoes() {
     const usuarioId = getUsuarioLogadoId();
@@ -121,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    fetch(`/missoes/status/${usuarioId}`)
+    fetch(`${API_URL}/missoes/status/${usuarioId}`)
       .then(res => {
         if (res.status === 404) {
           return { contadorAssistir: 0, contadorCadastrar: 0 };
