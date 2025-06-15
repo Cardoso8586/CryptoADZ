@@ -111,8 +111,10 @@ document.addEventListener('DOMContentLoaded', () => {
         textoCadastrar.style.display = 'none';
       }
     }
-  }
 
+    // MOSTRAR A SEÇÃO DE MISSÕES
+    document.getElementById('secaoMissoes').style.display = 'block';
+  }
 
   function carregarStatusMissoes() {
     const usuarioId = getUsuarioLogadoId();

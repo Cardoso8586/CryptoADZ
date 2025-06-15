@@ -13,7 +13,6 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Map;
 
 
-//site key= 0x4AAAAAABeuEKIL4oQVYiXR
 @Controller
 public class LoginController {
 
