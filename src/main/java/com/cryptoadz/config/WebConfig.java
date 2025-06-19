@@ -1,4 +1,4 @@
-package com.cryptoadz.config;
+/**package com.cryptoadz.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -13,4 +13,4 @@ public class WebConfig implements WebMvcConfigurer {
             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
             .allowCredentials(true);
     }
-}
+}*/

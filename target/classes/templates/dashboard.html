@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
+
 <head>
   <title>CryptoAdz</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <meta name="user-id" th:content="${usuario.id}" />
   <!-- CSS Styles -->
   <link rel="stylesheet" href="css/missoes.css" />
@@ -10,7 +12,8 @@
   <link rel="stylesheet" href="/css/wallet.css">
   <link rel="stylesheet" href="css/advertise.css" />
   <link rel="stylesheet" href="css/anuncio.css" />
-  
+  <link rel="stylesheet" href="css/avisos.css" />
+   <link rel="stylesheet" href="css/avisoFixado.css" />
   
 </head>
 
@@ -27,7 +30,9 @@
       <li><a href="#" id="btnRanking">👤 Ranking</a></li>
       <li><a href="#" id="btnSwap">🔄 Swap</a></li>
       <li><a href="#" id="btnWallet">💼 Wallet</a></li> <!-- New section -->
-      <li><a href="#" id="btnMissoes">🎯 Missões</a></li>
+      <li><a href="#" id="btnMissoes">🎯 Missions</a></li>
+    <li><a href="#" id="btnAvisos">🔔 Notices </a></li>
+
 
     </ul>
 
@@ -39,8 +44,11 @@
 
   <!-- ========== MAIN CONTENT ========== -->
   <main class="main-content-fixed">
+
     <p class="crypto-adz">CryptoADZ!</p>
     <p class="slogan-crypto-adz">Every click earns ADZ!</p>
+      <!-- Card de Avisos na Home -->
+ 
     <h1 class="saudacao-usuario">
       <span id="saudacao" th:text="${saudacao}">Hello</span>,
       <span id="nomeUsuario" th:text="${usuario.username}">User</span>
@@ -49,6 +57,7 @@
     <p class="token-info">
       ADZ Tokens: <strong id="saldoTokens" th:text="${saldoTokens}">0.00</strong>
     </p>
+    
   </main>
 
   <!-- ========== AD LISTING ========== -->
@@ -181,22 +190,233 @@
   
   
 <section id="secaoMissoes" style="display: none;">
-  <h2>🎯 Missões Diárias</h2>
+  <h2>🎯 Daily Missions</h2>
   <ul>
     <li>
-      <strong>📺 Assistir anúncios:</strong>
+      <strong>📺 Watch ads:</strong>
       <span id="statusAssistir">❌</span>
-     <button id="btnColetarAssistir" style="display:none;">Reivindicar</button>
+     <button id="btnColetarAssistir" style="display:none;">Claim</button>
     </li>
     <li>
-      <strong>📢 Cadastrar anúncio(s):</strong>
+      <strong>📢 Register ad(s):</strong>
       <span id="statusCadastro">❌</span>
-     <button id="btnColetarCadastrar" style="display:none;">Reivindicar</button>
+     <button id="btnColetarCadastrar" style="display:none;">Claim</button>
     </li>
   </ul>
   <p id="mensagemMissao"></p>
  
 </section>
+
+
+
+<!-- Seção Avisos -->
+<div id="Avisos" style="display:none; padding: 20px;">
+  <h2>🎯Notices</h2>
+  <div id="containerAvisos" class="container-avisos">
+    <!-- Cards de avisos aparecerão aqui -->
+  </div>
+</div>
+
+
+<!-- Announcement Card on Home -->
+<div id="cardAvisos" class="card-avisos">
+  <div class="card-avisos-header">
+    <h3>📢 Notices</h3>
+    <h6>Details</h6>
+  </div>
+  <p id="textoAvisos"></p>
+</div>
+
+
+<!-- Modal Bônus Diário -->
+<div id="bonusModal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="bonusTitle" aria-describedby="bonusDesc">
+  <div class="modal-content">
+    <span class="close" role="button" aria-label="Fechar modal">&times;</span>
+    <h2 id="bonusTitle">🎁 Bônus Diário!</h2>
+    <p id="bonusMensagem" aria-live="polite">Você tem um bônus diário disponível.</p>
+    <button id="btnColetarBonus">Coletar Bônus</button>
+  </div>
+</div>
+
+<style>
+/* Fundo do modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(3px);
+}
+
+/* Mostrar modal */
+.modal.show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Conteúdo do modal */
+.modal-content {
+  background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+  border-radius: 12px;
+  padding: 30px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
+  text-align: center;
+  color: #fff;
+  position: relative;
+  animation: fadeIn 0.4s ease;
+}
+
+/* Animação */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Botão de fechar */
+.close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  color: #fff;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close:hover {
+  color: #ff4c4c;
+}
+
+/* Título */
+.modal-content h2 {
+  margin-top: 0;
+  color: #ffd700;
+  font-size: 24px;
+}
+
+/* Mensagem */
+#bonusMensagem {
+  margin: 20px 0;
+  font-size: 16px;
+  color: #eee;
+}
+
+/* Botão coletar */
+#btnColetarBonus {
+  background-color: #00ffae;
+  color: #1e1e1e;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#btnColetarBonus:hover:not(:disabled) {
+  background-color: #00c18c;
+  transform: scale(1.05);
+}
+
+#btnColetarBonus:disabled {
+  background-color: #555;
+  color: #999;
+  cursor: not-allowed;
+}
+</style>
+
+<script>
+  // Função para obter ID do usuário logado, do meta tag por exemplo
+  function getUsuarioLogadoId() {
+    const meta = document.querySelector('meta[name="user-id"]');
+    return meta ? meta.getAttribute('content') : null;
+  }
+  const usuarioId = getUsuarioLogadoId();
+
+  function abrirModal() {
+    const modal = document.getElementById("bonusModal");
+    modal.classList.add('show');
+    modal.setAttribute('aria-hidden', 'false');
+  }
+
+  function fecharModal() {
+    const modal = document.getElementById("bonusModal");
+    modal.classList.remove('show');
+    modal.setAttribute('aria-hidden', 'true');
+  }
+
+  function verificarBonus(usuarioId) {
+    fetch(`/api/bonus/verificar/${usuarioId}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.disponivel) {
+          document.getElementById("bonusMensagem").innerText = data.mensagem;
+          abrirModal();
+        }
+      })
+      .catch(err => console.error('Erro na verificação:', err));
+  }
+
+  // Evento de clique no botão para coletar o bônus
+  document.getElementById("btnColetarBonus").addEventListener("click", function() {
+    const btn = this;
+    btn.disabled = true;
+
+    fetch(`/api/bonus/coletar/${usuarioId}`, {
+      method: 'POST'
+    })
+    .then(res => res.text())
+    .then(data => {
+      // Atualiza mensagem dentro do modal
+      document.getElementById("bonusMensagem").innerText = data;
+
+      // Atualiza o botão para indicar bônus coletado e mantém desabilitado
+      btn.innerText = "Bônus Coletado";
+      btn.disabled = true;
+
+      // Fecha modal automaticamente depois de 3 segundos
+      setTimeout(() => fecharModal(), 3000);
+    })
+    .catch(err => {
+      document.getElementById("bonusMensagem").innerText = "❌ Erro ao coletar bônus, tente novamente.";
+      btn.disabled = false;
+      btn.innerText = "Coletar Bônus";
+      console.error(err);
+    });
+  });
+
+  // Fechar modal clicando no "x"
+  document.querySelector(".close").onclick = function() {
+    fecharModal();
+  };
+
+  // Fechar modal clicando fora do conteúdo
+  window.onclick = function(event) {
+    const modal = document.getElementById("bonusModal");
+    if (event.target === modal) {
+      fecharModal();
+    }
+  };
+
+  // Verifica bônus ao carregar a página
+  window.addEventListener('DOMContentLoaded', () => {
+    verificarBonus(usuarioId);
+  });
+</script>
+
+
+
+
 
 
   </main>
@@ -212,6 +432,9 @@
 <script src="/js/wallet.js" defer></script>
 <script src="/js/slogans.js"></script>
 <script src="/js/mission.js"></script>
+<script src="/js/avisos.js"></script>
+<script src="/js/avisoFixado.js"></script>
+
 </body>
 </html>
 
