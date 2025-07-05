@@ -1,0 +1,67 @@
+/* Estilo principal do container de banners publicitários */
+#bannersPublicitarios {
+    padding: 20px; /* Espaçamento interno ao redor do conteúdo */
+    background-color: #fff; /* Fundo branco */
+    border-radius: 10px; /* Cantos arredondados */
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.1); /* Sombra leve para dar profundidade */
+    margin: 20px; /* Espaçamento externo ao redor do container */
+   
+}
+
+/* Estilo do título dentro do container de banners */
+#bannersPublicitarios h2 {
+    text-align: center; /* Centraliza o texto */
+    color: #333; /* Cor do texto em tom escuro */
+    margin-bottom: 5px; /* Espaço abaixo do título */
+    font-size: 24px; /* Tamanho da fonte do título */
+}
+
+/* Estilo de cada banner individual dentro do container */
+#bannersPublicitarios .banner {
+    border: 2px solid #ccc; /* Borda cinza clara */
+    border-radius: 18px; /* Cantos arredondados dos banners */
+    padding: 5px; /* Espaço interno do banner */
+    margin: 50px; /* Espaço externo entre banners */
+    text-align: center; /* Centraliza o conteúdo do banner */
+    max-width: 800px; /* Largura máxima para evitar ficar muito largo */
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.2); /* Sombra mais escura para destaque */
+    display: inline-block; /* Permite vários banners lado a lado */
+    vertical-align: top; /* Alinha banners ao topo */
+    background-color: #fafafa; /* Fundo levemente cinza */
+    transition: transform 0.3s ease; /* Transição suave para efeito hover */
+}
+
+/* Efeito quando o mouse passa sobre o banner */
+#bannersPublicitarios .banner:hover {
+    transform: scale(1.20); /* Aumenta o tamanho em 3% para destacar */
+}
+
+/* Estilo para as imagens dentro dos banners */
+#bannersPublicitarios .banner {
+    overflow: hidden; /* Garante que nada ultrapasse o espaço visível */
+}
+
+#bannersPublicitarios .banner img {
+    width: 100%;
+ 
+         /* Corta o excesso, sem distorcer */
+    border-radius: 5px;
+    margin-bottom: 0px;
+    display: block;
+}
+
+
+/* Estilo dos títulos dentro dos banners */
+#bannersPublicitarios .banner h3 {
+    margin: 3px 0; /* Espaçamento acima e abaixo do título */
+    font-size: 25px; /* Tamanho da fonte dos títulos */
+    color: #444; /* Cor do texto em tom médio */
+}
+
+/* Estilo do container interno chamado #banners */
+#bannersPublicitarios #banners {
+    text-align: center; /* Centraliza o conteúdo */
+    margin-top: 10px; /* Espaço acima */
+}
+
+

@@ -45,10 +45,22 @@ public class MissaoService {
         dto.setCadastrarCompleted(m.getContadorCadastrar() >= REQUISITO_CADASTRAR);
         dto.setContadorAssistir(m.getContadorAssistir());
         dto.setContadorCadastrar(m.getContadorCadastrar());
+        dto.setRecompensa_Assistir(getRecompensa_Assistir());
+        dto.setRecompensa_Registrar(getRecompensa_Registrar());
         return dto;
     }
 
-    // ✅ Incrementa apenas o contador de visualizações (sem recompensa)
+    private BigDecimal getRecompensa_Registrar() {
+		
+		return RECOMPENSA_CADASTRAR;
+	}
+
+	public BigDecimal getRecompensa_Assistir() {
+  		return RECOMPENSA_ASSISTIR;
+  	}
+
+
+	// ✅ Incrementa apenas o contador de visualizações (sem recompensa)
     public void incrementarAssistir(Long usuarioId) {
         Usuario usuario = usuarioRepo.findById(usuarioId).orElseThrow();
         MissaoDiaria missao = getOuCriarMissao(usuario);

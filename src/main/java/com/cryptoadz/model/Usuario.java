@@ -2,6 +2,7 @@ package com.cryptoadz.model;
 
 import jakarta.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -24,9 +25,16 @@ public class Usuario {
 
     @Column(name = "saldo_tokens")
     private BigDecimal saldoTokens;
+    
+    private int bannersVistos;  // contador de banners vistos
 
     @Column(name = "meus-anuncios")
     private BigDecimal meusAnuncios = BigDecimal.ZERO;
+    
+    private LocalDate dataUltimaColeta;
+
+    private LocalDate dataUltimaVisualizacao;  // nova data para controle de banners diários
+
     
     @PrePersist
     protected void onCreate() {
@@ -49,6 +57,30 @@ public class Usuario {
     private boolean ativo = false;
 
     // Getters e Setters
+    public LocalDate getDataUltimaVisualizacao() {
+        return dataUltimaVisualizacao;
+    }
+
+    public void setDataUltimaVisualizacao(LocalDate dataUltimaVisualizacao) {
+        this.dataUltimaVisualizacao = dataUltimaVisualizacao;
+    }
+
+ // getters e setters para dataUltimaColeta
+    public LocalDate getDataUltimaColeta() {
+        return dataUltimaColeta;
+    }
+
+    public void setDataUltimaColeta(LocalDate dataUltimaColeta) {
+        this.dataUltimaColeta = dataUltimaColeta;
+    }
+    public int getBannersVistos() {
+        return bannersVistos;
+    }
+
+    // setter para banners vistos
+    public void setBannersVistos(int bannersVistos) {
+        this.bannersVistos = bannersVistos;
+    }
     public BigDecimal getMeusAnuncios() {
 		return meusAnuncios;
 	}
@@ -97,7 +129,8 @@ public class Usuario {
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
-	
+
+
 	
 }
 

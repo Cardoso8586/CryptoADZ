@@ -1,6 +1,6 @@
 #secaoMissoes {
 
-  width: 100%;
+  width: 50%;
   background: linear-gradient(90deg, #0d47a1, #1976d2);
   color: #fff;
   border-bottom: 4px solid #ffca28;
@@ -71,7 +71,7 @@
   background-color: #ffca28;
   border: none;
   color: #0d47a1;
-  font-weight: 700;
+  font-weight: 100;
   padding: 8px 16px;
   border-radius: 20px;
   cursor: pointer;

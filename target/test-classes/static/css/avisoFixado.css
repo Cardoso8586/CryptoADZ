@@ -1,0 +1,54 @@
+.card-avisos {
+  position: fixed;
+  top: 18px;
+  right: 10px;
+  background: linear-gradient(135deg, #f9f9f9, #ffffff);
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 16px 18px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 9999;
+  max-width: 250px;
+  width: auto;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  user-select: none;
+}
+
+.card-avisos:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* Coloca o título e "Saiba Mais" na mesma linha */
+.card-avisos-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-avisos-header h3 {
+  margin: 0;
+  color: #222;
+  font-size: 1.4rem;
+  font-weight: bold;
+}
+
+.card-avisos-header h6 {
+  margin: 0;
+  color: #007BFF;
+  font-size: 0.85rem;
+  font-weight: normal;
+  margin-left: 16px; /* ou 20px para um pouco mais */
+}
+
+.card-avisos p {
+  margin: 6px 0 0 0;
+  color: #555;
+  font-size: 0.9rem;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+

@@ -51,6 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function atualizarUIStatusMissoes(status) {
+    console.log('Status recebido:', status);
+
     const assistirCount  = status.contadorAssistir  ?? 0;
     const cadastrarCount = status.contadorCadastrar ?? 0;
 
@@ -62,8 +64,56 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnColetarAssistir = document.getElementById('btnColetarAssistir');
     const btnColetarCadastrar = document.getElementById('btnColetarCadastrar');
 
-    if (btnColetarAssistir) btnColetarAssistir.style.display = assistirCount >= 20 ? 'inline-block' : 'none';
-    if (btnColetarCadastrar) btnColetarCadastrar.style.display = cadastrarCount >= 1 ? 'inline-block' : 'none';
+    let textoAssistir = document.getElementById('textoReivindicadoAssistir');
+    if (btnColetarAssistir && !textoAssistir) {
+      textoAssistir = document.createElement('span');
+      textoAssistir.id = 'textoReivindicadoAssistir';
+      textoAssistir.style.color = 'green';
+      textoAssistir.style.marginLeft = '10px';
+      btnColetarAssistir.parentNode.appendChild(textoAssistir);
+    }
+
+    let textoCadastrar = document.getElementById('textoReivindicadoCadastrar');
+    if (btnColetarCadastrar && !textoCadastrar) {
+      textoCadastrar = document.createElement('span');
+      textoCadastrar.id = 'textoReivindicadoCadastrar';
+      textoCadastrar.style.color = 'green';
+      textoCadastrar.style.marginLeft = '10px';
+      btnColetarCadastrar.parentNode.appendChild(textoCadastrar);
+    }
+
+    // Assistir
+    if (btnColetarAssistir) {
+      if (status.jaReivindicouAssistirHoje) {
+        btnColetarAssistir.style.display = 'none';
+        textoAssistir.innerText = 'Você já reivindicou hoje.';
+        textoAssistir.style.display = 'inline';
+      } else if (assistirCount >= 20) {
+        btnColetarAssistir.style.display = 'inline-block';
+        textoAssistir.style.display = 'none';
+      } else {
+        btnColetarAssistir.style.display = 'none';
+        textoAssistir.style.display = 'none';
+      }
+    }
+
+    // Cadastrar
+    if (btnColetarCadastrar) {
+      if (status.jaReivindicouCadastrarHoje) {
+        btnColetarCadastrar.style.display = 'none';
+        textoCadastrar.innerText = 'Você já reivindicou hoje.';
+        textoCadastrar.style.display = 'inline';
+      } else if (cadastrarCount >= 1) {
+        btnColetarCadastrar.style.display = 'inline-block';
+        textoCadastrar.style.display = 'none';
+      } else {
+        btnColetarCadastrar.style.display = 'none';
+        textoCadastrar.style.display = 'none';
+      }
+    }
+
+    // MOSTRAR A SEÇÃO DE MISSÕES
+    document.getElementById('secaoMissoes').style.display = 'block';
   }
 
   function carregarStatusMissoes() {
@@ -73,8 +123,12 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    fetch(`/missoes/status/${usuarioId}`)
+
+	fetch(`/missoes/status/${usuarioId}`, {
+	  credentials: 'include' // Aqui, dentro das opções do fetch
+	})
       .then(res => {
+		
         if (res.status === 404) {
           return { contadorAssistir: 0, contadorCadastrar: 0 };
         }
@@ -90,6 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
+  
   // Função para reivindicar cadastro
   function reivindicarCadastro() {
     const usuarioId = getUsuarioLogadoId();
@@ -98,16 +153,19 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch(`/missoes/reivindicar-cadastro/${usuarioId}`, { method: 'POST' })
       .then(res => res.text())
       .then(msg => {
-        alert(msg);
-        // Esconde o botão assim que reivindicado
+        alert(msg); // opcional manter o alert
         const btnColetarCadastrar = document.getElementById('btnColetarCadastrar');
-        if (btnColetarCadastrar) btnColetarCadastrar.style.display = 'none';
+        if (btnColetarCadastrar) {
+          btnColetarCadastrar.innerText = msg; // muda texto do botão
+          btnColetarCadastrar.disabled = true; // desabilita botão pra não clicar
+          btnColetarCadastrar.style.display = 'inline-block'; // garante que está visível
+        }
         carregarStatusMissoes();
       })
       .catch(console.error);
   }
 
-  // Função para reivindicar assistir 
+  // Função para reivindicar assistir
   function reivindicarAssistir() {
     const usuarioId = getUsuarioLogadoId();
     if (!usuarioId) return;
@@ -115,13 +173,18 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch(`/missoes/reivindicar-assistir/${usuarioId}`, { method: 'POST' })
       .then(res => res.text())
       .then(msg => {
-        alert(msg);
+        alert(msg); // opcional manter o alert
         const btnColetarAssistir = document.getElementById('btnColetarAssistir');
-        if (btnColetarAssistir) btnColetarAssistir.style.display = 'none';
+        if (btnColetarAssistir) {
+          btnColetarAssistir.innerText = msg; // muda texto do botão
+          btnColetarAssistir.disabled = true; // desabilita botão
+          btnColetarAssistir.style.display = 'inline-block'; // garante visibilidade
+        }
         carregarStatusMissoes();
       })
       .catch(console.error);
   }
+
 
   // Atualiza o status das missões a cada 3 segundos (opcional)
   setInterval(() => {
@@ -132,3 +195,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 3000);
 
 });
+
+
+
+

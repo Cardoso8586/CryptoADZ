@@ -1,202 +1,259 @@
+
 /* Container principal da seção "Anunciar" */
 #Anunciar {
-  background-color: #f9f9f9;          /* Fundo claro */
-  padding: 25px;                     /* Espaçamento interno */
-  border-radius: 12px;               /* Bordas arredondadas */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Sombra sutil */
-  max-width: 700px;                  /* Largura máxima para melhor leitura */
-  margin: 30px auto;                 /* Centraliza horizontalmente com margem vertical */
+  background-color: #f9f9f9;                  /* Fundo claro */
+  padding: 25px;                              /* Espaçamento interno */
+  border-radius: 12px;                        /* Bordas arredondadas */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);    /* Sombra sutil */
+  max-width: 700px;                           /* Largura máxima para melhor leitura */
+  margin: 30px auto;                          /* Centraliza horizontalmente com margem vertical */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Fonte limpa e moderna */
-  color: #333;                      /* Cor do texto escura */
+  color: #333;                               /* Cor do texto escura */
 }
 
 /* Texto de introdução no container #Anunciar */
 #Anunciar p {
-  font-size: 1.3rem;                /* Tamanho maior para melhor leitura */
-  font-weight: 600;                 /* Texto em negrito moderado */
-  margin-bottom: 20px;              /* Espaço abaixo para separar do próximo elemento */
-  color: #2c3e50;                  /* Cor azul escura para destaque */
-  text-align: center;              /* Centraliza o texto */
+  font-size: 1.3rem;                         /* Tamanho maior para melhor leitura */
+  font-weight: 600;                          /* Texto em negrito moderado */
+  margin-bottom: 20px;                       /* Espaço abaixo para separar do próximo elemento */
+  color: #2c3e50;                           /* Cor azul escura para destaque */
+  text-align: center;                       /* Centraliza o texto */
 }
 
 /* Estilo do slogan rotativo - classe .crypto-adz */
 .crypto-adz {
-  font-size: 2.5rem;               /* Texto bem maior */
-  font-weight: 700;                /* Negrito forte para destaque */
-  text-align: center;              /* Centraliza o texto */
-  margin: 20px auto;               /* Espaçamento vertical e centralização automática */
-  color: #2c3e50;                 /* Cor em azul escuro */
+  font-size: 2.5rem;                        /* Texto bem maior */
+  font-weight: 700;                         /* Negrito forte para destaque */
+  text-align: center;                      /* Centraliza o texto */
+  margin: 20px auto;                        /* Espaçamento vertical e centralização automática */
+  color: #2c3e50;                          /* Cor em azul escuro */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  max-width: 700px;               /* Limita largura para alinhamento visual */
-  transition: opacity 0.5s ease-in-out; /* Transição suave para efeitos de fade */
+  max-width: 700px;                        /* Limita largura para alinhamento visual */
+  transition: opacity 0.5s ease-in-out;   /* Transição suave para efeitos de fade */
 }
-
-
 
 /* Botão para mostrar o formulário */
 #btnMostrarForm {
-  background-color: #2c3e50;       /* Fundo azul escuro */
-  color: #fff;                    /* Texto branco */
-  border: none;                   /* Sem borda */
-  padding: 12px 22px;             /* Espaçamento interno */
-  border-radius: 8px;             /* Bordas arredondadas */
-  cursor: pointer;                /* Cursor tipo mãozinha */
-  font-size: 1rem;                /* Tamanho de fonte padrão */
+  background-color: #2c3e50;                /* Fundo azul escuro */
+  color: #fff;                              /* Texto branco */
+  border: none;                             /* Sem borda */
+  padding: 12px 22px;                       /* Espaçamento interno */
+  border-radius: 8px;                       /* Bordas arredondadas */
+  cursor: pointer;                          /* Cursor tipo mãozinha */
+  font-size: 1rem;                          /* Tamanho de fonte padrão */
   transition: background-color 0.3s ease; /* Transição suave ao passar o mouse */
 }
 
 #btnMostrarForm:hover {
-  background-color: #34495e;      /* Cor mais clara ao passar o mouse */
+  background-color: #34495e;                /* Cor mais clara ao passar o mouse */
+}
+
+/* Botão para mostrar o formulário de upload do banner */
+#btnMostrarFormBanner {
+  background-color: #2c3e50;                /* Fundo azul escuro */
+  color: #fff;                              /* Texto branco */
+  border: none;                             /* Sem borda */
+  padding: 12px 22px;                       /* Espaçamento interno */
+  border-radius: 8px;                       /* Bordas arredondadas */
+  cursor: pointer;                          /* Cursor tipo mãozinha */
+  font-size: 1rem;                          /* Tamanho de fonte padrão */
+  transition: background-color 0.3s ease; /* Transição suave ao passar o mouse */
+}
+
+#btnMostrarFormBanner:hover {
+  background-color: #34495e;                /* Cor mais clara ao passar o mouse */
+}
+
+/* Seção do formulário de upload do banner */
+#upload-banner {
+  display: none;                            /* Inicialmente oculto */
+  background-color: #f9f9f9;                /* Fundo claro */
+  padding: 20px;                            /* Espaçamento interno */
+  border-radius: 12px;                      /* Bordas arredondadas */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);  /* Sombra sutil */
+  max-width: 700px;                         /* Largura máxima */
+  margin: 20px auto;                        /* Centraliza horizontalmente */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+/* Formulário de upload */
+#form-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* Input do tipo file */
+#form-upload input[type="file"] {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1.8px solid #ccc;
+  font-size: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+#form-upload input[type="file"]:focus {
+  outline: none;
+  border-color: #2c3e50;
+  box-shadow: 0 0 5px #2c3e50a0;
+}
+
+/* Botão de envio do formulário */
+#form-upload button[type="submit"] {
+  background-color: #27ae60;               /* Fundo verde */
+  color: white;                           /* Texto branco */
+  border: none;
+  padding: 12px 25px;
+  font-size: 1.1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 700;
+  transition: background-color 0.3s ease;
+}
+
+#form-upload button[type="submit"]:hover {
+  background-color: #2ecc71;               /* Verde mais claro ao passar o mouse */
+}
+
+/* Preview da imagem enviada */
+#preview {
+  display: none;                           /* Inicialmente oculto */
+  max-width: 100%;
+  margin-top: 15px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
 /* Formulário de anúncio */
 #formAnuncio {
-  display: flex;                 /* Layout flexível */
-  flex-direction: column;        /* Itens em coluna */
-  gap: 15px;                    /* Espaço entre os campos */
-  margin-top: 15px;             /* Espaço acima do formulário */
+  display: flex;                           /* Layout flexível */
+  flex-direction: column;                  /* Itens em coluna */
+  gap: 15px;                              /* Espaço entre os campos */
+  margin-top: 15px;                       /* Espaço acima do formulário */
 }
 
 /* Labels do formulário */
 #formAnuncio label {
-  font-weight: 600;              /* Negrito moderado */
-  font-size: 1rem;               /* Tamanho de fonte padrão */
-  margin-bottom: 6px;            /* Espaço abaixo do label */
-  color: #34495e;                /* Azul escuro para contraste */
+  font-weight: 600;                        /* Negrito moderado */
+  font-size: 1rem;                         /* Tamanho de fonte padrão */
+  margin-bottom: 6px;                      /* Espaço abaixo do label */
+  color: #34495e;                        /* Azul escuro para contraste */
 }
 
 /* Inputs e textarea do formulário */
 #formAnuncio input[type="text"],
 #formAnuncio textarea {
-  padding: 10px 15px;           /* Espaço interno confortável */
-  border-radius: 6px;           /* Bordas arredondadas */
-  border: 1.8px solid #ccc;     /* Borda cinza clara */
-  font-size: 1rem;              /* Fonte padrão */
-  font-family: inherit;         /* Mesma fonte do container */
-  resize: vertical;             /* Permite redimensionar verticalmente */
-  transition: border-color 0.3s ease; /* Transição suave para borda */
+  padding: 10px 15px;                     /* Espaço interno confortável */
+  border-radius: 6px;                     /* Bordas arredondadas */
+  border: 1.8px solid #ccc;               /* Borda cinza clara */
+  font-size: 1rem;                        /* Fonte padrão */
+  font-family: inherit;                   /* Mesma fonte do container */
+  resize: vertical;                       /* Permite redimensionar verticalmente */
+  transition: border-color 0.3s ease;    /* Transição suave para borda */
 }
 
 #formAnuncio input[type="text"]:focus,
 #formAnuncio textarea:focus {
-  outline: none;                /* Remove contorno padrão */
-  border-color: #2c3e50;        /* Borda azul escura ao focar */
-  box-shadow: 0 0 5px #2c3e50a0; /* Sombra azul suave */
+  outline: none;                          /* Remove contorno padrão */
+  border-color: #2c3e50;                  /* Borda azul escura ao focar */
+  box-shadow: 0 0 5px #2c3e50a0;         /* Sombra azul suave */
 }
 
 /* Botão de envio do formulário */
 #formAnuncio button[type="submit"] {
-  background-color: #27ae60;     /* Fundo verde */
-  color: white;                  /* Texto branco */
-  border: none;                  /* Sem borda */
-  padding: 12px 25px;            /* Espaçamento confortável */
-  font-size: 1.1rem;             /* Fonte um pouco maior */
-  border-radius: 8px;            /* Bordas arredondadas */
-  cursor: pointer;               /* Cursor de clique */
-  font-weight: 700;              /* Negrito forte */
+  background-color: #27ae60;               /* Fundo verde */
+  color: white;                           /* Texto branco */
+  border: none;                           /* Sem borda */
+  padding: 12px 25px;                     /* Espaçamento confortável */
+  font-size: 1.1rem;                      /* Fonte um pouco maior */
+  border-radius: 8px;                     /* Bordas arredondadas */
+  cursor: pointer;                        /* Cursor de clique */
+  font-weight: 700;                       /* Negrito forte */
   transition: background-color 0.3s ease; /* Transição suave */
 }
 
 #formAnuncio button[type="submit"]:hover {
-  background-color: #2ecc71;     /* Verde mais claro ao passar o mouse */
+  background-color: #2ecc71;               /* Verde mais claro ao passar o mouse */
 }
 
 /* Mensagens de feedback */
 .mensagem {
-  margin-top: 15px;              /* Espaço acima */
-  font-weight: 600;              /* Negrito moderado */
-  font-size: 1rem;               /* Tamanho padrão */
-  color: #e67e22;               /* Cor laranja para destaque */
+  margin-top: 15px;                       /* Espaço acima */
+  font-weight: 600;                       /* Negrito moderado */
+  font-size: 1rem;                        /* Tamanho padrão */
+  color: #e67e22;                        /* Cor laranja para destaque */
 }
 
 /* Botão do menu lateral */
 #btnAnunciar {
-  font-weight: 600;              /* Negrito moderado */
-  font-size: 1rem;               /* Fonte padrão */
-  padding: 8px 10px;             /* Espaçamento interno */
-  border-radius: 6px;            /* Bordas arredondadas */
+  font-weight: 600;                       /* Negrito moderado */
+  font-size: 1rem;                        /* Fonte padrão */
+  padding: 8px 10px;                      /* Espaçamento interno */
+  border-radius: 6px;                     /* Bordas arredondadas */
   transition: background-color 0.3s ease, color 0.3s ease; /* Transição suave */
 }
 
 #btnAnunciar:hover {
-  background-color: #34495e;     /* Fundo azul ao passar o mouse */
-  color: #ecf0f1;               /* Texto claro */
+  background-color: #34495e;               /* Fundo azul ao passar o mouse */
+  color: #ecf0f1;                        /* Texto claro */
 }
 
 /* Estilo da chamada para anúncio (advertisement-call) */
 .advertisement-call {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 1.5rem;             /* Texto maior */
-  color: #fff;                   /* Texto branco */
-  background: linear-gradient(90deg, #fd7e14, #ffc107); /* Gradiente amarelo-laranja */
-  padding: 14px 26px;            /* Espaçamento interno */
-  border-radius: 12px;           /* Bordas arredondadas */
-  text-align: center;            /* Centraliza texto */
-  font-weight: 700;              /* Negrito forte */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Sombra sutil */
-  max-width: 500px;              /* Largura máxima */
-  margin: 25px auto;             /* Centraliza horizontalmente */
-  letter-spacing: 1px;           /* Espaçamento entre letras */
-  position: relative;
-  overflow: hidden;
+  font-size: 1.5rem;                      /* Tamanho maior */
+  font-weight: 700;                       /* Negrito forte */
+  text-align: center;                     /* Centralizado */
+  color: #2c3e50;                        /* Azul escuro */
+  margin-bottom: 20px;                    /* Espaço abaixo */
 }
 
-/* Ícone antes do texto na chamada */
-.advertisement-call::before {
-  content: "⭐";                 /* Estrela antes do texto */
+/* Título principal dentro do container (anunciar-title) */
+.anunciar-title {
+  font-size: 2.5rem;                      /* Grande */
+  font-weight: 900;                       /* Muito negrito */
+  color: #2c3e50;                        /* Azul escuro */
+  text-align: center;                     /* Centralizado */
+  margin-bottom: 25px;                    /* Espaço abaixo */
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Estilo do botão fechar formulário */
+.close-form-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #7f8c8d;
+  cursor: pointer;
   position: absolute;
-  left: 18px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.4rem;            /* Tamanho da estrela */
+  top: 15px;
+  right: 20px;
+  transition: color 0.3s ease;
 }
 
-/* Efeito hover para a chamada */
-.advertisement-call:hover {
-  background: linear-gradient(90deg, #ffc107, #fd7e14); /* Gradiente invertido */
-  transform: scale(1.02);        /* Leve aumento */
-  transition: all 0.3s ease;     /* Transição suave */
-}
-
-#infoPagamento {
-  margin-top: 15px;
-  font-weight: 700;
-  color: #27ae60;               /* verde vibrante */
-  font-size: 1.4rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding: 10px 15px;
-  border-radius: 6px;
-  background-color: #e6f4ea;    /* fundo verde clarinho */
-  box-shadow: 0 2px 5px rgba(39, 174, 96, 0.3);
-  max-width: 400px;
-  line-height: 1.4;
-}
-
-#feedback {
-  margin-top: 10px;
-  padding: 12px 20px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  border-radius: 8px;
-  max-width: 550px;
-  line-height: 1.4;
-  color: #34495e;               /* tom de cinza azulado */
-  background-color: #ecf0f1;    /* cinza clarinho */
-  box-shadow: 0 2px 6px rgba(52, 73, 94, 0.15);
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Exemplo de variação para sucesso */
-#feedback.success {
-  color: #27ae60;
-  background-color: #e6f4ea;
-  box-shadow: 0 2px 6px rgba(39, 174, 96, 0.3);
-}
-
-/* Exemplo de variação para erro */
-#feedback.error {
+.close-form-btn:hover {
   color: #c0392b;
-  background-color: #f9e6e5;
-  box-shadow: 0 2px 6px rgba(192, 57, 43, 0.3);
 }
+
+/* Responsividade simples */
+@media (max-width: 768px) {
+  #Anunciar {
+    padding: 15px;
+    max-width: 90%;
+  }
+
+  .crypto-adz {
+    font-size: 2rem;
+    max-width: 90%;
+  }
+
+  #formAnuncio button[type="submit"],
+  #form-upload button[type="submit"],
+  #btnMostrarForm,
+  #btnMostrarFormBanner {
+    width: 100%;
+  }
+}
+

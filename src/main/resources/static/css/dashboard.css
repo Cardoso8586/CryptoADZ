@@ -51,25 +51,6 @@ body {
 
 
 
-/* Caixa de informações de tokens */
-.token-info {
-  background-color: #f4faff;        /* Fundo azul claro */
-  border-left: 5px solid #3498db;  /* Barra azul */
-  padding: 12px 16px;
-  margin: 16px 0;
-  font-size: 1.1rem;
-  color: #2c3e50;
-  border-radius: 4px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05); /* Sombra leve */
-}
-
-/* Quantidade de tokens (destaque) */
-.token-amount {
-  color: #27ae60; /* Verde vibrante */
-  font-weight: bold;
-}
-
 /* Estilo específico para qualquer <p> com id começando com "contador-" */
 p[id^="contador-"] {
   font-size: 1rem;
@@ -213,17 +194,26 @@ body {
   color: #333;
 }
 
+/* Quantidade de tokens (destaque) */
+.token-amount {
+  color: #27ae60; /* Verde vibrante */
+  font-weight: bold;
+}
+
 /* token-info */
 .token-info {
+	
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1.2rem;
   color: #333;
   background: linear-gradient(90deg, #f0f0f0, #ffffff);
-  padding: 10px 16px;
+  padding: 11px 16px;
   border-radius: 12px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: inline-block;
   margin: 10px 0;
+   position: relative;
+  top: -10px; /* Move 30px pra cima */
   
 }
 
@@ -233,14 +223,24 @@ body {
   background-color: #e7f0ff;
   padding: 4px 8px;
   border-radius: 8px;
-  margin-left: 5px;
+  margin-left: 15px;
   transition: background-color 0.3s ease, color 0.3s ease;
+ 
 }
 
 .token-info strong:hover {
   background-color: #d0e6ff;
   color: #084298;
+  
 }
+
+.token-info img {
+  width: 60px;
+  height: 60px;       /* garante proporção certinha */
+  vertical-align: middle;
+  margin-right: 6px;  /* espaço entre ícone e texto */
+}
+
 .crypto-adz {
   position: absolute;
   top: 10;

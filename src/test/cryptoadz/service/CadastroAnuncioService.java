@@ -40,23 +40,23 @@ public class CadastroAnuncioService {
 
         if (dto.getTempoVisualizacao() >= 45) {
             tokensPorVisualizacao = new BigDecimal("0.90");
-            bloqueioHoras = 4;
+            bloqueioHoras = 6;
         } 
         else if (dto.getTempoVisualizacao() >= 30) {
         tokensPorVisualizacao = new BigDecimal("0.65");
-        bloqueioHoras = 8;
+        bloqueioHoras = 12;
         }
         else if (dto.getTempoVisualizacao() >= 20) {
         tokensPorVisualizacao = new BigDecimal("0.50");
-        bloqueioHoras = 12;
+        bloqueioHoras = 16;
        } 
         else if (dto.getTempoVisualizacao() >= 10) {
             tokensPorVisualizacao = new BigDecimal("0.35");
-            bloqueioHoras =16;
+            bloqueioHoras =20;
        } 
        else {
        tokensPorVisualizacao = new BigDecimal("0.20");
-       bloqueioHoras =5;
+       bloqueioHoras =10;
          
        
        }

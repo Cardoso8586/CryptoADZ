@@ -85,18 +85,23 @@ public class SecurityConfig {
             			    "/missoes/status/**",
             			    "/api/avisos/**",
             			    "/api/bonus/coletar/**",
-            			    "/api/bonus/verificar**"
+            			    "/api/bonus/verificar/**",
+            			    "/api/banners/bannser",
+            			    "/api/visualizacoes/banner/registrar/**",
+                            "/api/visualizacoes/banner/coletar/**",
+                            "/api/visualizacoes/banner/status/**"
+            			   
             			    
             			    
             			    
             			).permitAll()
 
 
-            		  
+            		
             		    .requestMatchers("/api/visualizacoes/**").permitAll()
             		    .requestMatchers("/api/saldo").authenticated()
             		    .anyRequest().authenticated()
-            		 
+            		    
             )
             .formLogin(form -> form
                 .loginPage("/login")

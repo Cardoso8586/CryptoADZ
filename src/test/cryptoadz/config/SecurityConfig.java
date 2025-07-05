@@ -10,11 +10,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @Configuration
 public class SecurityConfig {
 
+	
+	
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
@@ -39,11 +40,29 @@ public class SecurityConfig {
         return cfg.getAuthenticationManager();
     }
 
+  /** @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList(
+            "https://cryptoadz-production.up.railway.app",
+            "http://localhost:8080"
+        ));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
+        
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+  }*/
+   
+    
     // 4) definir as regras de segurança e injetar o provedor
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-        
+      
+          //  .cors(cors -> cors.configurationSource(corsConfigurationSource())) // aqui habilita o CORS e indica a configuração
             .authenticationProvider(authenticationProvider())
             .authorizeHttpRequests(auth -> auth
             		.requestMatchers(
@@ -63,18 +82,26 @@ public class SecurityConfig {
             			    "/missoes/incrementar-cadastro/**",
             			    "/missoes/reivindicar-cadastro/**",
             			    "/missoes/reivindicar-assistir/",
-            			    "/missoes/status/**"
+            			    "/missoes/status/**",
+            			    "/api/avisos/**",
+            			    "/api/bonus/coletar/**",
+            			    "/api/bonus/verificar/**",
+            			    "/api/banners/bannser",
+            			    "/api/visualizacoes/banner/registrar/**",
+                            "/api/visualizacoes/banner/coletar/**",
+                            "/api/visualizacoes/banner/status/**"
+            			   
             			    
             			    
             			    
             			).permitAll()
 
 
-            		  
+            		
             		    .requestMatchers("/api/visualizacoes/**").permitAll()
             		    .requestMatchers("/api/saldo").authenticated()
             		    .anyRequest().authenticated()
-            		 
+            		    
             )
             .formLogin(form -> form
                 .loginPage("/login")
@@ -94,6 +121,8 @@ public class SecurityConfig {
                 .expiredUrl("/login?expired")
             )
             
+          
+
             
             .csrf().disable();
 

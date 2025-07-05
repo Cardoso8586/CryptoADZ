@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnAnunciar: 'Anunciar',
     btnRanking: 'Ranking',
     btnSwap: 'Swap',
-    btnPerfil: 'Perfil',
+    btnBanners: 'bannersPublicitarios',  // 🔥 Aqui o controle
     btnWallet: 'Wallet',
     btnMissoes: 'secaoMissoes',
     btnAvisos: 'Avisos'
@@ -24,6 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const secaoInicial = document.getElementById('VerAnuncios');
   if (secaoInicial) secaoInicial.style.display = 'block';
 
+  // Seleciona a div ads-section
+  const adsSection = document.querySelector('.ads-section');
+
   // Evento clique nos botões do menu
   Object.entries(menuMap).forEach(([btnId, secaoId]) => {
     const btn = document.getElementById(btnId);
@@ -32,8 +35,18 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.addEventListener('click', e => {
       e.preventDefault();
       esconderTodasSecoes();
+
       const secao = document.getElementById(secaoId);
       if (secao) secao.style.display = 'block';
+
+      // 🔥 Controle da exibição da ads-section
+      if (adsSection) {
+        if (secaoId === 'bannersPublicitarios') {
+          adsSection.style.display = 'none'; // oculta ads-section quando for banners
+        } else {
+          adsSection.style.display = 'block'; // mostra ads-section nas outras seções
+        }
+      }
     });
   });
 
@@ -44,11 +57,14 @@ document.addEventListener('DOMContentLoaded', () => {
       esconderTodasSecoes();
       const secaoAvisos = document.getElementById('Avisos');
       if (secaoAvisos) secaoAvisos.style.display = 'block';
+
+      if (adsSection) {
+        adsSection.style.display = 'block'; // mostra ads-section aqui também
+      }
     });
   }
 
-  // --- Aqui seu código para carregar e alternar avisos ---
-
+  // --- Código de avisos continua igual ---
   let avisos = [];
   let avisoAtual = 0;
   const textoAvisos = document.getElementById('textoAvisos');
@@ -85,6 +101,5 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   carregarAvisos();
-
 });
 

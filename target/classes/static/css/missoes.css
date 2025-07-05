@@ -1,10 +1,10 @@
 #secaoMissoes {
 
-  width: 100%;
+  width: 50%;
   background: linear-gradient(90deg, #0d47a1, #1976d2);
   color: #fff;
   border-bottom: 4px solid #ffca28;
-  padding: 20px 40px;
+  padding: 100px 40px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.25);
   z-index: 1100;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -16,6 +16,7 @@
   margin: 0 0 15px 0;
   text-shadow: 0 2px 5px rgba(0,0,0,0.4);
   letter-spacing: 1.2px;
+  
 }
 
 #secaoMissoes ul {
@@ -23,7 +24,7 @@
   padding: 0;
   margin: 0;
   display: flex;
-  gap: 40px;
+  gap: 10px;
   justify-content: flex-start;
   flex-wrap: wrap;
 }
@@ -71,7 +72,7 @@
   background-color: #ffca28;
   border: none;
   color: #0d47a1;
-  font-weight: 700;
+  font-weight: 100;
   padding: 8px 16px;
   border-radius: 20px;
   cursor: pointer;
@@ -108,4 +109,10 @@
   #secaoMissoes li {
     min-width: 100%;
   }
+}
+#secaoMissoes img {
+  width: 35px;
+  height: 35px;
+  vertical-align: middle;
+  margin-left: 4px;
 }
