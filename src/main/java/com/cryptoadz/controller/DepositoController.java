@@ -1,8 +1,6 @@
 package com.cryptoadz.controller;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cryptoadz.dto.EnderecoDepositoResponse;
 import com.cryptoadz.dto.SolicitacaoDepositoRequest;
 import com.cryptoadz.model.DepositoPendente;
-import com.cryptoadz.model.DepositoRequest;
 import com.cryptoadz.model.Usuario;
 import com.cryptoadz.repository.DepositoPendenteRepository;
 import com.cryptoadz.repository.UsuarioRepository;
