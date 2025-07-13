@@ -35,9 +35,6 @@ public class DepositoController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @Autowired
-    private DepositoService depositoService;
-
     
     @PostMapping("/fazer")
     public ResponseEntity<?> fazerDeposito(@RequestBody SolicitacaoDepositoRequest request) {
