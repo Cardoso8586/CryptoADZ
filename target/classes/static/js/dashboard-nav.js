@@ -4,15 +4,24 @@ document.addEventListener('DOMContentLoaded', () => {
     btnAnunciar: 'Anunciar',
     btnRanking: 'Ranking',
     btnSwap: 'Swap',
-    btnBanners: 'bannersPublicitarios',  // 🔥 Aqui o controle
+    btnBanners: 'bannersPublicitarios',
     btnWallet: 'Wallet',
     btnMissoes: 'secaoMissoes',
     btnAvisos: 'Avisos'
   };
 
+  const adsSection = document.querySelector('.ads-section');
+
   function esconderTodasSecoes() {
     Object.values(menuMap).forEach(id => {
-      const secao = document.getElementById(id);
+      let secao;
+
+      if (id === 'Wallet') {
+        secao = document.getElementById('wallet-container'); // usar o container
+      } else {
+        secao = document.getElementById(id);
+      }
+
       if (secao) secao.style.display = 'none';
     });
   }
@@ -24,9 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const secaoInicial = document.getElementById('VerAnuncios');
   if (secaoInicial) secaoInicial.style.display = 'block';
 
-  // Seleciona a div ads-section
-  const adsSection = document.querySelector('.ads-section');
-
   // Evento clique nos botões do menu
   Object.entries(menuMap).forEach(([btnId, secaoId]) => {
     const btn = document.getElementById(btnId);
@@ -36,15 +42,21 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       esconderTodasSecoes();
 
-      const secao = document.getElementById(secaoId);
+      let secao;
+      if (secaoId === 'Wallet') {
+        secao = document.getElementById('wallet-container'); // mostrar container
+      } else {
+        secao = document.getElementById(secaoId);
+      }
+
       if (secao) secao.style.display = 'block';
 
-      // 🔥 Controle da exibição da ads-section
+      // Controle da exibição da ads-section
       if (adsSection) {
-        if (secaoId === 'bannersPublicitarios') {
-          adsSection.style.display = 'none'; // oculta ads-section quando for banners
+        if (secaoId === 'bannersPublicitarios' || secaoId === 'Wallet') {
+          adsSection.style.display = 'none';
         } else {
-          adsSection.style.display = 'block'; // mostra ads-section nas outras seções
+          adsSection.style.display = 'block';
         }
       }
     });
@@ -59,12 +71,12 @@ document.addEventListener('DOMContentLoaded', () => {
       if (secaoAvisos) secaoAvisos.style.display = 'block';
 
       if (adsSection) {
-        adsSection.style.display = 'block'; // mostra ads-section aqui também
+        adsSection.style.display = 'block';
       }
     });
   }
 
-  // --- Código de avisos continua igual ---
+  // --- Código de avisos ---
   let avisos = [];
   let avisoAtual = 0;
   const textoAvisos = document.getElementById('textoAvisos');

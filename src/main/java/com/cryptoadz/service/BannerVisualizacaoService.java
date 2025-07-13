@@ -182,8 +182,8 @@ public class BannerVisualizacaoService {
         Random random = new Random(seed);
 
         // Define o intervalo de limite possível, por ex, entre 10 e 20
-        int limiteMin = 10;
-        int limiteMax = 20;
+        int limiteMin = 15;
+        int limiteMax = 15;
 
         int limiteHoje = limiteMin + random.nextInt(limiteMax - limiteMin + 1);
         log.info("Limite missão para {}: {}", hoje, limiteHoje); // ADICIONE ISSO
@@ -197,7 +197,7 @@ public class BannerVisualizacaoService {
 
         if (bannersAtivos == 0) return limiteHoje;
 
-        int resultado = limiteHoje / bannersAtivos + 1;
+        int resultado = limiteHoje / bannersAtivos + 2;
 
         if (resultado < 1) {
             return limiteHoje;

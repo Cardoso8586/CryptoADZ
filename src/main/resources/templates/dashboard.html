@@ -166,11 +166,21 @@
     <h2>📤 Enviar Novo Banner</h2>
 
     <!-- Formulário de Upload -->
-    <form id="form-upload" enctype="multipart/form-data">
-        <label for="file">Selecione o banner (Imagem):</label>
-        <input type="file" name="file" id="file" accept="image/*" required>
-        <button type="submit">Enviar Imagem do Banner</button>
-    </form>
+   <form id="form-upload" enctype="multipart/form-data">
+    <label for="file"><strong>Selecione o banner (Imagem):</strong></label>
+    
+    <p style="color: #555; font-size: 14px; margin: 5px 0 3px 0;">
+        <strong>Tamanhos recomendados:</strong> 200x200, 250x250, 300x250, 336x280, 468x250 ou similares.
+    </p>
+    
+    <p style="color: #555; font-size: 14px; margin-bottom: 10px;">
+        <strong>Dica:</strong> Banners com essas dimensões garantem melhor visualização e encaixe na plataforma.
+    </p>
+    
+    <input type="file" name="file" id="file" accept="image/*" required>
+    <button type="submit">Enviar Imagem do Banner</button>
+</form>
+
 
     <div class="preview-container">
         <h3>Pré-visualização:</h3>
@@ -196,15 +206,23 @@
             <option value="inativo">Inativo</option>
         </select>
 
-        <label>Tempo de Exibição:</label>
-        <select id="tempo-banner" required>
-            <option value="">Selecione...</option>
-            <option value="10">10 segundos</option>
-            <option value="20">20 segundos</option>
-            <option value="30">30 segundos</option>
-            <option value="45">45 segundos</option>
-            <option value="60">60 segundos</option>
-        </select>
+     
+<label for="tempo-banner">Escolha o tipo de exibição:</label>
+
+<select id="tempo-banner" required>
+    <option value="">🔽 Selecione...</option>
+    <option value="10">🟢 Normal</option>
+    <option value="20">🔵 Destacado</option>
+    <option value="30">🟣 Premium</option>
+    <option value="45">🟡 Ouro</option>
+    <option value="60">💎 Diamante</option>
+</select>
+
+<p style="color: #555; font-size: 14px; margin-top: 8px;">
+    <strong>Dica:</strong> Utilize banners com os tamanhos recomendados (ex: 200x200, 250x250, 300x250, etc.) para melhor ajuste visual. Tipos como <em>Premium</em>, <em>Ouro</em> e <em>Diamante</em> proporcionam maior destaque.
+</p>
+
+
 
         <div id="custo-preview"></div>
         <div id="saldo-tokens"></div>
@@ -217,8 +235,9 @@
 
 
 
-  <!-- ========== WALLET SECTION ========== -->
-  <section id="Wallet" style="display: none;">
+<!-- ========== WALLET SECTION ========== -->
+<div id="wallet-container" style="display: none;">
+  <section id="Wallet">
     <h2>My Wallet</h2>
 
     <div class="wallet-tabs">
@@ -229,20 +248,42 @@
     <div class="wallet-content">
 
       <div class="wallet-section" id="depositos" style="display: none;">
-        <h3>Deposits</h3>
-        <form id="formDeposito">
-          <label for="valorDeposito">Amount:</label>
-          <input type="number" id="valorDeposito" required>
-          <button type="submit">Deposit</button>
-        </form>
-        <div id="historicoDepositos"></div>
-      </div>
+       <h3>
+ <img src="icones/tether-usdt-logo.png?v=032" alt="USDT" style="width: 20px; vertical-align: middle; margin-right: 5px;">
+  Deposits (USDT)
+ 
+</h3>
+<p>Deposit USDT (TRC20)</p>
+
+ <form id="formDeposito">
+  <label for="valorDeposito">Valor (mínimo 3 USDT):</label>
+  <input type="number" id="valorDeposito" min="3" step="0.01" required>
+  <button type="submit">Solicitar Depósito</button>
+</form>
+
+<div id="enderecoDeposito" style="display: none; margin-top: 10px;">
+  Envie o valor para o seguinte endereço USDT:
+ <code id="usdtAddress"></code>
+</div>
+<div id="statusDeposito" style="margin-top: 10px;"></div>
+<div id="mensagemAguardando" style="display:none;">Aguardando confirmação...</div>
+<div id="mensagemConfirmado" style="display:none;">Depósito confirmado!</div>
+
+
+
+
+<div id="historicoDepositos"></div>
+
 
       <div class="wallet-section" id="retiradas" style="display: none;">
-        <h3>Withdrawals</h3>
+       <h3>
+  <img src="icones/tether-usdt-logo.png?v=032" alt="USDT" style="width: 20px; vertical-align: middle; margin-right: 5px;">
+  Withdraw (USDT)
+</h3>
+
         <form id="formRetirada">
-          <label for="valorRetirada">Amount:</label>
-          <input type="number" id="valorRetirada" required>
+          <label for="valorRetirada">Amount (USDT):</label>
+          <input type="number" id="valorRetirada" required step="0.01" min="0">
           <button type="submit">Withdraw</button>
         </form>
         <div id="historicoRetiradas"></div>
@@ -250,6 +291,9 @@
     </div>
   </section>
   
+</div>
+
+
   
 <section id="secaoMissoes" style="display: none;">
   <h2>🎯 Daily Missions</h2>
@@ -259,22 +303,25 @@
       <span id="statusAssistir">❌</span>
       <button id="btnColetarAssistir" style="display:none;">Claim</button>
     </li>
-    <li>
-      <strong>📢 Register 1 ad, and earn! <span id="recompensaMissaorRegister">  <img src="/icones/adz-token.png" alt="ADZ Token"> </span> </strong>
-      <span id="statusCadastro">❌</span>
-      <button id="btnColetarCadastrar" style="display:none;">Claim</button>
-    </li>
- <li>
- 
- 
+    
+     <li>
 <strong>
   🎬 Watch banners, up to <span id="qtdeBannersDiferentes"></span> times each, and earn!
   <span id="recompensaMissaoHoje">  <img src="/icones/adz-token.png" alt="ADZ Token"> </span>
 </strong>
 
-  <span id="statusBanners">4/15</span>
+  <span id="statusBanners">0/15</span>
   <button id="btnColetarBanners" style="display:none;">Claim</button>
 </li>
+    
+    <li>
+      <strong>📢 Register 1 ad, and earn! <span id="recompensaMissaorRegister">  <img src="/icones/adz-token.png" alt="ADZ Token"> </span> </strong>
+      <span id="statusCadastro">❌</span>
+      <button id="btnColetarCadastrar" style="display:none;">Claim</button>
+    </li>
+    
+    
+
 
 
   </ul>
@@ -317,8 +364,12 @@
   <!-- 🔥 Area de Anúncios Patrocinados -->
 <section id="bannersPublicitarios">
     <h2>🚀 Advertising Area</h2>
-   <div id="banners"></div>
+    <div id="bannerEsquerdo" style="width:48%; float:left;"></div>
+<div id="bannerDireito" style="width:48%; float:right;"></div>
+<div style="clear:both;"></div>
+    
 </section>
+
 
 
     <!-- 🔥 Bloco de Anúncios Patrocinados -->
@@ -349,10 +400,12 @@
 <script src="/js/avisos.js"></script>
 <script src="/js/avisoFixado.js"></script>
 <script src="/js/bannerAdvertise.js"></script>
-<script src="/js/observer.js"></script>
-<script src="/js/publicitarios.js"></script>  
+<script src="/js/publicitarios.js"></script> 
+<script src="/js/bannersModal.js"></script> 
 <script src="/js/bonusModal.js"></script>
 <script src="/js/missaoBanner.js"></script>  
+<script src="/js/bloqueioAbas.js"></script>
+<script src="/js/finance.js"></script>
 
 
 

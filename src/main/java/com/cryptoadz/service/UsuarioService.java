@@ -2,8 +2,12 @@ package com.cryptoadz.service;
 
 import com.cryptoadz.model.Usuario;
 import com.cryptoadz.repository.UsuarioRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,6 +35,9 @@ public class UsuarioService {
     public long contarUsuarios() {
         return usuarioRepository.count();
     }
+    
+  
+
    
 }
 

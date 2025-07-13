@@ -1,6 +1,6 @@
 const API_URL = '/api/banners/ativos';
 const CONTAINER = document.getElementById('adsContainer');
-const ITEMS_PER_PAGE = 3;
+const ITEMS_PER_PAGE = 4;
 let banners = [];
 let currentPage = 1;
 

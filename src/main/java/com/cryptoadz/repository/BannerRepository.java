@@ -24,6 +24,7 @@ public interface BannerRepository extends JpaRepository<Banner, Long> {
 
     @Query("SELECT COUNT(b) FROM Banner b WHERE b.ativo = true")
     int countBannersAtivos();
+	List<Banner> findByDataExpiracaoBefore(LocalDateTime agora);
    
 
 

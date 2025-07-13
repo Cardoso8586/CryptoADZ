@@ -16,11 +16,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cryptoadz.model.TentativaCadastro;
 import com.cryptoadz.model.Usuario;
 import com.cryptoadz.model.UsuarioDetails;
 import com.cryptoadz.repository.UsuarioRepository;
 import com.cryptoadz.service.CaptchaService;
+import com.cryptoadz.service.TentativaCadastroService;
 import com.cryptoadz.service.UsuarioService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class UsuarioController {
@@ -37,6 +41,9 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private TentativaCadastroService tentativaCadastroService;
+    
     @GetMapping("/login")
     public String login() {
         return "login";
@@ -64,6 +71,83 @@ public class UsuarioController {
         usuarioRepository.save(usuario);
         return "redirect:/login";
     }
+    
+   //========================================= Cadastro controlado por IP   ===========================================================
+    
+  /**  @PostMapping("/cadastro")
+    public String cadastrarUsuario(
+            @ModelAttribute Usuario usuario,
+            @RequestParam(name = "cf-turnstile-response") String captchaToken,
+            HttpServletRequest request,
+            Model model
+    ) {
+        String ipUsuario = getClientIp(request);
+
+        // Recupera ou cria registro de tentativas
+        TentativaCadastro tentativa = tentativaCadastroService.getOuCriarTentativa(ipUsuario);
+
+        // Verifica se o IP está temporariamente bloqueado
+        if (tentativaCadastroService.isBloqueado(tentativa)) {
+            model.addAttribute("erroIp", "Este IP está temporariamente bloqueado por excesso de tentativas.");
+            return "cadastro";
+        }
+
+        // Verifica se o CAPTCHA foi resolvido corretamente
+        if (!captchaService.isValid(captchaToken)) {
+            tentativaCadastroService.registrarTentativa(tentativa);
+            model.addAttribute("erroCaptcha", "Falha na verificação do CAPTCHA.");
+            return "cadastro";
+        }
+
+        // Validação de e-mail/usuário
+        if (usuario.getUsername() == null || usuario.getUsername().isEmpty()) {
+            tentativaCadastroService.registrarTentativa(tentativa);
+            model.addAttribute("erroEmail", "O campo e-mail é obrigatório.");
+            return "cadastro";
+        }
+
+        // Validação de senha
+        if (usuario.getSenha() == null || usuario.getSenha().isEmpty()) {
+            tentativaCadastroService.registrarTentativa(tentativa);
+            model.addAttribute("erroSenha", "O campo senha é obrigatório.");
+            return "cadastro";
+        }
+
+        // Verifica se já existe uma conta com esse IP
+        if (usuarioRepository.findByIpCadastro(ipUsuario).isPresent()) {
+            tentativaCadastroService.registrarTentativa(tentativa);
+            model.addAttribute("erroIp", "Já existe uma conta cadastrada com este IP.");
+            return "cadastro";
+        }
+
+        // Cadastro bem-sucedido
+        tentativaCadastroService.limparTentativas(tentativa);
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+        usuario.setIpCadastro(ipUsuario);
+        usuarioRepository.save(usuario);
+
+        return "redirect:/login";
+   
+    
+//========================================================================================================
+    
+    //Recupera o IP real do cliente, mesmo por trás de proxies.
+    
+    private String getClientIp(HttpServletRequest request) {
+        String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null || ip.isEmpty() || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        } else {
+            // Em casos de múltiplos IPs, pega o primeiro (real)
+            ip = ip.split(",")[0];
+        }
+        return ip;
+    }
+
+     }*/
+    
+    
+    //==========================================================================================================
     
     // ✅ Mova este método para o controller, não dentro do service
     @PostMapping("/atualizar-username")

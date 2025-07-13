@@ -34,13 +34,47 @@ public class Usuario {
     private LocalDate dataUltimaColeta;
 
     private LocalDate dataUltimaVisualizacao;  // nova data para controle de banners diários
+    @Column(name = "ip_cadastro", unique = true)
+    private String ipCadastro;
 
+    @Column(name = "usdt_saldo", precision = 19, scale = 8)
+    private BigDecimal usdtSaldo = BigDecimal.ZERO;
+
+    @Column(name = "usdt_wallet", precision = 19, scale = 8)
+    private BigDecimal usdtWallet = BigDecimal.ZERO;
+
+    // ... construtores, outros getters e setters ...
+
+    public BigDecimal getUsdtSaldo() {
+        return usdtSaldo;
+    }
+
+    public void setUsdtSaldo(BigDecimal usdtSaldo) {
+        this.usdtSaldo = usdtSaldo;
+    }
+
+    public BigDecimal getUsdtWallet() {
+        return usdtWallet;
+    }
+
+    public void setUsdtWallet(BigDecimal usdtWallet) {
+        this.usdtWallet = usdtWallet;
+    }
+
+   
     
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
         if (this.saldoTokens == null) {
             this.saldoTokens = BigDecimal.ZERO; // inicializa saldo com zero se null
+        }
+       
+        if (this.usdtSaldo == null) {
+            this.usdtSaldo = BigDecimal.ZERO;
+        }
+        if (this.usdtWallet == null) {
+            this.usdtWallet = BigDecimal.ZERO;
         }
     }
 
@@ -56,6 +90,16 @@ public class Usuario {
     private String codigoConfirmacao;
     private boolean ativo = false;
 
+    
+ // Getter
+    public String getIpCadastro() {
+        return ipCadastro;
+    }
+
+    // Setter
+    public void setIpCadastro(String ipCadastro) {
+        this.ipCadastro = ipCadastro;
+    }
     // Getters e Setters
     public LocalDate getDataUltimaVisualizacao() {
         return dataUltimaVisualizacao;
@@ -105,10 +149,7 @@ public class Usuario {
     public BigDecimal getSaldoTokens() { return saldoTokens; }
     public void setSaldoTokens(BigDecimal saldoTokens) { this.saldoTokens = saldoTokens; }
 
-	//public Long setId(Long usuarioId) {
-		//return id;
-		
-	//}
+	
 	public void setId(Long id) {
 	    this.id = id;
 	}
@@ -129,6 +170,8 @@ public class Usuario {
 	public void setAtivo(boolean ativo) {
 		this.ativo = ativo;
 	}
+
+	
 
 
 	
