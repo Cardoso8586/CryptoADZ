@@ -8,7 +8,10 @@ public class BannerVisualizacaoStatusDTO {
     private int bannersParaRecompensa;
     private int tokensGanhos;
     private int limitePorDia;
+    private int limitePorBanner;
+
     private BigDecimal tokensAtualizados;
+	private BigDecimal recompensaMissao;
 
     public BannerVisualizacaoStatusDTO(int bannersVistos, int bannersParaRecompensa, int tokensGanhos) {
         this.bannersVistos = bannersVistos;
@@ -55,6 +58,26 @@ public class BannerVisualizacaoStatusDTO {
 	public void setTokensAtualizados(BigDecimal tokensAtualizados) {
 		this.tokensAtualizados = tokensAtualizados;
 	}
+
+	public int getLimitePorBanner() {
+	    return limitePorBanner;
+	}
+
+	public void setLimitePorBanner(int limitePorBanner) {
+	    this.limitePorBanner = limitePorBanner;
+	}
+
+
+	  // Getters e Setters
+
+    public BigDecimal getRecompensaMissao() {
+        return recompensaMissao;
+    }
+
+    public void setRecompensaMissao(BigDecimal recompensaMissao) {
+        this.recompensaMissao = recompensaMissao;
+    }
+
   
 
 }

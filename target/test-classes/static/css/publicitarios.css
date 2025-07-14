@@ -34,14 +34,14 @@
     padding: 10px;
     text-align: center;
     width: 100%;
-    background-color: #fafafa;
+    Zbackground-color: #fafafa;
     box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
     transition: transform 0.3s ease;
 }
 
 /* Hover */
 .ad-box:hover {
-    transform: scale(1.20);
+    transform: scale(1.50);
 }
 
 /* Imagem */

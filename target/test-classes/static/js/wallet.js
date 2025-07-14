@@ -1,5 +1,3 @@
-// wallet.js
-
 document.addEventListener('DOMContentLoaded', () => {
   const tabs = document.querySelectorAll('.wallet-tab');
   const sections = document.querySelectorAll('.wallet-section');
@@ -9,29 +7,28 @@ document.addEventListener('DOMContentLoaded', () => {
     tabs.forEach(tab => {
       tab.classList.toggle('active', tab.dataset.target === targetId);
     });
+
     sections.forEach(section => {
-      section.classList.toggle('active', section.id === targetId);
+      section.style.display = section.id === targetId ? 'block' : 'none';
     });
   }
 
   // Inicializa com a aba "depositos" ativa
   ativarAba('depositos');
 
-  // Adiciona evento de clique para trocar abas
+  // Troca de abas
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       ativarAba(tab.dataset.target);
     });
   });
 
-  // Histórico simples para depósitos e retiradas
+  // Histórico simples
   const historicoDepositos = document.getElementById('historicoDepositos');
   const historicoRetiradas = document.getElementById('historicoRetiradas');
-
   const formDeposito = document.getElementById('formDeposito');
   const formRetirada = document.getElementById('formRetirada');
 
-  // Array para guardar os valores (pode trocar por backend ou localStorage)
   const depositos = [];
   const retiradas = [];
 
@@ -43,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
       atualizarHistorico(historicoDepositos, depositos, 'Depósito');
       formDeposito.reset();
     } else {
-      alert('Please enter a valid deposit amount.');
+      alert('Por favor, insira um valor de depósito válido.');
     }
   });
 
@@ -55,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
       atualizarHistorico(historicoRetiradas, retiradas, 'Retirada');
       formRetirada.reset();
     } else {
-      alert('Please enter a valid withdrawal amount.');
+      alert('Por favor, insira um valor de retirada válido.');
     }
   });
 
@@ -67,4 +64,55 @@ document.addEventListener('DOMContentLoaded', () => {
       container.appendChild(item);
     });
   }
+
+  // Chamada imediata do status
+  atualizarStatusDeposito();
+
+  // Atualização periódica a cada 10 segundos
+  setInterval(atualizarStatusDeposito, 1000);
 });
+
+// Função auxiliar para obter ID do usuário logado
+function getUsuarioLogadoId() {
+  const meta = document.querySelector('meta[name="user-id"]');
+  return meta ? parseInt(meta.getAttribute('content')) : null;
+}
+
+// Consulta e atualiza o status do depósito
+async function atualizarStatusDeposito() {
+  const userId = getUsuarioLogadoId();
+  if (!userId) return;
+
+  try {
+    console.log('Consultando status do depósito para o usuário:', userId);
+    const response = await fetch(`/api/depositos/status/${userId}`);
+    if (!response.ok) throw new Error('Erro ao consultar status');
+
+    const status = await response.text();
+    console.log('Status recebido:', status);
+
+    document.getElementById('statusDeposito').innerText = status;
+
+    const aguardando = document.getElementById('mensagemAguardando');
+    const confirmado = document.getElementById('mensagemConfirmado');
+    const formDeposito = document.getElementById('formDeposito');
+
+    if (status === 'PENDENTE') {
+      aguardando.style.display = 'block';
+      confirmado.style.display = 'none';
+      formDeposito.style.display = 'none';  // Esconde o formulário de depósito
+    } else if (status === 'CONFIRMADO') {
+      aguardando.style.display = 'none';
+      confirmado.style.display = 'block';
+      formDeposito.style.display = 'block'; // Mostra o formulário de depósito
+    } else {
+      aguardando.style.display = 'none';
+      confirmado.style.display = 'none';
+      formDeposito.style.display = 'block'; // Mostra o formulário de depósito
+    }
+
+  } catch (error) {
+    console.error('Erro na atualização de status:', error);
+  }
+}
+

@@ -1,6 +1,6 @@
 const API_URL = '/api/banners/ativos';
 const CONTAINER = document.getElementById('adsContainer');
-const ITEMS_PER_PAGE = 5;
+const ITEMS_PER_PAGE = 4;
 let banners = [];
 let currentPage = 1;
 
@@ -44,7 +44,7 @@ fetch(API_URL)
   .then(data => {
     if (!Array.isArray(data)) throw new Error('Formato inválido retornado da API.');
     if (data.length === 0) {
-      CONTAINER.innerHTML = '<p>Nenhum banner disponível no momento.</p>';
+      CONTAINER.innerHTML = '<p>"No current banners. Advertise with us!"</p>';
       return;
     }
 
@@ -96,8 +96,8 @@ fetch(API_URL)
 
           if (!response.ok) {
             const erro = await response.text();
-            console.error("Erro ao registrar visualização:", erro);
-            alert("Erro ao registrar visualização: " + erro);
+          // console.error(erro);
+          // alert(erro);
           } else {
             const result = await response.json();
             console.log("Visualização registrada com sucesso:", result);

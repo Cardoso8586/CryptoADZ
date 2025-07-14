@@ -89,7 +89,12 @@ public class SecurityConfig {
             			    "/api/banners/bannser",
             			    "/api/visualizacoes/banner/registrar/**",
                             "/api/visualizacoes/banner/coletar/**",
-                            "/api/visualizacoes/banner/status/**"
+                            "/api/visualizacoes/banner/status/**",
+                            "/api/depositos/fazer/**",
+                            "/api/depositos/status/**",
+                            "/api/depositos/historico/**"
+                         
+                        
             			   
             			    
             			    
@@ -100,6 +105,7 @@ public class SecurityConfig {
             		
             		    .requestMatchers("/api/visualizacoes/**").permitAll()
             		    .requestMatchers("/api/saldo").authenticated()
+            		    .requestMatchers("/api/saldoUsdt").authenticated()
             		    .anyRequest().authenticated()
             		    
             )

@@ -1,67 +1,81 @@
-/* Estilo principal do container de banners publicitários */
+/* Container principal dos banners publicitários */
 #bannersPublicitarios {
-    padding: 20px; /* Espaçamento interno ao redor do conteúdo */
-    background-color: #fff; /* Fundo branco */
-    border-radius: 10px; /* Cantos arredondados */
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.1); /* Sombra leve para dar profundidade */
-    margin: 20px; /* Espaçamento externo ao redor do container */
-   
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+    margin: 20px auto;      /* centraliza horizontalmente */
+    max-width: 1400px;      /* aumenta largura máxima da seção */
+    width: 95%;             /* ocupa quase toda a largura da tela */
 }
 
-/* Estilo do título dentro do container de banners */
+/* Título principal da seção */
 #bannersPublicitarios h2 {
-    text-align: center; /* Centraliza o texto */
-    color: #333; /* Cor do texto em tom escuro */
-    margin-bottom: 5px; /* Espaço abaixo do título */
-    font-size: 24px; /* Tamanho da fonte do título */
+    text-align: center;
+    color: #333;
+    margin-bottom: 15px;
+    font-size: 24px;
 }
 
-/* Estilo de cada banner individual dentro do container */
+/* Container interno para banners - flex container */
+#bannersPublicitarios #banners {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Cada banner */
 #bannersPublicitarios .banner {
-    border: 2px solid #ccc; /* Borda cinza clara */
-    border-radius: 18px; /* Cantos arredondados dos banners */
-    padding: 5px; /* Espaço interno do banner */
-    margin: 50px; /* Espaço externo entre banners */
-    text-align: center; /* Centraliza o conteúdo do banner */
-    max-width: 800px; /* Largura máxima para evitar ficar muito largo */
-    box-shadow: 2px 2px 8px rgba(0,0,0,0.2); /* Sombra mais escura para destaque */
-    display: inline-block; /* Permite vários banners lado a lado */
-    vertical-align: top; /* Alinha banners ao topo */
-    background-color: #fafafa; /* Fundo levemente cinza */
-    transition: transform 0.3s ease; /* Transição suave para efeito hover */
+    border: 2px solid #ccc;
+    border-radius: 12px;
+    padding: 10px;
+    text-align: center;
+    background-color: #fafafa;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
+    flex: 1 1 calc(25% - 30px); /* 4 por linha */
+    max-width: 320px;            /* tamanho máximo do banner */
+    transition: transform 0.3s ease;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
-/* Efeito quando o mouse passa sobre o banner */
+/* Hover suave */
 #bannersPublicitarios .banner:hover {
-    transform: scale(1.20); /* Aumenta o tamanho em 3% para destacar */
+    transform: scale(1.20);
 }
 
-/* Estilo para as imagens dentro dos banners */
-#bannersPublicitarios .banner {
-    overflow: hidden; /* Garante que nada ultrapasse o espaço visível */
-}
-
+/* Imagem dentro do banner */
 #bannersPublicitarios .banner img {
-    width: 100%;
- 
-         /* Corta o excesso, sem distorcer */
+    max-width: 100%;
+    height: auto;
     border-radius: 5px;
-    margin-bottom: 0px;
+    margin-bottom: 8px;
     display: block;
 }
 
-
-/* Estilo dos títulos dentro dos banners */
+/* Título dentro do banner */
 #bannersPublicitarios .banner h3 {
-    margin: 3px 0; /* Espaçamento acima e abaixo do título */
-    font-size: 25px; /* Tamanho da fonte dos títulos */
-    color: #444; /* Cor do texto em tom médio */
+    margin: 6px 0;
+    font-size: 18px;
+    color: #444;
 }
 
-/* Estilo do container interno chamado #banners */
-#bannersPublicitarios #banners {
-    text-align: center; /* Centraliza o conteúdo */
-    margin-top: 10px; /* Espaço acima */
+/* Responsivo - telas médias (tablet) - 2 colunas */
+@media (max-width: 900px) {
+    #bannersPublicitarios .banner {
+        flex: 1 1 calc(50% - 20px);
+        max-width: 45%;
+    }
 }
+
+/* Responsivo - telas pequenas (celular) - 1 coluna */
+@media (max-width: 600px) {
+    #bannersPublicitarios .banner {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
+
 
 

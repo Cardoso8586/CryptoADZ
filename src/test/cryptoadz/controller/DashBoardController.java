@@ -38,6 +38,7 @@ public class DashBoardController {
 
         model.addAttribute("usuario", usuario);
         model.addAttribute("saldoTokens", usuario.getSaldoTokens());
+        model.addAttribute("saldoUsdt", usuario.getUsdtSaldo());
 
         if (page < 0) {
             page = 0;

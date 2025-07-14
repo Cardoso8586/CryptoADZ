@@ -22,7 +22,7 @@ public class SaldoController {
 
     @GetMapping("/api/saldo")
     @ResponseBody
-    public Map<String, BigDecimal> getSaldo(@AuthenticationPrincipal UserDetails userDetails) {
+    public Map<String, BigDecimal> getSaldoTokens(@AuthenticationPrincipal UserDetails userDetails) {
         String username = userDetails.getUsername();
 
         Usuario usuario = usuarioRepository.findByUsername(username)
@@ -31,4 +31,19 @@ public class SaldoController {
         return Map.of("saldo", usuario.getSaldoTokens());
     }
 
+    @GetMapping("/api/saldoUsdt")
+    @ResponseBody
+    public Map<String, BigDecimal> getSaldoUsdt(@AuthenticationPrincipal UserDetails userDetails) {
+        String username = userDetails.getUsername();
+
+        Usuario usuario = usuarioRepository.findByUsername(username)
+            .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+
+        return Map.of("saldoUsdt", usuario.getUsdtSaldo());
+    }
+
+
+    
+    
+    
 }

@@ -28,6 +28,8 @@ public class MissaoController {
             .orElseThrow(() -> new ResponseStatusException(
                 HttpStatus.NOT_FOUND, "Usuário não encontrado"));
         MissaoDTO dto = missaoService.getStatus(usuario);
+    
+        
         return ResponseEntity.ok(dto);
     }
 

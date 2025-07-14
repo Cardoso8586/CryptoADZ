@@ -1,12 +1,19 @@
 package com.cryptoadz.service;
 
+import java.io.File;
 import java.math.BigDecimal;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+
+
 import org.apache.http.HttpStatus;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,6 +23,7 @@ import com.cryptoadz.dto.BannerResponseDTO;
 import com.cryptoadz.model.Banner;
 import com.cryptoadz.model.Usuario;
 import com.cryptoadz.repository.BannerRepository;
+import com.cryptoadz.repository.BannerVisualizacaoRepository;
 import com.cryptoadz.repository.UsuarioRepository;
 
 import jakarta.transaction.Transactional;
@@ -29,6 +37,8 @@ public class BannerService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private BannerVisualizacaoRepository bannerVisualizacaoRepository;
    
     @Transactional
     public BannerResponseDTO criarBannerComUsuario(BannerDTO dto, String username) {
@@ -59,7 +69,7 @@ public class BannerService {
         banner.setImagemUrl(dto.getImagemUrl());
         banner.setDataExpiracao(dto.getDataExpiracao());
         banner.setTempoExibicao(dto.getTempoExibicao());
-        // Outros campos, se houver
+   
 
         bannerRepository.save(banner);
 
@@ -107,13 +117,114 @@ public class BannerService {
 
         bannerRepository.save(banner);
     }
-  //@Scheduled(cron = "*/30 * * * * *") // Executa a cada 30 segundos
-    @Scheduled(cron = "0 0 * * * *") // Executa todo início de hora
-    public void verificarEBloquearBannersExpirados() {
-        LocalDateTime agora = LocalDateTime.now();
-        int deletados = bannerRepository.deleteExpiredBanners(agora);
-        System.out.println(deletados + " banners expirados foram removidos.");
+    public BannerService(BannerVisualizacaoRepository bannerVisualizacaoRepository, BannerRepository bannerRepository) {
+        this.bannerVisualizacaoRepository = bannerVisualizacaoRepository;
+        this.bannerRepository = bannerRepository;
     }
+    
+    
+    //====================================================================== DELETAR BANNERS EXPIRADOS =============================================
+    @Value("${upload.banner.directory}")
+    private String uploadDir;
+
+   // @Scheduled(cron = "0 0 */1 * * *") // a cada 1 hora
+    @Scheduled(cron = "*/30 * * * * *") //a cada 30 segundos.
+    @Transactional
+    public void verificarEBloquearBannersExpirados() {
+        try {
+            LocalDateTime agora = LocalDateTime.now();
+
+            List<Banner> expirados = bannerRepository.findByDataExpiracaoBefore(agora);
+
+            for (Banner banner : expirados) {
+                String imagemUrl = banner.getImagemUrl();
+
+                if (imagemUrl != null && imagemUrl.startsWith("/uploads")) {
+                    String nomeArquivo = Paths.get(imagemUrl).getFileName().toString();
+
+                    Path caminhoCompleto = Paths.get(uploadDir, nomeArquivo).toAbsolutePath();
+
+                    File arquivo = caminhoCompleto.toFile();
+                    if (arquivo.exists()) {
+                        boolean apagado = arquivo.delete();
+                        System.out.println("Imagem apagada: " + caminhoCompleto + " → " + apagado);
+                    } else {
+                        System.out.println("Imagem não encontrada para apagar: " + caminhoCompleto);
+                    }
+                }
+            }
+
+            bannerVisualizacaoRepository.deleteByBannerDataExpiracaoBefore(agora);
+            int deletados = bannerRepository.deleteExpiredBanners(agora);
+
+            System.out.println("Verificação de banners expirada às " + agora);
+            System.out.println(deletados + " banners expirados foram removidos.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+//================================================================================================
+
+   // @Scheduled(cron = "0 0 */1 * * *") // a cada 1 hora
+   // @Transactional
+   /** public void verificarEBloquearBannersExpirados() {
+        try {
+            LocalDateTime agora = LocalDateTime.now();
+
+            List<Banner> expirados = bannerRepository.findByDataExpiracaoBefore(agora);
+
+            for (Banner banner : expirados) {
+                String imagemUrl = banner.getImagemUrl();
+
+                if (imagemUrl != null && imagemUrl.startsWith("/uploads")) {
+                    String nomeArquivo = Paths.get(imagemUrl).getFileName().toString();
+
+             
+                    Path uploadDir = Paths.get("/uploads/banners/");
+                    Path caminhoCompleto = uploadDir.resolve(nomeArquivo).toAbsolutePath();
+
+                    File arquivo = caminhoCompleto.toFile();
+                    if (arquivo.exists()) {
+                        boolean apagado = arquivo.delete();
+                        System.out.println("Imagem apagada: " + caminhoCompleto + " → " + apagado);
+                    } else {
+                        System.out.println("Imagem não encontrada para apagar: " + caminhoCompleto);
+                    }
+                }
+            }
+
+            bannerVisualizacaoRepository.deleteByBannerDataExpiracaoBefore(agora);
+            int deletados = bannerRepository.deleteExpiredBanners(agora);
+
+            System.out.println("Verificação de banners expirada às " + agora);
+            System.out.println(deletados + " banners expirados foram removidos.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }*/
+
+    
+  //========================================================================  
+  //@Scheduled(cron = "*/30 * * * * *") a cada 30 segundos. 
+  //@Scheduled(cron = "0 0 */1 * * *")   // a cada 1 hora
+ // @Transactional
+    /**  
+     * 
+     * public void verificarEBloquearBannersExpirados() {
+        try {
+            LocalDateTime agora = LocalDateTime.now();
+
+            bannerVisualizacaoRepository.deleteByBannerDataExpiracaoBefore(agora);
+            int deletados = bannerRepository.deleteExpiredBanners(agora);
+
+            System.out.println("Verificação de banners expirada às " + agora);
+            System.out.println(deletados + " banners expirados foram removidos.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }*/
+//=================================================================================
 
 
 }

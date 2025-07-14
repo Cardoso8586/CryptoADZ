@@ -1,12 +1,3 @@
-// Corrigido: chamar a função corretamente
-function getUsuarioLogadoId() {
-  const meta = document.querySelector('meta[name="user-id"]');
-  return meta ? parseInt(meta.getAttribute('content')) : null;
-}
-
-// Depósito
-
-// Escuta envio do formulário
 document.getElementById('formDeposito').addEventListener('submit', async function(event) {
   event.preventDefault();
 
@@ -44,21 +35,49 @@ document.getElementById('formDeposito').addEventListener('submit', async functio
 
     const data = await response.json();
 
-    // Mostrar endereço no <code> do seu HTML
     document.getElementById('usdtAddress').innerText = data.endereco;
-    document.getElementById('enderecoDeposito').style.display = 'block'; // <-- ESSENCIAL
+    document.getElementById('enderecoDeposito').style.display = 'block';
 
-    // Mostrar mensagem de aguardando confirmação
     document.getElementById('mensagemAguardando').style.display = 'block';
     document.getElementById('mensagemConfirmado').style.display = 'none';
 
-    // Limpar campo do valor após sucesso
     document.getElementById('valorDeposito').value = '';
+
+    localStorage.setItem('abaAtiva', 'wallet');
+
+    // Inicia polling para verificar status
+    const checkStatusInterval = setInterval(async () => {
+      try {
+        const statusResponse = await fetch(`/api/depositos/status?userId=${userId}`);
+        if (!statusResponse.ok) {
+          throw new Error('Erro ao consultar status do depósito');
+        }
+
+        const statusData = await statusResponse.json();
+
+        if (statusData.status === 'confirmado') {
+          clearInterval(checkStatusInterval);
+          document.getElementById('mensagemAguardando').style.display = 'none';
+          document.getElementById('mensagemConfirmado').style.display = 'block';
+		  
+          // reload após confirmação
+          location.reload();
+        } else if (statusData.status === 'rejeitado') {
+          clearInterval(checkStatusInterval);
+          document.getElementById('mensagemAguardando').style.display = 'none';
+          alert('Depósito rejeitado.');
+          // reload após rejeição, se quiser
+          location.reload();
+        }
+        // Se status for outro, continua aguardando...
+      } catch (err) {
+        clearInterval(checkStatusInterval);
+        //alert('Erro ao verificar status: ' + err.message);
+      }
+    }, 5000); // checa a cada 5 segundos
 
   } catch (error) {
     alert('Erro ao solicitar depósito: ' + error.message);
   }
 });
-
-
 

@@ -46,7 +46,7 @@ public class BannerVisualizacaoController {
 
         if  (!service.podeRegistrarVisualizacao(bannerId, usuarioId, 0)) {  // só precisa do usuário pra verificar limite
             return ResponseEntity.status(HttpStatus.SC_TOO_MANY_REQUESTS)
-                    .body("Limite diário de visualizações atingido.");
+                    .body("Escolha um novo Banner para continuar a missão!.");
         }
 
         try {
@@ -81,8 +81,15 @@ public class BannerVisualizacaoController {
 
             BannerVisualizacaoStatusDTO dto = new BannerVisualizacaoStatusDTO();
             dto.setBannersVistos(usuario.getBannersVistos());
-            dto.setLimitePorDia(15); // ou use uma constante: LIMITE_MISSAO
+            
             dto.setTokensAtualizados(usuario.getSaldoTokens());
+            dto.setLimitePorBanner(service.calcularLimitePorBanner()); // 👈 Aqui
+            int limiteMissao = service.getLimiteMissaoParaHoje();
+            dto.setLimitePorDia(limiteMissao);
+            
+            
+            dto.setRecompensaMissao(service.getRECOMPENSA_MISSAO());
+
 
             return ResponseEntity.ok(dto);
         }     

@@ -46,22 +46,28 @@
   </nav>
 
   <!-- ========== MAIN CONTENT ========== -->
-  <main class="main-content-fixed">
+<main class="main-content-fixed">
 
     <p class="crypto-adz">CryptoADZ!</p>
     <p class="slogan-crypto-adz">Every click earns ADZ!</p>
-      <!-- Card de Avisos na Home -->
- 
+
     <h1 class="saudacao-usuario">
       <span id="saudacao" th:text="${saudacao}">Hello</span>,
       <span id="nomeUsuario" th:text="${usuario.username}">User</span>
     </h1>
-<p class="token-info">
-  <img src="/icones/adz-token.png" alt="ADZ Token"> 
-  <strong id="saldoTokens" th:text="${saldoTokens}">0.00</strong>
-</p>
 
-  </main>
+    <p class="token-info">
+      <img src="/icones/adz-token.png" alt="ADZ Token"> 
+      <strong id="saldoTokens" th:text="${saldoTokens}">0.00</strong>
+    </p>
+
+    <p class="token-info">
+      <img src="icones/tether-usdt-logo.png?v=032" alt="USDT" style="width: 45px; vertical-align: middle; margin-right: 0px;">
+      <strong id="saldoUsdt" th:text="${saldoUsdt}">0.00</strong>
+    </p>
+
+</main>
+
 
   <!-- ========== AD LISTING ========== -->
   <section id="VerAnuncios" class="conteudoPrincipal">
@@ -269,7 +275,11 @@
         <div id="mensagemAguardando" style="display: none;">Aguardando confirmação...</div>
         <div id="mensagemConfirmado" style="display: none;">Depósito confirmado!</div>
 
-        <div id="historicoDepositos"></div>
+       <div id="historicoDepositos"></div>
+
+
+
+
       </div>
 
       <!-- Seção de Retiradas -->
@@ -388,11 +398,12 @@
 <!-- ========== EXTERNAL SCRIPTS ========== -->
 <script src="/js/verificarBloqueio.js"></script>
 <script src="/js/atualizarSaldo.js"></script>
+<script src="/js/atualizarSaldoUsdt.js"></script>
 <script src="/js/session-timeout.js"></script>
 <script src="/js/verAnuncios.js"></script>
-<script src="/js/advertise.js"></script>
+<script src="/js/advertise.js"defer></script>
 <script src="/js/dashboard-nav.js"></script>
-<script src="/js/wallet.js"></script>
+<script src="/js/wallet.js"defer></script>
 <script src="/js/slogans.js"></script>
 <script src="/js/mission.js"></script>
 <script src="/js/avisos.js"></script>
@@ -403,8 +414,8 @@
 <script src="/js/bonusModal.js"></script>
 <script src="/js/missaoBanner.js"></script>  
 <script src="/js/bloqueioAbas.js"></script>
-<script src="/js/finance.js"></script>
-
+<script src="/js/finance.js"></script>   
+<script src="/js/historicoDepositos.js"></script>  
 
 
 

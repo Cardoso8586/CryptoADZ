@@ -208,6 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Atualiza saldo para refletir o gasto
       await buscarSaldo();
       atualizarCustoEBotao();
+	  location.reload();
 
     } catch (err) {
       alert(err.message);
@@ -216,8 +217,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Inicialização
+  setInterval(() => {
+  	 // Inicialização
   buscarSaldo();
-  atualizarCustoEBotao();
+  atualizarCustoEBotao(); 
+	
+	
+  	}, 3000); // Atualiza a cada 3 segundos
+ 
 });
 

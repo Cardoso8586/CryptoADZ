@@ -16,6 +16,18 @@
     <div th:if="${erro}" class="error">
         <p th:text="${erro}"></p>
     </div>
+<div th:if="${erroIp}" class="error">
+    <p th:text="${erroIp}"></p>
+</div>
+<div th:if="${erroCaptcha}" class="error">
+    <p th:text="${erroCaptcha}"></p>
+</div>
+<div th:if="${erroEmail}" class="error">
+    <p th:text="${erroEmail}"></p>
+</div>
+<div th:if="${erroSenha}" class="error">
+    <p th:text="${erroSenha}"></p>
+</div>
 
     <form th:action="@{/cadastro}" th:object="${usuario}" method="post" id="registerForm">
         <label for="username">Username:</label>
@@ -29,7 +41,7 @@
 
         <!-- Turnstile CAPTCHA -->
         <div class="cf-turnstile" 
-             data-sitekey="0x4AAAAAABeuEKIL4oQVYiXR"
+             data-sitekey="0x4AAAAAABhDBlDrEgbq9kdW"
              data-callback="onTurnstileSuccess"
              data-error-callback="onTurnstileError"
              data-expired-callback="onTurnstileExpired"></div>
@@ -44,6 +56,8 @@
 </div>
 
 <script src="/js/Register.js"></script>
+<script src="/js/bloqueioAbas.js"></script>
+
 
 </body>
 </html>

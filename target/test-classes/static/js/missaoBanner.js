@@ -1,8 +1,3 @@
-function getUsuarioLogadoId() {
-  const meta = document.querySelector('meta[name="user-id"]');
-  return meta ? meta.getAttribute('content') : null;
-}
-
 async function verificarStatusVisualizacoes() {
   const usuarioId = getUsuarioLogadoId();
 
@@ -11,18 +6,44 @@ async function verificarStatusVisualizacoes() {
     if (!response.ok) throw new Error("Erro ao buscar status");
 
     const data = await response.json();
-    const { bannersVistos, limitePorDia, tokensAtualizados } = data;
+    const { bannersVistos, limitePorDia, tokensAtualizados, jaColetouHoje, limitePorBanner, recompensaMissao } = data;
 
     const statusSpan = document.getElementById('statusBanners');
     const btnClaim = document.getElementById('btnColetarBanners');
+    const qtdeBannersDiferentesSpan = document.getElementById('qtdeBannersDiferentes');
+    const recompensaMissaoHoje = document.getElementById('recompensaMissaoHoje');
 
     statusSpan.textContent = `${bannersVistos}/${limitePorDia}`;
 
-    if (bannersVistos >= limitePorDia) {
-      btnClaim.style.display = 'inline-block';
+    if (qtdeBannersDiferentesSpan && limitePorBanner != null) {
+      qtdeBannersDiferentesSpan.textContent = limitePorBanner;
+    }
+
+	if (recompensaMissaoHoje && recompensaMissao != null) {
+	  recompensaMissaoHoje.innerHTML = `${recompensaMissao} <img src="/icones/adz-token.png" alt="ADZ Token">`;
+	}
+
+
+    if (jaColetouHoje) {
+      btnClaim.style.display = 'none';
+
+      let textoColetado = document.getElementById('textoColetadoBanners');
+      if (!textoColetado) {
+        textoColetado = document.createElement('span');
+        textoColetado.id = 'textoColetadoBanners';
+        textoColetado.style.color = 'green';
+        textoColetado.style.marginLeft = '10px';
+        btnClaim.parentNode.appendChild(textoColetado);
+      }
+      textoColetado.textContent = 'Você já coletou hoje.';
+      textoColetado.style.display = 'inline';
+
       statusSpan.textContent = `✅ Completo! (${bannersVistos}/${limitePorDia})`;
     } else {
-      btnClaim.style.display = 'none';
+      btnClaim.style.display = (bannersVistos >= limitePorDia) ? 'inline-block' : 'none';
+
+      const textoColetado = document.getElementById('textoColetadoBanners');
+      if (textoColetado) textoColetado.style.display = 'none';
     }
   } catch (error) {
     console.error('Erro ao verificar status:', error.message);
@@ -49,8 +70,11 @@ async function coletarRecompensaBanners() {
   }
 }
 
-document.getElementById('btnColetarBanners').addEventListener('click', coletarRecompensaBanners);
+// Garante que o DOM esteja pronto antes de iniciar
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('btnColetarBanners').addEventListener('click', coletarRecompensaBanners);
+  
 
-// Atualiza status ao carregar e a cada minuto (60.000 ms)
-verificarStatusVisualizacoes();
-setInterval(verificarStatusVisualizacoes, 5000);
+  verificarStatusVisualizacoes();
+  setInterval(verificarStatusVisualizacoes, 5000);
+});
