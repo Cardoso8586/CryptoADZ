@@ -175,12 +175,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const recompensaMissaorAssistir = document.getElementById('recompensaMissaorAssistir');
         if (recompensaMissaorAssistir && status.recompensa_Assistir != null) {
-          recompensaMissaorAssistir.innerHTML = `${status.recompensa_Assistir} <img src="/icones/adz-token.png" alt="ADZ Token">`;
+          recompensaMissaorAssistir.innerHTML = `${status.recompensa_Assistir}`;
         }
 
         const recompensaMissaorRegister = document.getElementById('recompensaMissaorRegister');
         if (recompensaMissaorRegister && status.recompensa_Registrar != null) {
-          recompensaMissaorRegister.innerHTML = `${status.recompensa_Registrar} <img src="/icones/adz-token.png" alt="ADZ Token">`;
+          recompensaMissaorRegister.innerHTML = `${status.recompensa_Registrar}`;
         }
       })
       .catch(err => {

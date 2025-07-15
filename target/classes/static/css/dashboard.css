@@ -1,6 +1,4 @@
 
-
-
 /* ===== Estilos básicos do body ===== */
 body {
   background-color: #f0f4f8; /* Fundo azul bem claro, combina com sidebar escura */
@@ -243,10 +241,10 @@ body {
 
 .crypto-adz {
   position: absolute;
-  top: 10;
+  top: 1rem;  /* Usar unidade relativa */
   left: 70%;
   transform: translateX(-50%);
-  font-size: 64px;
+  font-size: clamp(2.5rem, 6vw, 4rem); /* tamanho responsivo */
   font-weight: 900;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: linear-gradient(90deg, #00c9a7, #00ffe0);
@@ -261,10 +259,10 @@ body {
 
 .slogan-crypto-adz {
   position: absolute;
-  top: 70px; /* ajusta abaixo do logo */
+  top: 5rem; /* ajusta abaixo do logo */
   left: 70%;
   transform: translateX(-50%);
-  font-size: 20px;
+  font-size: clamp(1rem, 3vw, 1.25rem);
   color: #ffffffcc;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
@@ -273,6 +271,21 @@ body {
   font-style: italic;
   letter-spacing: 0.5px;
 }
+
+/* Ajuste para telas pequenas */
+@media (max-width: 600px) {
+  .crypto-adz {
+    left: 50%;
+    top: 0.5rem;
+  }
+  .slogan-crypto-adz {
+    left: 50%;
+    top: 3rem;
+    text-align: center;
+    width: 90vw;
+  }
+}
+
 
 
 

@@ -155,7 +155,7 @@ public class BannerVisualizacaoService {
         usuario.setDataUltimaColeta(hoje);
 
         // ✅ Zera o contador
-      //  usuario.setBannersVistos(0);
+        usuario.setBannersVistos(0);
         usuario.setDataUltimaVisualizacao(hoje); // Reinicia também a data de visualização se quiser resetar
 
         usuarioRepository.save(usuario);
