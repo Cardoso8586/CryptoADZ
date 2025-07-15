@@ -148,7 +148,7 @@ public class DepositoService {
             System.err.println("Erro ao verificar na blockchain: " + e.getMessage());
         }
 
-        return true;
+        return false;
     }
 
 }

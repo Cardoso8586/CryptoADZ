@@ -189,7 +189,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const recompensaMissaorAssistir = document.getElementById('recompensaMissaorAssistir');
         if (recompensaMissaorAssistir) {
-          recompensaMissaorAssistir.innerHTML = `0 <img src="/icones/adz-token.png" alt="ADZ Token">`;
+          recompensaMissaorAssistir.innerHTML = `recompensaMissaorAssistir">`;
         }
       });
   }
