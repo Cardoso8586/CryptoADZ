@@ -74,7 +74,7 @@ document.getElementById('formDeposito').addEventListener('submit', async functio
         clearInterval(checkStatusInterval);
         //alert('Erro ao verificar status: ' + err.message);
       }
-    }, 5000); // checa a cada 5 segundos
+    }, 30000); // checa a cada 5 segundos
 
   } catch (error) {
     alert('Erro ao solicitar depósito: ' + error.message);
