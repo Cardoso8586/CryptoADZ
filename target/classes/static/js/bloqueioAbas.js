@@ -3,7 +3,6 @@ const blockKey = 'app-tab-blocked';
 
 let isMainTab = false;
 
-// Mostrar mensagem de bloqueio
 function showBlockMessage() {
   document.body.innerHTML = `
     <div style="margin: 50px auto; max-width: 600px; text-align: center; font-family: Arial, sans-serif;">
@@ -34,11 +33,10 @@ function showBlockMessage() {
   });
 }
 
-// Tenta registrar esta aba como a principal
 function tryRegisterTab() {
   const currentTab = localStorage.getItem(tabKey);
-
   if (!currentTab) {
+    // Se não tiver nenhuma aba registrada, registre esta como principal
     localStorage.setItem(tabKey, Date.now().toString());
     isMainTab = true;
     localStorage.removeItem(blockKey);
@@ -48,7 +46,6 @@ function tryRegisterTab() {
   }
 }
 
-// Limpa registro da aba principal ao fechar
 function clearTab() {
   if (isMainTab) {
     localStorage.removeItem(tabKey);
@@ -56,24 +53,47 @@ function clearTab() {
   }
 }
 
-// Escuta mudanças no localStorage (comunicação entre abas)
 window.addEventListener('storage', (e) => {
   if (e.key === tabKey) {
-    // Se aba principal foi removida, tenta registrar esta aba
+    // Quando a aba principal fecha, a chave é removida
     if (!localStorage.getItem(tabKey)) {
-      if (tryRegisterTab()) {
-        location.reload(); // recarrega para liberar o acesso
+      // Tente registrar esta aba como principal (se não for principal)
+      if (!isMainTab && tryRegisterTab()) {
+        // Se conseguiu registrar, limpa bloqueio e recarrega para liberar acesso
+        localStorage.removeItem(blockKey);
+        location.reload();
       }
     } else {
+      // Se outra aba principal foi registrada e esta não é, bloqueie-se
       if (!isMainTab) {
         localStorage.setItem(blockKey, 'true');
         showBlockMessage();
       }
     }
   }
+
+  if (e.key === blockKey) {
+    // Se bloqueio for removido, significa que aba pode liberar acesso
+    if (!localStorage.getItem(blockKey) && !isMainTab) {
+      location.reload();
+    }
+  }
 });
 
-// Bloqueia navegação do teclado
+if (tryRegisterTab()) {
+  // Esta aba é principal
+  blockNavigationKeys();
+  blockHistoryNavigation();
+
+  window.addEventListener('beforeunload', () => {
+    clearTab();
+  });
+} else {
+  // Outra aba já está aberta, bloqueie esta
+  localStorage.setItem(blockKey, 'true');
+  showBlockMessage();
+}
+
 function blockNavigationKeys() {
   window.addEventListener('keydown', function(e) {
     if (['Backspace', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
@@ -82,27 +102,10 @@ function blockNavigationKeys() {
   });
 }
 
-// Bloqueia botões de voltar/avançar do navegador
 function blockHistoryNavigation() {
   history.pushState(null, document.title, location.href);
   window.addEventListener('popstate', function () {
     history.pushState(null, document.title, location.href);
   });
 }
-
-// Verifica no carregamento se já existe aba principal
-if (tryRegisterTab()) {
-  // Esta aba é a principal
-  blockNavigationKeys();
-  blockHistoryNavigation();
-
-  window.addEventListener('beforeunload', () => {
-    clearTab();
-  });
-} else {
-  // Outra aba já está aberta, bloqueia esta
-  localStorage.setItem(blockKey, 'true');
-  showBlockMessage();
-}
-
 
