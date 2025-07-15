@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnRanking: 'Ranking',
     btnSwap: 'Swap',
     btnBanners: 'bannersPublicitarios',
-    btnWallet: 'Wallet',
+    btnWallet: 'wallet-container',
     btnMissoes: 'secaoMissoes',
     btnAvisos: 'Avisos'
   };
@@ -14,26 +14,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function esconderTodasSecoes() {
     Object.values(menuMap).forEach(id => {
-      let secao;
-
-      if (id === 'Wallet') {
-        secao = document.getElementById('wallet-container'); // usar o container
-      } else {
-        secao = document.getElementById(id);
-      }
-
+      const secao = document.getElementById(id);
       if (secao) secao.style.display = 'none';
     });
   }
 
-  // Esconde tudo no começo
   esconderTodasSecoes();
 
-  // Exibe a seção inicial
   const secaoInicial = document.getElementById('VerAnuncios');
   if (secaoInicial) secaoInicial.style.display = 'block';
 
-  // Evento clique nos botões do menu
   Object.entries(menuMap).forEach(([btnId, secaoId]) => {
     const btn = document.getElementById(btnId);
     if (!btn) return;
@@ -42,18 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       esconderTodasSecoes();
 
-      let secao;
-      if (secaoId === 'Wallet') {
-        secao = document.getElementById('wallet-container'); // mostrar container
-      } else {
-        secao = document.getElementById(secaoId);
-      }
-
+      const secao = document.getElementById(secaoId);
       if (secao) secao.style.display = 'block';
 
-      // Controle da exibição da ads-section
       if (adsSection) {
-        if (secaoId === 'bannersPublicitarios' || secaoId === 'Wallet') {
+        if (secaoId === 'bannersPublicitarios' || secaoId === 'wallet-container') {
           adsSection.style.display = 'none';
         } else {
           adsSection.style.display = 'block';
@@ -62,7 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Configura o cardAvisos para abrir a seção Avisos
   const cardAvisos = document.getElementById('cardAvisos');
   if (cardAvisos) {
     cardAvisos.addEventListener('click', () => {
@@ -114,4 +96,3 @@ document.addEventListener('DOMContentLoaded', () => {
 
   carregarAvisos();
 });
-

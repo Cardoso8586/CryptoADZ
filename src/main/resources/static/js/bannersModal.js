@@ -12,8 +12,8 @@ document.getElementById('btnBanners').addEventListener('click', () => {
       console.log('Banners recebidos:', banners);
 
       if (banners.length === 0) {
-        document.getElementById('bannerEsquerdo').innerHTML = '<p>Sem banners.</p>';
-        document.getElementById('bannerDireito').innerHTML = '<p>Sem banners.</p>';
+        document.getElementById('bannerEsquerdo').innerHTML = '<p>"No current banners. Advertise with us!"</p>';
+        document.getElementById('bannerDireito').innerHTML = '<p>"No current banners. Advertise with us!"</p>';
         return;
       }
 
