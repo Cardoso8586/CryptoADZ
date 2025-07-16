@@ -79,7 +79,7 @@ function calcularCustoEstimado() {
 
   custoEstimado = tokensPorView * maxVis;
 
-  infoPagamento.textContent = `💰 Estimated Cost:  ${custoEstimado.toFixed(2)} tokens`;
+  infoPagamento.textContent = `💰 Custo Estimado:  ${custoEstimado.toFixed(2)} tokens`;
 }
 
 formAnuncio.addEventListener('submit', async e => {
@@ -89,7 +89,7 @@ formAnuncio.addEventListener('submit', async e => {
   const maxVis = parseInt(maxVisInput.value, 10);
 
   if (isNaN(tempo) || isNaN(maxVis) || tempo <= 0 || maxVis <= 0) {
-    feedback.textContent = '⛔ Time and views must be valid.';
+    feedback.textContent = '⛔ Tempo e visualizações devem ser válidos.';
     feedback.style.color = 'red';
     return;
   }
@@ -105,7 +105,7 @@ formAnuncio.addEventListener('submit', async e => {
   const minimoExigido = limitesMinimos[tempo];
 
   if (minimoExigido && maxVis < minimoExigido) {
-    feedback.textContent = `⚠️The minimum number of views for ${tempo} seconds is ${minimoExigido}.`;
+    feedback.textContent = `⚠️ O número mínimo de visualizações para ${tempo} segundos é ${minimoExigido}.`;
     feedback.style.color = 'red';
     maxVisInput.focus();
     return;
@@ -134,7 +134,7 @@ formAnuncio.addEventListener('submit', async e => {
 
       // Ajuste: tratar erro específico de saldo insuficiente
       if (err.toLowerCase().includes('saldo insuficiente')) {
-        feedback.textContent = '⛔ Insufficient balance to register the advertisement. Please recharge your account.';
+        feedback.textContent = '⛔ Saldo insuficiente para cadastrar o anúncio. Por favor, recarregue sua conta.';
       } else {
         feedback.textContent = 'Erro: ' + err;
       }
@@ -146,20 +146,20 @@ formAnuncio.addEventListener('submit', async e => {
     const data = await response.json();
     console.log('Server response:', data);
 
-    feedback.textContent = '✅ Advertisement registered successfully!';
+    feedback.textContent = '✅ Anúncio cadastrado com sucesso!';
     feedback.style.color = 'green';
     esconderFormulario();
     limparFormulario();
-	registrarMissaoCadastrar();
+    registrarMissaoCadastrar();
     infoPagamento.textContent = '';
     atualizarSaldo();
-	
-	setInterval(() => {
-	  carregarQuantidadeDeAnuncios();
-	}, 3000); // Atualiza a cada 3 segundos
+    
+    setInterval(() => {
+      carregarQuantidadeDeAnuncios();
+    }, 3000); // Atualiza a cada 3 segundos
 
   } catch (error) {
-    feedback.textContent = 'Failed to save the advertisement: ' + error.message;
+    feedback.textContent = 'Falha ao salvar o anúncio: ' + error.message;
     feedback.style.color = 'red';
   }
 });

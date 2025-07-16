@@ -1,15 +1,15 @@
 // slogans.js
 const slogans = [
-  "CryptoADZ — Innovation starts here!",
-  "Unlock the power of cryptocurrencies!",
-  "Your crypto journey, our commitment.",
-  "Transform your digital investment!",
-  "Simplifying the crypto world for you.",
-  "Security, speed, and innovation.",
-  "Connecting you to the future of finance.",
-  "The crypto market in the palm of your hand.",
-  "Explore, invest, grow with CryptoADZ!",
-  "Crypto for everyone, easy and fast."
+  "CryptoADZ — A inovação começa aqui!",
+  "Desbloqueie o poder das criptomoedas!",
+  "Sua jornada cripto, nosso compromisso.",
+  "Transforme seu investimento digital!",
+  "Simplificando o mundo cripto para você.",
+  "Segurança, rapidez e inovação.",
+  "Conectando você ao futuro das finanças.",
+  "O mercado cripto na palma da sua mão.",
+  "Explore, invista, cresça com CryptoADZ!",
+  "Cripto para todos, fácil e rápido."
 ];
 
 let index = 0;

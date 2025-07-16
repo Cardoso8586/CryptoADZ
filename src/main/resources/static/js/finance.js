@@ -4,14 +4,14 @@ document.getElementById('formDeposito').addEventListener('submit', async functio
   const valor = parseFloat(document.getElementById('valorDeposito').value);
 
   if (isNaN(valor) || valor < 3) {
-    alert('Valor mínimo para depósito é 3 USDT');
+    alert('⚠️ Valor mínimo para depósito é 3 USDT');
     return;
   }
 
   const userId = getUsuarioLogadoId();
 
   if (!userId) {
-    alert('Usuário não identificado.');
+    alert('❌ Usuário não identificado.');
     return;
   }
 
@@ -29,7 +29,7 @@ document.getElementById('formDeposito').addEventListener('submit', async functio
 
     if (!response.ok) {
       const errorText = await response.text();
-      alert('Erro: ' + errorText);
+      alert('❌ Erro: ' + errorText);
       return;
     }
 
@@ -38,14 +38,18 @@ document.getElementById('formDeposito').addEventListener('submit', async functio
     document.getElementById('usdtAddress').innerText = data.endereco;
     document.getElementById('enderecoDeposito').style.display = 'block';
 
-    document.getElementById('mensagemAguardando').style.display = 'block';
-    document.getElementById('mensagemConfirmado').style.display = 'none';
+    // Mensagem aguardando com ícone
+    const msgAguardando = document.getElementById('mensagemAguardando');
+    msgAguardando.innerText = '⏳ Aguardando confirmação do depósito...';
+    msgAguardando.style.display = 'block';
+
+    const msgConfirmado = document.getElementById('mensagemConfirmado');
+    msgConfirmado.style.display = 'none';
 
     document.getElementById('valorDeposito').value = '';
 
     localStorage.setItem('abaAtiva', 'wallet');
 
-    // Inicia polling para verificar status
     const checkStatusInterval = setInterval(async () => {
       try {
         const statusResponse = await fetch(`/api/depositos/status?userId=${userId}`);
@@ -57,27 +61,27 @@ document.getElementById('formDeposito').addEventListener('submit', async functio
 
         if (statusData.status === 'confirmado') {
           clearInterval(checkStatusInterval);
-          document.getElementById('mensagemAguardando').style.display = 'none';
-          document.getElementById('mensagemConfirmado').style.display = 'block';
-		  
-          // reload após confirmação
+
+          msgAguardando.style.display = 'none';
+          msgConfirmado.innerText = '✅ Depósito confirmado com sucesso!';
+          msgConfirmado.style.display = 'block';
+
           location.reload();
         } else if (statusData.status === 'rejeitado') {
           clearInterval(checkStatusInterval);
-          document.getElementById('mensagemAguardando').style.display = 'none';
-          alert('Depósito rejeitado.');
-          // reload após rejeição, se quiser
+
+          msgAguardando.style.display = 'none';
+          alert('❌ Depósito rejeitado.');
+
           location.reload();
         }
-        // Se status for outro, continua aguardando...
       } catch (err) {
         clearInterval(checkStatusInterval);
-        //alert('Erro ao verificar status: ' + err.message);
+        // alert('Erro ao verificar status: ' + err.message);
       }
-    }, 30000); // checa a cada 5 segundos
+    }, 30000);
 
   } catch (error) {
-    alert('Erro ao solicitar depósito: ' + error.message);
+    alert('❌ Erro ao solicitar depósito: ' + error.message);
   }
 });
-

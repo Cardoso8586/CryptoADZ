@@ -13,47 +13,43 @@
 <div class="login-container">
     <h2>Login</h2>
     <form th:action="@{/login}" method="post" class="login-form">
-        <input type="text" name="username" placeholder="Username" required />
-        <input type="password" name="password" placeholder="Password" required />
+        <input type="text" name="username" placeholder="Usuário" required />
+        <input type="password" name="password" placeholder="Senha" required />
         
         <!-- CAPTCHA -->
         <div class="cf-turnstile" data-sitekey="0x4AAAAAABhDBlDrEgbq9kdW"></div>
         
-        <button type="submit">Sign In</button>
+        <button type="submit">Entrar</button>
     </form>
-    <p class="cadastro-link">Don't have an account? <a th:href="@{/cadastro}">Register here</a></p>
+    <p class="cadastro-link">Não tem uma conta? <a th:href="@{/cadastro}">Cadastre-se aqui</a></p>
 </div>
 
 <div class="dashboard-stats">
   <div class="total-users">
-    <i class="fas fa-users"></i> Active users <span id="quantidadeUsuarios"></span>
+    <i class="fas fa-users"></i> Usuários ativos <span id="quantidadeUsuarios"></span>
   </div>
 
   <div class="quantidade-anuncios">
-    <i class="fas fa-bullhorn"></i> Total Ads <span id="quantidadeAnuncios"></span>
+    <i class="fas fa-bullhorn"></i> Total de anúncios <span id="quantidadeAnuncios"></span>
   </div>
 
   <div class="quantidade-cliks">
-    <i class="fas fa-mouse-pointer"></i> Clicks <span id="quantidadeCliks"></span>
+    <i class="fas fa-mouse-pointer"></i> Cliques <span id="quantidadeCliks"></span>
   </div>
 </div>
 
-<p class="ptc-ads">ptc ads.<span id="quantidadeUsuarios">Click, view, and earn instantly.</span></p>
+<p class="ptc-ads">Anúncios PTC.<span id="quantidadeUsuarios">Clique, visualize e ganhe instantaneamente.</span></p>
 
 <link rel="stylesheet" href="/css/login.css">
-
-
 
 <script src="/js/atualizarQuantidadeUsuarios.js"></script>
 <script src="/js/atualizarQuantidadeAnuncios.js"></script>
 <script src="/js/quantidadeCliks.js"></script>
 <script src="/js/bloqueioAbas.js"></script>
 
-
 </body>
 
-
-
 </html>
+
 
 

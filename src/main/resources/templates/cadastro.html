@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Register</title>
+    <title>Cadastro</title>
     <link rel="stylesheet" href="/css/cadastro.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -11,32 +11,32 @@
 <body>
 
 <div class="container">
-    <h2>User Registration</h2>
+    <h2>Cadastro de Usuário</h2>
 
     <div th:if="${erro}" class="error">
         <p th:text="${erro}"></p>
     </div>
-<div th:if="${erroIp}" class="error">
-    <p th:text="${erroIp}"></p>
-</div>
-<div th:if="${erroCaptcha}" class="error">
-    <p th:text="${erroCaptcha}"></p>
-</div>
-<div th:if="${erroEmail}" class="error">
-    <p th:text="${erroEmail}"></p>
-</div>
-<div th:if="${erroSenha}" class="error">
-    <p th:text="${erroSenha}"></p>
-</div>
+    <div th:if="${erroIp}" class="error">
+        <p th:text="${erroIp}"></p>
+    </div>
+    <div th:if="${erroCaptcha}" class="error">
+        <p th:text="${erroCaptcha}"></p>
+    </div>
+    <div th:if="${erroEmail}" class="error">
+        <p th:text="${erroEmail}"></p>
+    </div>
+    <div th:if="${erroSenha}" class="error">
+        <p th:text="${erroSenha}"></p>
+    </div>
 
     <form th:action="@{/cadastro}" th:object="${usuario}" method="post" id="registerForm">
-        <label for="username">Username:</label>
+        <label for="username">Usuário:</label>
         <input type="text" th:field="*{username}" id="username" required>
 
         <label for="email">Email:</label>
         <input type="email" th:field="*{email}" id="email" required>
 
-        <label for="senha">Password:</label>
+        <label for="senha">Senha:</label>
         <input type="password" th:field="*{senha}" id="senha" required>
 
         <!-- Turnstile CAPTCHA -->
@@ -49,17 +49,15 @@
         <!-- Campo oculto para enviar o token do CAPTCHA -->
         <input type="hidden" id="captcha-response" name="response" />
 
-        <button type="submit" id="submitBtn" disabled>Register</button>
+        <button type="submit" id="submitBtn" disabled>Cadastrar</button>
     </form>
 
-    <p>Already have an account? <a th:href="@{/login}">Login here</a></p>
+    <p>Já tem uma conta? <a th:href="@{/login}">Faça login aqui</a></p>
 </div>
 
 <script src="/js/Register.js"></script>
 <script src="/js/bloqueioAbas.js"></script>
 
-
 </body>
 </html>
-
 

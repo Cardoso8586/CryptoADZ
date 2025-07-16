@@ -4,6 +4,12 @@
 
 <head>
   <title>CryptoAdz</title>
+  <link rel="icon" href="/icones/adz-token.png" type="image/png">
+  <link rel="icon" href="/icones/adz-token-16.png" sizes="16x16" type="image/png">
+  <link rel="icon" href="/icones/adz-token-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="/icones/adz-token-48.png" sizes="48x48" type="image/png">
+  
+  
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
  <meta name="user-id" th:content="${usuario.id}" />
   <!-- CSS Styles -->
@@ -25,40 +31,39 @@
 
   
 <div class="container">
-  <!-- ========== SIDEBAR MENU ========== -->
-  <nav class="sidebar">
-    <ul>
-     <li><a href="#" id="btnBanners">🚀 Advertisers</a></li>
-      <li><a href="#" id="btnVerAnuncios">👁 View Ads</a></li>
-      <li><a href="#" id="btnAnunciar">📢 Advertise</a></li>
-      <li><a href="#" id="btnRanking">👤 Ranking</a></li>
-      <li><a href="#" id="btnSwap">🔄 Swap</a></li>
-      <li><a href="#" id="btnWallet">💼 Wallet</a></li> <!-- New section -->
-      <li><a href="#" id="btnMissoes">🎯 Missions</a></li>
-    <li><a href="#" id="btnAvisos">🔔 Notices </a></li> 
-
-
-    </ul>
+ 
+ <!-- ========== SIDEBAR MENU ========== -->
+<nav class="sidebar">
+  <ul>
+    <li><a href="#" id="btnBanners">🚀 Anunciantes</a></li>
+    <li><a href="#" id="btnVerAnuncios">👁 Ver Anúncios</a></li>
+    <li><a href="#" id="btnAnunciar">📢 Anunciar</a></li>
+    <li><a href="#" id="btnRanking">👤 Ranking</a></li>
+    <li><a href="#" id="btnSwap">🔄 Troca</a></li>
+    <li><a href="#" id="btnWallet">💼 Carteira</a></li> <!-- Nova seção -->
+    <li><a href="#" id="btnMissoes">🎯 Missões</a></li>
+    <li><a href="#" id="btnAvisos">🔔 Avisos</a></li>
+  </ul>
 
     <!-- Logout button -->
     <form th:action="@{/logout}" method="post" style="margin: 0;">
-      <button class="logout">🚪 Logout</button>
+      <button class="logout">🚪 Encerrar sessão</button>
     </form>
   </nav>
 
-  <!-- ========== MAIN CONTENT ========== -->
+<!-- ========== CONTEÚDO PRINCIPAL ========== -->
 <main class="main-content-fixed">
 
     <p class="crypto-adz">CryptoADZ!</p>
-    <p class="slogan-crypto-adz">Every click earns ADZ!</p>
+    <p class="slogan-crypto-adz">Cada clique ganha ADZ!</p>
 
     <h1 class="saudacao-usuario">
-      <span id="saudacao" th:text="${saudacao}">Hello</span>,
-      <span id="nomeUsuario" th:text="${usuario.username}">User</span>
+      <span id="saudacao" th:text="${saudacao}">Olá</span>,
+      <span id="nomeUsuario" th:text="${usuario.username}">Usuário</span>
     </h1>
 
     <p class="token-info">
-      <img src="/icones/adz-token.png" alt="ADZ Token"> 
+      <img src="/icones/adz-token.png" alt="Token ADZ"> 
       <strong id="saldoTokens" th:text="${saldoTokens}">0.00</strong>
     </p>
 
@@ -70,53 +75,52 @@
 </main>
 
 
-  <!-- ========== AD LISTING ========== -->
-  <section id="VerAnuncios" class="conteudoPrincipal">
-    <p class="announcement-board">Announcement Board!</p>
 
+  <!-- ========== LISTAGEM DE ANÚNCIOS ========== -->
+<section id="VerAnuncios" class="conteudoPrincipal">
+  <p class="announcement-board">Quadro de Anúncios!</p>
 
-    <div>
-      <ul>
-        <li th:each="anuncio : ${anuncios}" class="anuncio-card">
-          <h3 th:text="${anuncio.titulo}">Title</h3>
-          <p th:text="${anuncio.descricao}">Description</p>
+  <div>
+    <ul>
+      <li th:each="anuncio : ${anuncios}" class="anuncio-card">
+        <h3 th:text="${anuncio.titulo}">Título</h3>
+        <p th:text="${anuncio.descricao}">Descrição</p>
 
-          <!-- Value the user will earn -->
-          <p class="token-info">
-            You will earn
-            <span class="token-amount" th:text="${#numbers.formatDecimal(anuncio.tokensPorVisualizacao, 1, 'POINT', 2, 'POINT')}"></span>
-             <img src="/icones/adz-token.png" alt="ADZ Token"> 
-          </p>
+        <!-- Valor que o usuário irá ganhar -->
+        <p class="token-info">
+          Você ganhará
+          <span class="token-amount" th:text="${#numbers.formatDecimal(anuncio.tokensPorVisualizacao, 1, 'POINT', 2, 'POINT')}"></span>
+          <img src="/icones/adz-token.png" alt="Token ADZ"> 
+        </p>
 
-          <!-- View time -->
-          <p id="contador-" th:attr="id=${'contador-' + anuncio.id}">
-            Time to wait: <span th:text="${anuncio.tempoVisualizacao != null ? anuncio.tempoVisualizacao : 30}"></span> seconds
-          </p>
+        <!-- Tempo de visualização -->
+        <p id="contador-" th:attr="id=${'contador-' + anuncio.id}">
+          Tempo de espera: <span th:text="${anuncio.tempoVisualizacao != null ? anuncio.tempoVisualizacao : 30}"></span> segundos
+        </p>
 
-          <a href="#" th:attr="data-id=${anuncio.id}, data-url=${anuncio.url}, data-username=${usuario.username}" class="ver-anuncio" target="_blank" rel="noopener noreferrer"> Click here to view </a>
-        </li>
-      </ul>
+        <a href="#" th:attr="data-id=${anuncio.id}, data-url=${anuncio.url}, data-username=${usuario.username}" class="ver-anuncio" target="_blank" rel="noopener noreferrer"> Clique aqui para ver </a>
+      </li>
+    </ul>
 
-
-      <div class="paginacao">
-        <a th:href="@{'/dashboard?page=' + ${paginaAnterior}}" th:if="${paginaAtual > 0}">Previous</a>
-        <a th:href="@{'/dashboard?page=' + ${paginaProxima}}" th:if="${paginaAtual < totalPaginas - 1}">Next</a>
-        <p>Page <span th:text="${paginaAtual + 1}"></span> of <span th:text="${totalPaginas}"></span></p>
-      </div>
+    <div class="paginacao">
+      <a th:href="@{'/dashboard?page=' + ${paginaAnterior}}" th:if="${paginaAtual > 0}">Anterior</a>
+      <a th:href="@{'/dashboard?page=' + ${paginaProxima}}" th:if="${paginaAtual < totalPaginas - 1}">Próximo</a>
+      <p>Página <span th:text="${paginaAtual + 1}"></span> de <span th:text="${totalPaginas}"></span></p>
     </div>
-    
+  </div>
+</section>
 
-  </section>
 
-  <!-- ========== AD CREATION SECTION ========== -->
-  <section id="Anunciar" style="display:none; margin-top:20px;">
-    <ul></ul>
- <p class="advertisement-call">Make Your Best Advertisement!</p>
+<!-- ========== SEÇÃO DE CRIAÇÃO DE ANÚNCIOS ========== -->
+<section id="Anunciar" style="display:none; margin-top:20px;">
+  <ul></ul>
+  <p class="advertisement-call">Faça Seu Melhor Anúncio!</p>
 
-<button id="btnMostrarForm">Create New Ad</button>
-<button id="btnMostrarFormBanner">Create New Banner</button>
+  <button id="btnMostrarForm">Criar Novo Anúncio</button>
+  <button id="btnMostrarFormBanner">Criar Novo Banner</button>
 
-<p>You have created <span id="quantidadeSpan">0</span> ads.</p>
+  <p>Você criou <span id="quantidadeSpan">0</span> anúncios.</p>
+
   <script>
     async function carregarQuantidadeDeAnuncios() {
       console.log("Função chamada");
@@ -138,36 +142,36 @@
 
 
 
-    <form id="formAnuncio" style="display:none; margin-top:10px;">
-      <input type="hidden" id="anuncioId" name="anuncioId" value="">
+   <form id="formAnuncio" style="display:none; margin-top:10px;">
+  <input type="hidden" id="anuncioId" name="anuncioId" value="">
 
-      <label for="titulo">Title:</label>
-      <input type="text" id="titulo" name="titulo" required>
+  <label for="titulo">Título:</label>
+  <input type="text" id="titulo" name="titulo" required>
 
-      <label for="descricao">Description:</label>
-      <textarea id="descricao" name="descricao" rows="4" required></textarea>
+  <label for="descricao">Descrição:</label>
+  <textarea id="descricao" name="descricao" rows="4" required></textarea>
 
-      <label for="url">URL:</label>
-      <input type="url" id="url" name="url" required>
+  <label for="url">URL:</label>
+  <input type="url" id="url" name="url" required>
 
-      <label for="tempoVisualizacao">View Time (seconds):</label>
-      <select id="tempoVisualizacao" name="tempoVisualizacao" required>
-        <option value="">Select...</option>
-        <option value="10">10 seconds</option>
-        <option value="20">20 seconds</option>
-        <option value="30">30 seconds</option>
-        <option value="45">45 seconds</option>
-      </select>
+  <label for="tempoVisualizacao">Tempo de Visualização (segundos):</label>
+  <select id="tempoVisualizacao" name="tempoVisualizacao" required>
+    <option value="">Selecione...</option>
+    <option value="10">10 segundos</option>
+    <option value="20">20 segundos</option>
+    <option value="30">30 segundos</option>
+    <option value="45">45 segundos</option>
+  </select>
 
-      <label for="maxVisualizacoes">Max Views:</label>
-      <input type="number" id="maxVisualizacoes" name="maxVisualizacoes" min="1" required>
+  <label for="maxVisualizacoes">Máximo de Visualizações:</label>
+  <input type="number" id="maxVisualizacoes" name="maxVisualizacoes" min="1" required>
 
-      <!-- DISPLAY PAYMENT CALCULATION -->
-      <div id="infoPagamento" style="margin-top:10px; font-weight:bold; color:blue;"></div>
-       
-      <button type="submit">Submit Ad</button>
-      <button type="button" id="btnCancelar">Cancel</button>
-    </form>
+  <!-- EXIBIR CÁLCULO DE PAGAMENTO -->
+  <div id="infoPagamento" style="margin-top:10px; font-weight:bold; color:blue;"></div>
+
+  <button type="submit">Enviar Anúncio</button>
+  <button type="button" id="btnCancelar">Cancelar</button>
+</form>
 
 <section id="upload-banner">
     <h2>📤 Enviar Novo Banner</h2>
@@ -243,22 +247,22 @@
 
 
 <!-- ========== WALLET SECTION ========== -->
-<!-- ========== WALLET SECTION ========== -->
+<!-- ========== SEÇÃO CARTEIRA ========== -->
 <div id="wallet-container">
-    <h2>My Wallet</h2>
+    <h2>Minha Carteira</h2>
 
     <div class="wallet-tabs">
-      <button class="wallet-tab" data-target="depositos">Deposits</button>
-      <button class="wallet-tab" data-target="retiradas">Withdrawals</button>
+      <button class="wallet-tab" data-target="depositos">Depósitos</button>
+      <button class="wallet-tab" data-target="retiradas">Retiradas</button>
     </div>
 
     <div class="wallet-content">
 
-      <!-- Seção de Depósitos -->
+      <!-- Seção de Depósito -->
       <div class="wallet-section" id="depositos" style="display: none;">
         <h3>
           <img src="icones/tether-usdt-logo.png?v=032" alt="USDT" style="width: 20px; vertical-align: middle; margin-right: 5px;">
-          Deposits USDT (TRC20)
+          Depósitos USDT (TRC20)
         </h3>
 
         <form id="formDeposito">
@@ -273,62 +277,59 @@
         </div>
 
         <div id="statusDeposito" style="margin-top: 10px;"></div>
-        <div id="mensagemAguardando" style="display: none;">Aguardando confirmação...</div>
-        <div id="mensagemConfirmado" style="display: none;">Depósito confirmado!</div>
+        <div id="mensagemAguardando" style="display: none;">⏳ Aguardando confirmação...</div>
+        <div id="mensagemConfirmado" style="display: none;">✅ Solicitar um novo Depósito!</div>
+
 
         <div id="historicoDepositos"></div>
       </div>
 
-      <!-- Seção de Retiradas -->
+      <!-- Seção de Retirada -->
       <div class="wallet-section" id="retiradas" style="display: none;">
         <h3>
           <img src="icones/tether-usdt-logo.png?v=032" alt="USDT" style="width: 20px; vertical-align: middle; margin-right: 5px;">
-          Withdraw (USDT)
+          Retiradas (USDT)
         </h3>
 
         <form id="formRetirada">
-          <label for="valorRetirada">Amount (USDT):</label>
+          <label for="valorRetirada">Valor (USDT):</label>
           <input type="number" id="valorRetirada" required step="0.01" min="0">
-          <button type="submit">Withdraw</button>
+          <button type="submit">Retirar</button>
         </form>
 
         <div id="historicoRetiradas"></div>
       </div>
 
     </div> <!-- Fim de wallet-content -->
- 
+
 </div>
+
 
 
   
 <section id="secaoMissoes" style="display: none;">
-  <h2>🎯 Daily Missions</h2>
+  <h2>🎯 Missões Diárias</h2>
   <ul>
     <li>
-      <strong>📺 Watch ads, and earn!:<span id="recompensaMissaorAssistir"><img src="/icones/adz-token.png" alt="ADZ Token"> </span></strong>
+      <strong>📺 Assista aos anúncios e ganhe!:<span id="recompensaMissaorAssistir"><img src="/icones/adz-token.png" alt="ADZ Token"> </span></strong>
       <span id="statusAssistir">0/20</span>
-      <button id="btnColetarAssistir" style="display:none;">Claim</button>
+      <button id="btnColetarAssistir" style="display:none;">Resgatar</button>
     </li>
     
      <li>
 <strong>
-  🎬 Watch banners, up to <span id="qtdeBannersDiferentes"></span> times each, and earn!
+  🎬 Assista aos banners, até <span id="qtdeBannersDiferentes"></span> vezes cada, e ganhe!
   <span id="recompensaMissaoHoje"><img src="/icones/adz-token.png" alt="ADZ Token"> </span></strong>
 
   <span id="statusBanners">0/15</span>
-  <button id="btnColetarBanners" style="display:none;">Claim</button>
+  <button id="btnColetarBanners" style="display:none;">Resgatar</button>
 </li>
     
     <li>
-      <strong>📢 Register 1 ad, and earn! <span id="recompensaMissaorRegister"><img src="/icones/adz-token.png" alt="ADZ Token"> </span> </strong>
+      <strong>📢 Cadastre 1 anúncio e ganhe! <span id="recompensaMissaorRegister"><img src="/icones/adz-token.png" alt="ADZ Token"> </span> </strong>
       <span id="statusCadastro">1</span>
-      <button id="btnColetarCadastrar" style="display:none;">Claim</button>
+      <button id="btnColetarCadastrar" style="display:none;">Resgatar</button>
     </li>
-    
-    
-
-
-
   </ul>
   <p id="mensagemMissao"></p>
 </section>
@@ -336,23 +337,25 @@
 
 
 
+
 <!-- Seção Avisos -->
 <div id="Avisos" style="display:none; padding: 20px;">
-  <h2>🎯Notices</h2>
+  <h2>🎯 Avisos</h2>
   <div id="containerAvisos" class="container-avisos">
     <!-- Cards de avisos aparecerão aqui -->
   </div>
 </div>
 
 
-<!-- Announcement Card on Home -->
+<!-- Cartão de Avisos na Home -->
 <div id="cardAvisos" class="card-avisos">
   <div class="card-avisos-header">
-    <h3>📢 Notices</h3>
-    <h6>Details</h6>
+    <h3>📢 Avisos</h3>
+    <h6>Detalhes</h6>
   </div>
   <p id="textoAvisos"></p>
 </div>
+
 
 
 <!-- Modal Bônus Diário -->
@@ -366,14 +369,14 @@
 </div>
 
 
-  <!-- 🔥 Area de Anúncios Patrocinados -->
+<!-- 🔥 Área de Anúncios Patrocinados -->
 <section id="bannersPublicitarios">
-    <h2>🚀 Advertising Area</h2>
+    <h2>🚀 Área de Publicidade</h2>
     <div id="bannerEsquerdo" style="width:48%; float:left;"></div>
-<div id="bannerDireito" style="width:48%; float:right;"></div>
-<div style="clear:both;"></div>
-    
+    <div id="bannerDireito" style="width:48%; float:right;"></div>
+    <div style="clear:both;"></div>
 </section>
+
 
 
 
@@ -386,7 +389,7 @@
 </div>
 
 
-
+   <!-- <script src="/js/bloqueioAbas.js" defer></script> -->
 
 
   </main>
@@ -408,7 +411,6 @@
 <script src="/js/bannersModal.js" defer></script> 
 <script src="/js/bonusModal.js" defer></script>
 <script src="/js/missaoBanner.js" defer></script>  
-<script src="/js/bloqueioAbas.js" defer></script>
 <script src="/js/finance.js" defer></script>   
 <script src="/js/historicoDepositos.js" defer></script>
 

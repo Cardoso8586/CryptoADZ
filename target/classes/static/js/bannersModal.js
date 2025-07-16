@@ -10,12 +10,12 @@ document.getElementById('btnBanners').addEventListener('click', () => {
 
       banners = await response.json();
       console.log('Banners recebidos:', banners);
+	  if (banners.length === 0) {
+	    document.getElementById('bannerEsquerdo').innerHTML = '<p>"Nenhum banner disponível no momento. Anuncie conosco!"</p>';
+	    document.getElementById('bannerDireito').innerHTML = '<p>"Nenhum banner disponível no momento. Anuncie conosco!"</p>';
+	    return;
+	  }
 
-      if (banners.length === 0) {
-        document.getElementById('bannerEsquerdo').innerHTML = '<p>"No current banners. Advertise with us!"</p>';
-        document.getElementById('bannerDireito').innerHTML = '<p>"No current banners. Advertise with us!"</p>';
-        return;
-      }
 
       exibirBannerEsquerdo();
       exibirBannerDireito();

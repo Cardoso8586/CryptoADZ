@@ -13,15 +13,16 @@ CONTAINER.parentElement.appendChild(PAGINATION);
 
 // Substituições aleatórias para o texto "Expira em"
 const nomes = [
-  '🔥 Sponsored',
-  '🚀 Advertising',
-  '💎 Premium Ad',
-  '📢 Promotion',
-  '⭐ Special Offer',
-  '🧠 Recommended',
-  '🏆 Featured',
-  '✨ Suggestion of the Day'
+  '🔥 Patrocinado',
+  '🚀 Publicidade',
+  '💎 Anúncio Premium',
+  '📢 Promoção',
+  '⭐ Oferta Especial',
+  '🧠 Recomendado',
+  '🏆 Destaque',
+  '✨ Sugestão do Dia'
 ];
+
 
 
 // Observador para alterar os textos dinamicamente após inserção
@@ -44,7 +45,8 @@ fetch(API_URL)
   .then(data => {
     if (!Array.isArray(data)) throw new Error('Formato inválido retornado da API.');
     if (data.length === 0) {
-      CONTAINER.innerHTML = '<p>"No current banners. Advertise with us!"</p>';
+		CONTAINER.innerHTML = '<p>"Sem banners no momento. Anuncie conosco!"</p>';
+
       return;
     }
 
