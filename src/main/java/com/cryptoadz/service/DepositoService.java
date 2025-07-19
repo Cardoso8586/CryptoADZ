@@ -29,6 +29,7 @@ import jakarta.transaction.Transactional;
 public class DepositoService {
 	@Value("${tron.api.key}")
 	private String tronApiKey ;
+	
     @Value("${deposito.endereco.fixo}")
     private String enderecoFixo; // endereço fixo da carteira
 
@@ -134,6 +135,64 @@ public class DepositoService {
                 for (int i = 0; i < transacoes.length(); i++) {
                     JSONObject tx = transacoes.getJSONObject(i);
 
+                    // Confere endereço de destino
+                    String to = tx.getString("to");
+                    if (!to.equalsIgnoreCase(endereco)) continue;
+
+                    // Confere status de sucesso da transação
+                    JSONArray contractResult = tx.optJSONArray("contract_result");
+                    if (contractResult == null || contractResult.length() == 0 || !"SUCCESS".equalsIgnoreCase(contractResult.getString(0))) {
+                        continue;
+                    }
+
+                    // Confere token e valor
+                    JSONObject tokenInfo = tx.optJSONObject("token_info");
+                    if (tokenInfo == null || !"USDT".equalsIgnoreCase(tokenInfo.optString("symbol"))) continue;
+
+                    BigDecimal valorUSDT = new BigDecimal(tx.getString("value")).divide(BigDecimal.valueOf(1_000_000));
+                    if (valorUSDT.compareTo(valorEsperado) < 0) continue;
+
+                    // Confere se transação já foi usada para evitar duplicidade
+                    String txId = tx.getString("transaction_id");
+                    boolean jaProcessada = depositoPendenteRepository.existsByTransactionId(txId) 
+                                            || depositoHistoricoRepository.existsByTransactionId(txId);
+                    if (jaProcessada) continue;
+
+                    // Tudo certo: retorna o id da transação para confirmação
+                    return Optional.of(txId);
+                }
+            }
+
+        } catch (Exception e) {
+            System.err.println("Erro ao verificar depósito na TRON: " + e.getMessage());
+        }
+
+        return Optional.empty();
+    }
+
+    
+    
+   /** public Optional<String> verificarDepositoNaTron(DepositoPendente deposito) {
+        try {
+            String endereco = deposito.getEnderecoDeposito();
+            BigDecimal valorEsperado = deposito.getValorEsperado();
+            String url = "https://api.trongrid.io/v1/accounts/" + endereco + "/transactions/trc20?limit=20";
+            HttpClient client = HttpClient.newHttpClient();
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .header("TRON-PRO-API-KEY", tronApiKey)
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                JSONObject json = new JSONObject(response.body());
+                JSONArray transacoes = json.getJSONArray("data");
+
+                for (int i = 0; i < transacoes.length(); i++) {
+                    JSONObject tx = transacoes.getJSONObject(i);
+
                     String to = tx.getString("to");
                     if (!to.equalsIgnoreCase(endereco)) continue;
 
@@ -153,48 +212,7 @@ public class DepositoService {
 
         return Optional.empty();
     }
-
-
- // Substituir o método simulado por uma integração real com a API da FaucetPay ou TRON
-    
-   /** private boolean verificarDepositoNaBlockchain(DepositoPendente deposito) {
-        try {
-            // Dados necessários
-            String walletAddress = deposito.getEnderecoDeposito();
-            BigDecimal valorEsperado = deposito.getValorEsperado();
-
-            // Endpoint da FaucetPay (exemplo) - você deve substituir pela documentação oficial da FaucetPay
-            String apiUrl = "https://faucetpay.io/api/check_transaction"; // Substitua pela URL correta
-
-            // Montar request
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(apiUrl))
-                .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer SUA_CHAVE_API") // substitua por sua chave real
-                .POST(HttpRequest.BodyPublishers.ofString("""
-                {
-                    \"address\": \"" + walletAddress + "\",
-                    \"amount\": " + valorEsperado + "
-                }
-                """))
-                .build();
-
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            if (response.statusCode() == 200) {
-                // Parse o JSON (usando biblioteca como Jackson ou org.json)
-                String responseBody = response.body();
-                JSONObject json = new JSONObject(responseBody);
-
-                boolean encontrado = json.optBoolean("found", false);
-                return encontrado;
-            }
-        } catch (Exception e) {
-            System.err.println("Erro ao verificar na blockchain: " + e.getMessage());
-        }
-
-        return false;
-    }
 */
+
+
 }

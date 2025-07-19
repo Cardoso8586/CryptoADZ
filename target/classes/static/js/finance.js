@@ -36,10 +36,9 @@ document.getElementById('formDeposito').addEventListener('submit', async functio
     const data = await response.json();
 
     document.getElementById('usdtAddress').innerText = data.endereco;
-	document.getElementById('depositValue').innerText = valor.toFixed(2);
-
     document.getElementById('enderecoDeposito').style.display = 'block';
-
+    document.getElementById('depositValue').innerText = valor.toFixed(2);
+	
     // Mensagem aguardando com ícone
     const msgAguardando = document.getElementById('mensagemAguardando');
     msgAguardando.innerText = '⏳ Aguardando confirmação do depósito...';

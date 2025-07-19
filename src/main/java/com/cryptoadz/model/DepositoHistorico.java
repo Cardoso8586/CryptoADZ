@@ -14,6 +14,9 @@ public class DepositoHistorico {
     @SequenceGenerator(name = "deposito_historico_seq", sequenceName = "deposito_historico_seq", allocationSize = 1)
     private Long id;
 
+    @Column(name = "id_transacao", nullable = false, unique = true)
+    private String transactionId;
+
 
     @Column(name = "data_deposito", nullable = false)
     private LocalDateTime dataDeposito;
@@ -68,5 +71,14 @@ public class DepositoHistorico {
     public void setValor(BigDecimal valor) {
         this.valor = valor;
     }
+    
+    public String getIdTransacao() {
+        return getIdTransacao();
+    }
+
+    public void setIdTransacao(String idTransacao) {
+        this.transactionId = idTransacao;
+    }
+
 }
 
