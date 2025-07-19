@@ -2,13 +2,21 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Login</title>
-    <link rel="stylesheet" href="/css/dashboard.css">
+    
+    <link rel="stylesheet" href="/css/login.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Turnstile script -->
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
+
+ <p class="crypto-adz-login">
+<img src="./icones/cryptoAdzLogin.png" alt="CryptoADZ Login" />
+</p>
+
+<p class="slogan-crypto-adz-login">Cada clique ganha ADZ!</p>
+
 
 <div class="login-container">
     <h2>Login</h2>
@@ -17,8 +25,8 @@
         <input type="password" name="password" placeholder="Senha" required />
         
         <!-- CAPTCHA -->
-        <div class="cf-turnstile" data-sitekey="0x4AAAAAABhDBlDrEgbq9kdW"></div>
-        
+       <div class="cf-turnstile" data-sitekey="0x4AAAAAABhDBlDrEgbq9kdW" data-callback="onTurnstileSuccess"></div>
+
         <button type="submit">Entrar</button>
     </form>
     <p class="cadastro-link">Não tem uma conta? <a th:href="@{/cadastro}">Cadastre-se aqui</a></p>
@@ -38,14 +46,16 @@
   </div>
 </div>
 
+
 <p class="ptc-ads">Anúncios PTC.<span id="quantidadeUsuarios">Clique, visualize e ganhe instantaneamente.</span></p>
 
-<link rel="stylesheet" href="/css/login.css">
+
 
 <script src="/js/atualizarQuantidadeUsuarios.js"></script>
 <script src="/js/atualizarQuantidadeAnuncios.js"></script>
 <script src="/js/quantidadeCliks.js"></script>
 <script src="/js/bloqueioAbas.js"></script>
+<script src="/js/slogans.js" defer></script>
 
 </body>
 

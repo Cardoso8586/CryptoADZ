@@ -37,16 +37,29 @@
       <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
 
+<dependency>
+  <groupId>io.github.tronprotocol</groupId>
+  <artifactId>trident</artifactId>
+  <version>0.10.0</version> <!-- versão mais recente disponível -->
+</dependency>
+
+
+
+
     <!-- Spring Security -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
+    
+    
 <dependency>
   <groupId>org.json</groupId>
   <artifactId>json</artifactId>
   <version>20240303</version>
 </dependency>
+
+
 
     <!-- Spring Data JPA -->
     <dependency>
@@ -116,7 +129,48 @@
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
     </dependency>
+    
+    
+      <!-- Criptografia secp256k1 / ECDSA -->
+    <dependency>
+        <groupId>org.bouncycastle</groupId>
+        <artifactId>bcprov-jdk15on</artifactId>
+        <version>1.70</version>
+    </dependency>
+
+  <!-- JSON -->
+    <dependency>
+        <groupId>org.json</groupId>
+        <artifactId>json</artifactId>
+        <version>20240303</version>
+    </dependency>
+
+    <!-- BouncyCastle para assinatura ECDSA -->
+    <dependency>
+        <groupId>org.bouncycastle</groupId>
+        <artifactId>bcprov-jdk15to18</artifactId>
+        <version>1.77</version>
+    </dependency>
+    
+  
+
+  
+    
+   
+    
   </dependencies>
+ 
+   
+  <repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+
+
+
+
 
   <build>
     <plugins>

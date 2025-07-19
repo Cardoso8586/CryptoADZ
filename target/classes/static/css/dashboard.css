@@ -239,30 +239,25 @@ body {
   margin-right: 6px;  /* espaço entre ícone e texto */
 }
 
-.crypto-adz {
-  position: absolute;
-  top: 1rem;  /* Usar unidade relativa */
-  left: 70%;
-  transform: translateX(-50%);
-  font-size: clamp(2.5rem, 6vw, 4rem); /* tamanho responsivo */
-  font-weight: 900;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(90deg, #00c9a7, #00ffe0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  z-index: 10;
-  pointer-events: none;
-  margin: 0;
-  animation: pulse 2.5s infinite;
+
+.crypto-adz img {
+  position: fixed;
+  top: -60px; /* <- Aqui está o ajuste para subir */
+  left: 60%;
+ 
+  width: 240px;
+  height: auto;
+  display: block;
+  
 }
 
+
 .slogan-crypto-adz {
-  position: absolute;
-  top: 5rem; /* ajusta abaixo do logo */
+  position: fixed;
+  top: 70px; /* antes era 70px */
   left: 70%;
   transform: translateX(-50%);
-  font-size: clamp(1rem, 3vw, 1.25rem);
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
   color: #ffffffcc;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
@@ -272,20 +267,12 @@ body {
   letter-spacing: 0.5px;
 }
 
-/* Ajuste para telas pequenas */
+
+/* Responsividade */
 @media (max-width: 600px) {
   .crypto-adz {
-    left: 50%;
-    top: 0.5rem;
+    top: 0.2rem;
   }
-  .slogan-crypto-adz {
-    left: 50%;
-    top: 3rem;
-    text-align: center;
-    width: 90vw;
-  }
+
+ 
 }
-
-
-
-

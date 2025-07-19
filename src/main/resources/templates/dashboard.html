@@ -54,8 +54,6 @@
 <!-- ========== CONTEÚDO PRINCIPAL ========== -->
 <main class="main-content-fixed">
 
-    <p class="crypto-adz">CryptoADZ!</p>
-    <p class="slogan-crypto-adz">Cada clique ganha ADZ!</p>
 
     <h1 class="saudacao-usuario">
       <span id="saudacao" th:text="${saudacao}">Olá</span>,
@@ -63,14 +61,22 @@
     </h1>
 
     <p class="token-info">
-      <img src="/icones/adz-token.png" alt="Token ADZ"> 
+      <img src="/icones/adz-token.png" alt="Token ADZ" title="Saldo em ADZ" aria-label="Token ADZ">
+
+      
       <strong id="saldoTokens" th:text="${saldoTokens}">0.00</strong>
     </p>
 
     <p class="token-info">
-      <img src="icones/tether-usdt-logo.png?v=032" alt="USDT" style="width: 45px; vertical-align: middle; margin-right: 0px;">
+   <img src="icones/tether-usdt-logo.png?v=032" alt="USDT" title="Saldo em USDT" aria-label="Token USDT">
       <strong id="saldoUsdt" th:text="${saldoUsdt}">0.00</strong>
     </p>
+
+   <p class="crypto-adz">
+  <img src="/icones/cryptoAdz.png?v=032" alt="CryptoADZ Logo">
+</p>
+ 
+    <p class="slogan-crypto-adz">Cada clique ganha ADZ!</p>
 
 </main>
 
@@ -266,15 +272,15 @@
         </h3>
 
         <form id="formDeposito">
-          <label for="valorDeposito">Valor (mínimo 3 USDT):</label>
+          <label for="valorDeposito">Valor mínimo 3 USDT:</label>
           <input type="number" id="valorDeposito" min="3" step="0.01" required>
           <button type="submit">Solicitar Depósito</button>
         </form>
+<div id="enderecoDeposito" style="display: none; margin-top: 10px;">
+  Envie o valor de, <span id="depositValue" style="color: #00D1FF; font-size: 22px; font-weight: bold;"></span> USDT, para o endereço:
+  <code id="usdtAddress" style="font-size: 2.0em; color: #00D1FF; font-weight: bold;"></code>
+</div>
 
-        <div id="enderecoDeposito" style="display: none; margin-top: 10px;">
-          Envie o valor para o seguinte endereço USDT:
-          <code id="usdtAddress"></code>
-        </div>
 
         <div id="statusDeposito" style="margin-top: 10px;"></div>
         <div id="mensagemAguardando" style="display: none;">⏳ Aguardando confirmação...</div>
@@ -290,19 +296,35 @@
           <img src="icones/tether-usdt-logo.png?v=032" alt="USDT" style="width: 20px; vertical-align: middle; margin-right: 5px;">
           Retiradas (USDT)
         </h3>
+<form id="formRetirada">
+  <label for="carteiraDestino">Endereço da Carteira (TRC20):</label>
+  <input type="text" id="enderecoDestino" placeholder="Digite o endereço da carteira" required>
 
-        <form id="formRetirada">
-          <label for="valorRetirada">Valor (USDT):</label>
-          <input type="number" id="valorRetirada" required step="0.01" min="0">
-          <button type="submit">Retirar</button>
-        </form>
+  <label for="valorRetirada">Valor Mínimo 6 (USDT):</label>
+  <input type="number" id="valorRetirada" required step="0.01" min="6" placeholder="Valor a retirar" style="font-size: 24px; font-weight: bold;">
 
-        <div id="historicoRetiradas"></div>
+  <!-- Aviso da taxa -->
+<div id="avisoTaxa" style="margin-top: 10px; color: white; font-size: 0.8em; font-weight: bold;">
+  ⚠️ Uma taxa será aplicada ao valor solicitado para cobrir custos de rede.<br>
+  Você receberá <span id="valorLiquidoPreview" style="color: #00D1FF; font-size: 22px; font-weight: bold;">???</span> USDT
+  <div id="mensagemErroSaque" style="color: red; display: none; margin-top: 10px;"></div>
+</div>
+
+
+  <button type="submit">Retirar</button>
+</form>
+
+
+         <div id="historicoRetiradas"></div>
+         <div id="mensagemAguardandoSaque" style="display: none; color: orange;"></div>
+         <div id="mensagemConfirmadoSaque" style="display: none; color: green;"></div>
+     
       </div>
 
     </div> <!-- Fim de wallet-content -->
 
 </div>
+
 
 
 
@@ -413,8 +435,8 @@
 <script src="/js/missaoBanner.js" defer></script>  
 <script src="/js/finance.js" defer></script>   
 <script src="/js/historicoDepositos.js" defer></script>
-
-
+<script src="/js/historicoSaques.js" defer></script>  
+<script src="/js/formRetirada.js" defer></script>
 
 </body>
 </html>

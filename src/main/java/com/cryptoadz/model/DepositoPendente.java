@@ -18,13 +18,27 @@ public class DepositoPendente {
     private BigDecimal valorEsperado;
     private boolean confirmado;
 
-    @Column(name = "data_solicitacao")
+ 
+    @Column(name = "data_solicitacao", nullable = false)
     private LocalDateTime dataSolicitacao;
 
     private String enderecoDeposito;
 
     @Column(nullable = false)
     private String status = "PENDENTE"; 
+    
+    @Column(name = "transaction_id")
+    private String transactionId;
+
+    // ... getters e setters
+
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
     // Getters e Setters
 
     public Long getId() { return id; }
@@ -52,5 +66,6 @@ public class DepositoPendente {
     public void setStatus(String status) {
         this.status = status;
     }
+	
 }
 

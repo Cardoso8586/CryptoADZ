@@ -198,3 +198,39 @@
   margin: 20px auto 30px auto; /* topo e centralizado */
   text-align: center;
 }
+
+
+.crypto-adz-login {
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  z-index: 1000; /* Garante que fique sobre outros elementos */
+}
+
+.crypto-adz-login img {
+  width: 160px;
+  max-width: 100%;
+  height: auto;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  transition: transform 0.3s ease;
+}
+
+.crypto-adz-login img:hover {
+  transform: scale(1.05);
+}
+
+.slogan-crypto-adz-login {
+  position: absolute;
+  top: 90px; /* Ajuste conforme o tamanho do logo */
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #007bff;
+  font-style: italic;
+  letter-spacing: 0.5px;
+  z-index: 1000;
+}

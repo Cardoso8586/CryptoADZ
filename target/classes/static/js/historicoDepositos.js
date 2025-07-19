@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       html += `</tbody></table>`;
       document.getElementById('historicoDepositos').innerHTML = html;
+	
 
     } catch (error) {
       document.getElementById('historicoDepositos').innerText = 'Erro ao carregar histórico.';
