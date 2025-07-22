@@ -16,14 +16,13 @@ body {
 
 /* ===== Sidebar lateral ===== */
 .sidebar {
-  width: 180px;               /* Largura fixa reduzida da sidebar */
-  height: 100vh;              /* Altura total da tela */
+  width: 200px;               /* Largura fixa reduzida da sidebar */
+  height: 200vh;              /* Altura total da tela */
   background-color: #2c3e50; /* Cor azul escuro */
-  padding: 0px;              /* Espaçamento interno */
-  box-sizing: border-box;     /* Inclui padding na largura */
-  overflow-y: auto;           /* Barra de rolagem vertical se necessário */
+  padding: 20px;              /* Espaçamento interno */
+
   color: white;               /* Cor do texto na sidebar */
-  z-index: 1000;              /* Fica acima de outros elementos */
+  z-index: 400;              /* Fica acima de outros elementos */
 }
 
 /* Título dentro da sidebar */

@@ -12,19 +12,18 @@ document.addEventListener("DOMContentLoaded", function () {
       return `${segundosRestantes}s`;
     }
   }
-
   function mensagemBloqueio(segundos) { 
     const simbolo = '🔒'; // símbolo cadeado
     if (segundos <= 120) {
-      return `${simbolo} Wait ${formatarTempo(segundos)}`;
+      return `${simbolo} Aguarde ${formatarTempo(segundos)}`;
     } else if (segundos <= 900) {
-      return `${simbolo} Wait ${formatarTempo(segundos)}`;
+      return `${simbolo} Aguarde ${formatarTempo(segundos)}`;
     } else if (segundos <= 3600) {
-      return `${simbolo} Retry in ${formatarTempo(segundos)}`;
+      return `${simbolo} Tente novamente em ${formatarTempo(segundos)}`;
     } else if (segundos <= 10800) {
-      return `${simbolo} Try later`;
+      return `${simbolo} Tente mais tarde`;
     } else {
-      return `${simbolo} Come back later`;
+      return `${simbolo} Volte mais tarde`;
     }
   }
 
@@ -41,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
           link.style.pointerEvents = 'none';
         } else {
           link.classList.remove('bloqueado');
-          link.textContent = "✅ Click here to view";
+		  link.textContent = "✅ Clique aqui para ver";
           link.setAttribute('href', link.getAttribute('data-url'));
           link.style.backgroundColor = '#4CAF50';
           link.style.pointerEvents = 'auto';

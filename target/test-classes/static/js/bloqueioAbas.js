@@ -1,9 +1,7 @@
 const tabKey = 'app-tab-open';
 const blockKey = 'app-tab-blocked';
-
 let isMainTab = false;
 
-// Mostrar mensagem de bloqueio
 function showBlockMessage() {
   document.body.innerHTML = `
     <div style="margin: 50px auto; max-width: 600px; text-align: center; font-family: Arial, sans-serif;">
@@ -34,21 +32,19 @@ function showBlockMessage() {
   });
 }
 
-// Tenta registrar esta aba como a principal
 function tryRegisterTab() {
   const currentTab = localStorage.getItem(tabKey);
+  const now = Date.now();
 
-  if (!currentTab) {
-    localStorage.setItem(tabKey, Date.now().toString());
+  if (!currentTab || now - parseInt(currentTab, 10) > 10000) { // 10 segundos
+    localStorage.setItem(tabKey, now.toString());
     isMainTab = true;
     localStorage.removeItem(blockKey);
     return true;
-  } else {
-    return false;
   }
+  return false;
 }
 
-// Limpa registro da aba principal ao fechar
 function clearTab() {
   if (isMainTab) {
     localStorage.removeItem(tabKey);
@@ -56,13 +52,12 @@ function clearTab() {
   }
 }
 
-// Escuta mudanças no localStorage (comunicação entre abas)
 window.addEventListener('storage', (e) => {
   if (e.key === tabKey) {
-    // Se aba principal foi removida, tenta registrar esta aba
     if (!localStorage.getItem(tabKey)) {
-      if (tryRegisterTab()) {
-        location.reload(); // recarrega para liberar o acesso
+      if (!isMainTab && tryRegisterTab()) {
+        localStorage.removeItem(blockKey);
+        location.reload();
       }
     } else {
       if (!isMainTab) {
@@ -71,38 +66,47 @@ window.addEventListener('storage', (e) => {
       }
     }
   }
+
+  if (e.key === blockKey) {
+    if (!localStorage.getItem(blockKey) && !isMainTab) {
+      location.reload();
+    }
+  }
 });
 
-// Bloqueia navegação do teclado
+if (tryRegisterTab()) {
+  setInterval(() => {
+    if (isMainTab) {
+      localStorage.setItem(tabKey, Date.now().toString());
+    }
+  }, 5000);
+} else {
+  localStorage.setItem(blockKey, 'true');
+  showBlockMessage();
+}
+
+// Impede uso de teclas que causam navegação
 function blockNavigationKeys() {
-  window.addEventListener('keydown', function(e) {
+  window.addEventListener('keydown', (e) => {
     if (['Backspace', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
       e.preventDefault();
     }
   });
 }
 
-// Bloqueia botões de voltar/avançar do navegador
+// Impede navegação pelo botão "Voltar"
 function blockHistoryNavigation() {
   history.pushState(null, document.title, location.href);
-  window.addEventListener('popstate', function () {
+  window.addEventListener('popstate', () => {
     history.pushState(null, document.title, location.href);
   });
 }
 
-// Verifica no carregamento se já existe aba principal
-if (tryRegisterTab()) {
-  // Esta aba é a principal
-  blockNavigationKeys();
-  blockHistoryNavigation();
+// Chamada das proteções de navegação
+blockNavigationKeys();
+blockHistoryNavigation();
 
-  window.addEventListener('beforeunload', () => {
-    clearTab();
-  });
-} else {
-  // Outra aba já está aberta, bloqueia esta
-  localStorage.setItem(blockKey, 'true');
-  showBlockMessage();
-}
+// Limpa chave ao sair
+window.addEventListener('beforeunload', clearTab);
 
 

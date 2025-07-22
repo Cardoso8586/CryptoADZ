@@ -227,3 +227,20 @@ document.addEventListener('DOMContentLoaded', () => {
  
 });
 
+const tituloBannerInput = document.getElementById('titulo-banner');
+const restantesTituloBanner = document.getElementById('restantes-titulo-banner');
+
+tituloBannerInput.addEventListener('input', () => {
+  const max = 30;
+  const atual = tituloBannerInput.value.length;
+  const restantes = max - atual;
+
+  restantesTituloBanner.textContent = restantes;
+
+  if (restantes <= 0) {
+    restantesTituloBanner.style.color = 'red';
+  } else {
+    restantesTituloBanner.style.color = 'gray';
+  }
+});
+

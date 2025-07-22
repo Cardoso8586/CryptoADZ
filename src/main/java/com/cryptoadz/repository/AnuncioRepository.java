@@ -26,4 +26,6 @@ public interface AnuncioRepository extends JpaRepository<Anuncios, Long> {
 	 List<Anuncios> findByUsuario_Username(String username);
 	
 
+	
+
 }

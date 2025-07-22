@@ -192,5 +192,48 @@ function registrarMissaoCadastrar() {
     });
 }
 
+const descricaoInput = document.getElementById('descricao');
+const contadorDescricao = document.getElementById('contadorDescricao');
+const spanRestantes = document.getElementById('restantes');
+const limiteDescricao = 200;
+
+descricaoInput.addEventListener('input', () => {
+  const restante = limiteDescricao - descricaoInput.value.length;
+
+  if (restante < 0) {
+    descricaoInput.value = descricaoInput.value.substring(0, limiteDescricao); // Corta o excesso
+    spanRestantes.textContent = '0';
+  } else {
+    spanRestantes.textContent = restante;
+  }
+
+  if (restante <= 20 && restante >= 0) {
+    spanRestantes.style.color = 'orange';
+  } else if (restante === 0) {
+    spanRestantes.style.color = 'red';
+  } else {
+    spanRestantes.style.color = 'gray';
+  }
+});
+
+
+const tituloInput = document.getElementById('titulo');
+const restantesTitulo = document.getElementById('restantesTitulo');
+
+tituloInput.addEventListener('input', () => {
+  const max = 30;
+  const atual = tituloInput.value.length;
+  const restantes = max - atual;
+
+  restantesTitulo.textContent = restantes;
+
+  // Opcional: alerta visual se atingir o limite
+  if (restantes <= 0) {
+    restantesTitulo.style.color = 'red';
+  } else {
+    restantesTitulo.style.color = 'gray';
+  }
+});
+
 
 

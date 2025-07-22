@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
         resposta = await resTempo.json(); // { tempo }
 
       } catch (err) {
-        alert('Failed to retrieve ad time.');
+        alert('Falha ao obter o tempo do anúncio.');
         anuncioEmContagem = false;
         atualizarEstadoDosBotoes();
         return;
@@ -57,57 +57,54 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const iniciarContagem = (regressiva) => {
         const tick = async () => {
-			if (regressiva <= 0) {
-			  try {
-			    // Registrar visualização
-			    const resRegistrar = await fetch(`/api/visualizacoes/registrar-visualizacao/${anuncioId}`, {
-			      method: 'POST',
-			      credentials: 'include'
-			    });
+          if (regressiva <= 0) {
+            try {
+              // Registrar visualização
+              const resRegistrar = await fetch(`/api/visualizacoes/registrar-visualizacao/${anuncioId}`, {
+                method: 'POST',
+                credentials: 'include'
+              });
 
-			    if (!resRegistrar.ok) throw new Error();
+              if (!resRegistrar.ok) throw new Error();
 
-			    // Buscar tokens creditados
-			    try {
-			      const resTokens = await fetch(`/api/visualizacoes/tokens-creditados/${anuncioId}`, {
-			        credentials: 'include'
-			      });
+              // Buscar tokens creditados
+              try {
+                const resTokens = await fetch(`/api/visualizacoes/tokens-creditados/${anuncioId}`, {
+                  credentials: 'include'
+                });
 
-			      if (!resTokens.ok) throw new Error();
+                if (!resTokens.ok) throw new Error();
 
-			      const finalData = await resTokens.json();
-			      const tokensFinais = finalData.tokensCreditados ?? 0;
+                const finalData = await resTokens.json();
+                const tokensFinais = finalData.tokensCreditados ?? 0;
 
-			      display.innerHTML = `<strong style="color:green;">You received ${tokensFinais.toFixed(2)} tokens!</strong>`;
-			      document.title = `+${tokensFinais.toFixed(2)} Tokens credited ✔`;
+                display.innerHTML = `<strong style="color:green;">Você recebeu ${tokensFinais.toFixed(2)} tokens!</strong>`;
+                document.title = `+${tokensFinais.toFixed(2)} Tokens creditados ✔`;
 
-			    } catch (e) {
-					display.innerHTML = `<strong style="color:orange;">Tokens credited ✔ (amount hidden or unavailable)</strong>`;
-					document.title = `Tokens credited ✔`;
-			    }
+              } catch (e) {
+                display.innerHTML = `<strong style="color:orange;">Tokens creditados ✔ (quantia oculta ou indisponível)</strong>`;
+                document.title = `Tokens creditados ✔`;
+              }
 
-			  } catch (e) {
-			    display.innerHTML = `<strong style="color:red;">Failed to register view and credit tokens.</strong>`;
-			    document.title = `Erro`;
-			  }
-			  
-			  setInterval(() => {
-			  		  	 
-			  		  	}, 3000); 
-			            
-			  anuncioEmContagem = false;
-			  atualizarEstadoDosBotoes();
-			  registrarMissaoAssistir();
-                setTimeout(() => {
-			    location.reload();
-			  }, 1000);
-			 
-			
+            } catch (e) {
+              display.innerHTML = `<strong style="color:red;">Falha ao registrar visualização e creditar tokens.</strong>`;
+              document.title = `Erro`;
+            }
 
+            setInterval(() => {
+              // Pode deixar vazio ou para futuras ações
+            }, 3000);
+
+            anuncioEmContagem = false;
+            atualizarEstadoDosBotoes();
+            registrarMissaoAssistir();
+            setTimeout(() => {
+              location.reload();
+            }, 1000);
 
           } else {
-            display.textContent = `Time remaining: ${regressiva}s`;
-            document.title = `${regressiva}s - Please keep this page open`;
+            display.textContent = `Tempo restante: ${regressiva}s`;
+            document.title = `${regressiva}s - Por favor, mantenha esta página aberta`;
             setTimeout(() => tick(--regressiva), 1000);
           }
         };

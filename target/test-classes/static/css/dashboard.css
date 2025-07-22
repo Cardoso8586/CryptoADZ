@@ -1,6 +1,4 @@
 
-
-
 /* ===== Estilos básicos do body ===== */
 body {
   background-color: #f0f4f8; /* Fundo azul bem claro, combina com sidebar escura */
@@ -241,30 +239,25 @@ body {
   margin-right: 6px;  /* espaço entre ícone e texto */
 }
 
-.crypto-adz {
-  position: absolute;
-  top: 10;
-  left: 70%;
-  transform: translateX(-50%);
-  font-size: 64px;
-  font-weight: 900;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(90deg, #00c9a7, #00ffe0);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  z-index: 10;
-  pointer-events: none;
-  margin: 0;
-  animation: pulse 2.5s infinite;
+
+.crypto-adz img {
+  position: fixed;
+  top: -60px; /* <- Aqui está o ajuste para subir */
+  left: 60%;
+ 
+  width: 240px;
+  height: auto;
+  display: block;
+  
 }
 
+
 .slogan-crypto-adz {
-  position: absolute;
-  top: 70px; /* ajusta abaixo do logo */
+  position: fixed;
+  top: 70px; /* antes era 70px */
   left: 70%;
   transform: translateX(-50%);
-  font-size: 20px;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
   color: #ffffffcc;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
@@ -275,4 +268,11 @@ body {
 }
 
 
+/* Responsividade */
+@media (max-width: 600px) {
+  .crypto-adz {
+    top: 0.2rem;
+  }
 
+ 
+}

@@ -76,4 +76,12 @@ public class LoginController {
 // server.port=8086
 
 
+/**cryptoadz-production-ptcrewards-adz.up.railway.app
+ * 
+ * data-sitekey= 0x4AAAAAABhDBlDrEgbq9kdW
+ * turnstile.secret= 0x4AAAAAABhDBiZ7lkln5XLQFCFW4C5hiRM
+ */
+
+
+
 

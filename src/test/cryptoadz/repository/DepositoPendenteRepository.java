@@ -12,4 +12,6 @@ public interface DepositoPendenteRepository extends JpaRepository<DepositoPenden
     List<DepositoPendente> findByConfirmadoFalse();
 	List<DepositoPendente> findByStatus(String status);
 	 Optional<DepositoPendente> findTopByUserIdAndStatusInOrderByDataSolicitacaoDesc(Long userId, List<String> statusList);
+	 
+	boolean existsByTransactionId(String txId);
 }

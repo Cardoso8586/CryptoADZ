@@ -9,4 +9,6 @@ import com.cryptoadz.model.Usuario;
 public interface DepositoHistoricoRepository extends JpaRepository<DepositoHistorico, Long> {
     List<DepositoHistorico> findByUser(Usuario user);
     List<DepositoHistorico> findByUserId(Long userId);
+	boolean existsByTransactionId(String txId);
+	
 }

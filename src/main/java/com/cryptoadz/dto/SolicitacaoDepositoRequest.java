@@ -5,6 +5,9 @@ import java.math.BigDecimal;
 public class SolicitacaoDepositoRequest {
     private Long userId;
     private BigDecimal valor;
+    private Boolean confirmado;
+    
+    
 	public Long getUserId() {
 		return userId;
 	}
@@ -17,6 +20,14 @@ public class SolicitacaoDepositoRequest {
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
+
+	public Boolean getConfirmado() {
+		return confirmado;
+	}
+	public void setConfirmado(Boolean confirmado) {
+		this.confirmado = confirmado;
+	}
+
 
     // getters e setters
 }

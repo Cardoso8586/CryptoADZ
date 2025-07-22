@@ -1,39 +1,35 @@
 document.addEventListener('DOMContentLoaded', () => {
+  // Mapeamento dos botões para as respectivas seções
   const menuMap = {
     btnVerAnuncios: 'VerAnuncios',
     btnAnunciar: 'Anunciar',
     btnRanking: 'Ranking',
     btnSwap: 'Swap',
     btnBanners: 'bannersPublicitarios',
-    btnWallet: 'Wallet',
+    btnWallet: 'wallet-container',
     btnMissoes: 'secaoMissoes',
     btnAvisos: 'Avisos'
   };
 
+  // Seção que exibe os anúncios (para ocultar em certas seções)
   const adsSection = document.querySelector('.ads-section');
 
+  // Função que esconde todas as seções listadas no menuMap
   function esconderTodasSecoes() {
     Object.values(menuMap).forEach(id => {
-      let secao;
-
-      if (id === 'Wallet') {
-        secao = document.getElementById('wallet-container'); // usar o container
-      } else {
-        secao = document.getElementById(id);
-      }
-
+      const secao = document.getElementById(id);
       if (secao) secao.style.display = 'none';
     });
   }
 
-  // Esconde tudo no começo
+  // Esconder todas seções inicialmente
   esconderTodasSecoes();
 
-  // Exibe a seção inicial
+  // Mostrar a seção inicial (VerAnuncios)
   const secaoInicial = document.getElementById('VerAnuncios');
   if (secaoInicial) secaoInicial.style.display = 'block';
 
-  // Evento clique nos botões do menu
+  // Adiciona evento de clique em cada botão para alternar seções
   Object.entries(menuMap).forEach(([btnId, secaoId]) => {
     const btn = document.getElementById(btnId);
     if (!btn) return;
@@ -42,27 +38,28 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       esconderTodasSecoes();
 
-      let secao;
-      if (secaoId === 'Wallet') {
-        secao = document.getElementById('wallet-container'); // mostrar container
-      } else {
-        secao = document.getElementById(secaoId);
-      }
-
+      const secao = document.getElementById(secaoId);
       if (secao) secao.style.display = 'block';
 
-      // Controle da exibição da ads-section
+      // Controla visibilidade da seção de anúncios
       if (adsSection) {
-        if (secaoId === 'bannersPublicitarios' || secaoId === 'Wallet') {
+        if (secaoId === 'bannersPublicitarios' || secaoId === 'wallet-container') {
           adsSection.style.display = 'none';
         } else {
           adsSection.style.display = 'block';
         }
       }
+
+      // Ação extra para missões: recarregar status se existir função
+      if (btnId === 'btnMissoes') {
+        if (typeof carregarStatusMissoes === 'function') {
+          carregarStatusMissoes();
+        }
+      }
     });
   });
 
-  // Configura o cardAvisos para abrir a seção Avisos
+  // Clique especial no cardAvisos que também mostra a seção de Avisos
   const cardAvisos = document.getElementById('cardAvisos');
   if (cardAvisos) {
     cardAvisos.addEventListener('click', () => {
@@ -76,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // --- Código de avisos ---
+  // --- Código para carregar e rotacionar avisos ---
   let avisos = [];
   let avisoAtual = 0;
   const textoAvisos = document.getElementById('textoAvisos');
@@ -92,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
         textoAvisos.textContent = "Nenhum aviso no momento.";
       } else {
         exibirAvisoAtual();
-        setInterval(alternarAviso, 10000);
+        setInterval(alternarAviso, 10000); // alterna a cada 10s
       }
 
     } catch (error) {
@@ -112,6 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
     exibirAvisoAtual();
   }
 
+  // Inicializa carregamento de avisos
   carregarAvisos();
 });
-

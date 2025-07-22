@@ -1,0 +1,82 @@
+/* Container principal da seção de troca */
+#Swap {
+  display: none;
+  padding: 20px;
+  color: #ffffff;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  max-width: 400px;
+  margin: 40px auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  font-family: 'Arial', sans-serif;
+}
+
+/* Título */
+#Swap h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.6rem;
+  color: #00ffcc;
+}
+
+/* Caixa de troca - menos flexível com flex */
+.swap-box {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 350px;      /* largura fixa */
+  max-width: 100%;   /* evita estouro */
+  flex: none;        /* sem flex-grow/shrink */
+}
+
+/* Inputs e selects */
+.swap-box select,
+.swap-box input {
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #333;
+  background-color: #2b2b2b;
+  color: #fff;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.swap-box select:focus,
+.swap-box input:focus {
+  border-color: #00ffcc;
+}
+
+/* Campo readonly */
+.swap-box input[readonly] {
+  background-color: #444;
+  color: #bbb;
+}
+
+/* Botão de confirmar */
+#btnConfirmSwap {
+  padding: 10px;
+  font-size: 1rem;
+  background-color: #00cc99;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+#btnConfirmSwap:hover {
+  background-color: #009977;
+}
+.preview-swap {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: #292929;
+  color: #00ffcc;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 0.95rem;
+  min-height: 30px;
+}
+

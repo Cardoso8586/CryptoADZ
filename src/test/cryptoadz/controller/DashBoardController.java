@@ -63,7 +63,7 @@ public class DashBoardController {
         model.addAttribute("paginaProxima", paginaProxima);
 
         int hora = LocalTime.now().getHour();
-        String saudacao = hora < 12 ? "Good morning" : (hora < 18 ? "Good afternoon" : "Good evening");
+        String saudacao = hora < 12 ? "Bom dia" : (hora < 18 ? "Boa tarde" : "Boa noite");
         model.addAttribute("saudacao", saudacao);
        
 

@@ -8,14 +8,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function hideAll() {
     Object.values(sections).forEach(sec => {
-      if (sec) sec.style.display = 'none';
+      if (sec) {
+        sec.style.visibility = 'hidden';   // invisível, mas ocupa espaço
+        sec.style.position = 'absolute';   // tira do fluxo visual
+        sec.style.left = '-9999px';        // fora da tela
+        sec.style.top = '0';
+        sec.style.display = 'block';       // manter display para scripts
+      }
     });
   }
 
   function show(name) {
     hideAll();
-    if (sections[name]) sections[name].style.display = 'block';
+    if (sections[name]) {
+      sections[name].style.visibility = 'visible';
+      sections[name].style.position = 'static';
+      sections[name].style.left = 'auto';
+      sections[name].style.display = 'block';
+    }
   }
+
 
   document.getElementById('btnVerAnuncios')?.addEventListener('click', e => { e.preventDefault(); show('verAnuncios'); });
   document.getElementById('btnAnunciar')?.addEventListener('click', e => { e.preventDefault(); show('anunciar'); });
@@ -189,7 +201,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const recompensaMissaorAssistir = document.getElementById('recompensaMissaorAssistir');
         if (recompensaMissaorAssistir) {
-          recompensaMissaorAssistir.innerHTML = `0 <img src="/icones/adz-token.png" alt="ADZ Token">`;
+          recompensaMissaorAssistir.innerHTML = `recompensaMissaorAssistir">`;
         }
       });
   }
@@ -199,11 +211,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Atualiza missões a cada 3 segundos se estiver visível
   setInterval(() => {
-    const secaoMissoesVisivel = sections.missoes.style.display === 'block';
+    const secaoMissoesVisivel = sections.missoes.style.display === 'block' || sections.missoes.style.visibility === 'visible';
     if (secaoMissoesVisivel) {
       carregarStatusMissoes();
     }
   }, 30000);
+
 });
 
 

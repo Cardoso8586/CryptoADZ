@@ -23,7 +23,7 @@
    <link rel="stylesheet" href="css/bannersPublicitarios.css" />
    <link rel="stylesheet" href="css/publicitarios.css" />    
    <link rel="stylesheet" href="css/bonusModal.css" />
-
+   <link rel="stylesheet" href="css/swap.css" />
   
 </head>
 
@@ -82,39 +82,44 @@
 
 
 
-  <!-- ========== LISTAGEM DE ANÚNCIOS ========== -->
+<!-- ========== LISTAGEM DE ANÚNCIOS ========== -->
 <section id="VerAnuncios" class="conteudoPrincipal">
   <p class="announcement-board">Quadro de Anúncios!</p>
 
-  <div>
-    <ul>
-      <li th:each="anuncio : ${anuncios}" class="anuncio-card">
-        <h3 th:text="${anuncio.titulo}">Título</h3>
-        <p th:text="${anuncio.descricao}">Descrição</p>
+  <div class="anuncios-grid">
+  <div class="anuncios">
+  <ul class="anuncios-grid">
+    <li th:each="anuncio : ${anuncios}" class="anuncio-card">
+      <h3 th:text="${anuncio.titulo}">Título</h3>
+      <p th:text="${anuncio.descricao}">Descrição</p>
 
-        <!-- Valor que o usuário irá ganhar -->
-        <p class="token-info">
-          Você ganhará
-          <span class="token-amount" th:text="${#numbers.formatDecimal(anuncio.tokensPorVisualizacao, 1, 'POINT', 2, 'POINT')}"></span>
-          <img src="/icones/adz-token.png" alt="Token ADZ"> 
-        </p>
+      <p class="token-info">
+        Você ganhará
+        <span class="token-amount"
+              th:text="${#numbers.formatDecimal(anuncio.tokensPorVisualizacao, 1, 'POINT', 2, 'POINT')}"></span>
+        <img src="/icones/adz-token.png" alt="Token ADZ"> 
+      </p>
 
-        <!-- Tempo de visualização -->
-        <p id="contador-" th:attr="id=${'contador-' + anuncio.id}">
-          Tempo de espera: <span th:text="${anuncio.tempoVisualizacao != null ? anuncio.tempoVisualizacao : 30}"></span> segundos
-        </p>
+      <p id="contador-" th:attr="id=${'contador-' + anuncio.id}">
+        Tempo de espera: <span th:text="${anuncio.tempoVisualizacao != null ? anuncio.tempoVisualizacao : 30}"></span> segundos
+      </p>
 
-        <a href="#" th:attr="data-id=${anuncio.id}, data-url=${anuncio.url}, data-username=${usuario.username}" class="ver-anuncio" target="_blank" rel="noopener noreferrer"> Clique aqui para ver </a>
-      </li>
-    </ul>
+      <a href="#" th:attr="data-id=${anuncio.id}, data-url=${anuncio.url}, data-username=${usuario.username}" class="ver-anuncio" target="_blank" rel="noopener noreferrer">
+        Clique aqui para ver
+      </a>
+    </li>
+  </ul>
+</div>
 
-    <div class="paginacao">
-      <a th:href="@{'/dashboard?page=' + ${paginaAnterior}}" th:if="${paginaAtual > 0}">Anterior</a>
-      <a th:href="@{'/dashboard?page=' + ${paginaProxima}}" th:if="${paginaAtual < totalPaginas - 1}">Próximo</a>
-      <p>Página <span th:text="${paginaAtual + 1}"></span> de <span th:text="${totalPaginas}"></span></p>
-    </div>
+  </div>
+
+  <div class="paginacao">
+    <a th:href="@{'/dashboard?page=' + ${paginaAnterior}}" th:if="${paginaAtual > 0}">Anterior</a>
+    <a th:href="@{'/dashboard?page=' + ${paginaProxima}}" th:if="${paginaAtual < totalPaginas - 1}">Próximo</a>
+    <p>Página <span th:text="${paginaAtual + 1}"></span> de <span th:text="${totalPaginas}"></span></p>
   </div>
 </section>
+
 
 
 <!-- ========== SEÇÃO DE CRIAÇÃO DE ANÚNCIOS ========== -->
@@ -152,11 +157,17 @@
   <input type="hidden" id="anuncioId" name="anuncioId" value="">
 
   <label for="titulo">Título:</label>
-  <input type="text" id="titulo" name="titulo" required>
+<input type="text" id="titulo" name="titulo" maxlength="30" required>
+<small id="contadortitulo" style="color: gray; display: block; margin-bottom: 10px;">
+  Máx. 30 caracteres. Restantes: <span id="restantesTitulo">30</span>
+</small>
 
   <label for="descricao">Descrição:</label>
   <textarea id="descricao" name="descricao" rows="4" required></textarea>
-
+   <small id="contadorDescricao" style="color: gray; display: block; margin-bottom: 10px;">
+  Máx. 200 caracteres. Restantes: <span id="restantes">200</span>
+</small>
+   
   <label for="url">URL:</label>
   <input type="url" id="url" name="url" required>
 
@@ -208,14 +219,18 @@
     <form id="form-cadastro">
         <h3>📝 Dados do Banner</h3>
 
-        <label>Título do Banner:</label>
-        <input type="text" id="titulo-banner" required>
+          <label for="titulo-banner">Título do Banner:</label>
+<input type="text" id="titulo-banner" maxlength="30" required>
 
+<small id="contador-titulo-banner" style="color: gray; display: block; margin-bottom: 10px;">
+  Máx. 30 caracteres. Restantes: <span id="restantes-titulo-banner">30</span>
+</small>
         <label>Link de Destino (URL):</label>
         <input type="url" id="link-banner" placeholder="https://exemplo.com" required>
 
         <label>Data de Expiração:</label>
         <input type="date" id="data-expiracao" required>
+
 
         <label>Status:</label>
         <select id="status-banner">
@@ -252,78 +267,92 @@
 
 
 
-<!-- ========== WALLET SECTION ========== -->
+
+
 <!-- ========== SEÇÃO CARTEIRA ========== -->
 <div id="wallet-container">
-    <h2>Minha Carteira</h2>
+  <h2>Minha Carteira</h2>
+  <button id="connectButton">Conectar MetaMask</button>
+  <p id="status"></p>
+  <p id="walletAddress">Carteira: não conectada</p>
 
-    <div class="wallet-tabs">
-      <button class="wallet-tab" data-target="depositos">Depósitos</button>
-      <button class="wallet-tab" data-target="retiradas">Retiradas</button>
-    </div>
+  <!-- Botões de navegação -->
+  <div class="wallet-tabs">
+    <button class="wallet-tab active-tab" data-target="depositos">Depósitos</button>
+    <button class="wallet-tab" data-target="retiradas">Retiradas</button>
+  </div>
 
-    <div class="wallet-content">
+  <!-- Conteúdo das abas -->
+  <div class="wallet-content">
+    
+    <!-- Aba de Depósito -->
+    <div class="wallet-section" id="depositos">
+      <h3>
+        Depositar (USDT)
+        <img src="icones/tether-usdt-logo.png?v=032" alt="USDT" style="width: 30px; vertical-align: middle; margin-right: 5px;">
+      </h3>
 
-      <!-- Seção de Depósito -->
-      <div class="wallet-section" id="depositos" style="display: none;">
-        <h3>
-          <img src="icones/tether-usdt-logo.png?v=032" alt="USDT" style="width: 20px; vertical-align: middle; margin-right: 5px;">
-          Depósitos USDT (TRC20)
-        </h3>
+      <p style="color: orange; font-weight: bold; margin-top: -10px;">
+        ⚠️ Os depósitos devem ser feitos em USDT na rede <strong>BEP20</strong> (Binance Smart Chain).
+      </p>
 
-        <form id="formDeposito">
-          <label for="valorDeposito">Valor mínimo 3 USDT:</label>
-          <input type="number" id="valorDeposito" min="3" step="0.01" required>
-          <button type="submit">Solicitar Depósito</button>
-        </form>
-<div id="enderecoDeposito" style="display: none; margin-top: 10px;">
-  Envie o valor de, <span id="depositValue" style="color: #00D1FF; font-size: 22px; font-weight: bold;"></span> USDT, para o endereço:
-  <code id="usdtAddress" style="font-size: 2.0em; color: #00D1FF; font-weight: bold;"></code>
-</div>
+      <form id="depositForm">
+        <input type="number" id="depositAmount" placeholder="Quantidade em USDT" step="0.01" min="3" required />
+        <button type="submit">Depositar</button>
+      </form>
 
-
-        <div id="statusDeposito" style="margin-top: 10px;"></div>
-        <div id="mensagemAguardando" style="display: none;">⏳ Aguardando confirmação...</div>
-        <div id="mensagemConfirmado" style="display: none;">✅ Solicitar um novo Depósito!</div>
-
-
+      <div id="historicoDepositosContainer" style="margin-top: 30px;">
+        <h3>Histórico de Depósitos</h3>
         <div id="historicoDepositos"></div>
       </div>
+    </div>
 
-      <!-- Seção de Retirada -->
-      <div class="wallet-section" id="retiradas" style="display: none;">
-        <h3>
-          <img src="icones/tether-usdt-logo.png?v=032" alt="USDT" style="width: 20px; vertical-align: middle; margin-right: 5px;">
-          Retiradas (USDT)
-        </h3>
-<form id="formRetirada">
-  <label for="carteiraDestino">Endereço da Carteira (TRC20):</label>
-  <input type="text" id="enderecoDestino" placeholder="Digite o endereço da carteira" required>
+    <!-- Aba de Retirada -->
+    <div class="wallet-section" id="retiradas" style="display: none;">
+      <h3>Sacar</h3>
+      <form id="withdrawForm">
+        <input type="number" id="withdrawAmount" placeholder="Quantidade em USDT" step="0.01" min="0" required />
+        <button type="submit">Sacar</button>
+      </form>
 
-  <label for="valorRetirada">Valor Mínimo 6 (USDT):</label>
-  <input type="number" id="valorRetirada" required step="0.01" min="6" placeholder="Valor a retirar" style="font-size: 24px; font-weight: bold;">
-
-  <!-- Aviso da taxa -->
-<div id="avisoTaxa" style="margin-top: 10px; color: white; font-size: 0.8em; font-weight: bold;">
-  ⚠️ Uma taxa será aplicada ao valor solicitado para cobrir custos de rede.<br>
-  Você receberá <span id="valorLiquidoPreview" style="color: #00D1FF; font-size: 22px; font-weight: bold;">???</span> USDT
-  <div id="mensagemErroSaque" style="color: red; display: none; margin-top: 10px;"></div>
-</div>
-
-
-  <button type="submit">Retirar</button>
-</form>
-
-
-         <div id="historicoRetiradas"></div>
-         <div id="mensagemAguardandoSaque" style="display: none; color: orange;"></div>
-         <div id="mensagemConfirmadoSaque" style="display: none; color: green;"></div>
-     
+      <div id="historicoRetiradasContainer" style="margin-top: 30px;">
+        <h3>Histórico de Retiradas</h3>
+        <div id="historicoRetiradas"></div>
       </div>
+    </div>
 
-    </div> <!-- Fim de wallet-content -->
-
+  </div> <!-- Fim wallet-content -->
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const tabButtons = document.querySelectorAll('.wallet-tab');
+  const sections = document.querySelectorAll('.wallet-section');
+
+  // Função para mostrar a aba desejada
+  function mostrarAba(id) {
+    sections.forEach(section => {
+      section.style.display = (section.id === id) ? 'block' : 'none';
+    });
+
+    tabButtons.forEach(btn => {
+      btn.classList.toggle('active-tab', btn.dataset.target === id);
+    });
+  }
+
+  // Evento de clique nos botões
+  tabButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const targetId = button.dataset.target;
+      mostrarAba(targetId);
+    });
+  });
+
+  // Mostrar a aba ativa por padrão (depósitos)
+  mostrarAba('depositos');
+});
+</script>
+
 
 
 
@@ -355,6 +384,250 @@
   </ul>
   <p id="mensagemMissao"></p>
 </section>
+
+
+<!-- Seção de Troca (Swap) -->
+<section id="Swap" style="display: block;">
+  <div class="swap-container">
+    <h2>Trocar </h2>
+    
+    <div class="swap-box">
+      <label for="fromToken">De:</label>
+      <select id="fromToken">
+        <option value="token">ADZ Token</option>
+        <option value="usdt">USDT</option>
+      </select>
+
+      <input type="number" id="fromAmount" placeholder="Valor" min="0" />
+
+      <label for="toToken">Para:</label>
+      <select id="toToken">
+        <option value="usdt">USDT</option>
+        <option value="token">ADZ Token</option>
+      </select>
+
+      <input type="number" id="toAmount" placeholder="Valor Recebido" readonly />
+
+      <div id="previewSwap" class="preview-swap">
+        <!-- A prévia da troca será exibida aqui -->
+      </div>
+
+      <button id="btnConfirmSwap">Confirmar Troca</button>
+    </div>
+  </div>
+</section>
+
+<script>
+  let saldoTokens = 0;
+  let saldoUsdt = 0;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const fromToken = document.getElementById('fromToken');
+    const toToken = document.getElementById('toToken');
+    const fromAmount = document.getElementById('fromAmount');
+    const toAmount = document.getElementById('toAmount');
+    const preview = document.getElementById('previewSwap');
+    const btnConfirmSwap = document.getElementById('btnConfirmSwap');
+    const taxa = 0.02; // 2%
+
+    function getUsuarioLogadoId() {
+      const meta = document.querySelector('meta[name="user-id"]');
+      return meta ? parseInt(meta.getAttribute('content')) : null;
+    }
+
+    function obterSaldo(token) {
+      if (token === 'token') return saldoTokens;
+      if (token === 'usdt') return saldoUsdt;
+      return 0;
+    }
+
+    async function getCotacao(from, to) {
+      if (from === 'token' && to === 'usdt') return 0.001;
+      if (from === 'usdt' && to === 'token') return 1000;
+      return 1;
+    }
+
+    function logMensagem(msg, cor = 'black') {
+      const logEntry = document.createElement('div');
+      logEntry.style.color = cor;
+      logEntry.innerHTML = `📝 ${msg}`;
+      preview.appendChild(logEntry);
+    }
+
+    async function atualizarResultado() {
+      const from = fromToken.value;
+      const to = toToken.value;
+      const valor = parseFloat(fromAmount.value);
+
+      preview.innerHTML = ''; // limpa os logs anteriores
+
+      if (!valor || valor <= 0) {
+        toAmount.value = '';
+        return;
+      }
+
+      if (from === to) {
+        toAmount.value = valor.toFixed(2);
+        logMensagem('Selecione moedas diferentes para trocar.', 'red');
+        return;
+      }
+
+      const saldoAtual = obterSaldo(from);
+      if (valor > saldoAtual) {
+        toAmount.value = '';
+        logMensagem(`Saldo insuficiente! ${saldoAtual.toFixed(2)} ${from.toUpperCase()}.`, 'red');
+        return;
+      }
+
+      if (from === 'token' && valor < 1000) {
+        logMensagem('O valor mínimo para troca de ADZ Token é 1000.', 'red');
+        toAmount.value = '';
+        return;
+      }
+
+      if (from === 'usdt' && valor < 1) {
+        logMensagem('O valor mínimo para troca de USDT é 1.', 'red');
+        toAmount.value = '';
+        return;
+      }
+
+      const cotacao = await getCotacao(from, to);
+      const bruto = valor * cotacao;
+      const taxaAplicada = bruto * taxa;
+      const liquido = bruto - taxaAplicada;
+
+      toAmount.value = liquido.toFixed(2);
+      logMensagem(`Valor líquido: ${liquido.toFixed(2)} ${to.toUpperCase()}`, 'wite');
+      
+    }
+
+    btnConfirmSwap.addEventListener('click', async () => {
+      const valor = parseFloat(fromAmount.value);
+      const de = fromToken.value;
+      const para = toToken.value;
+
+      if (!valor || valor <= 0) {
+      //  alert("Digite um valor válido.");
+        logMensagem('Digite um valor válido.');
+        return;
+      }
+
+      if (de === para) {
+       // alert("Selecione moedas diferentes.");
+       logMensagem('Selecione moedas diferentes.');
+        return;
+      }
+
+      const saldoAtual = obterSaldo(de);
+      if (valor > saldoAtual) {
+      //  alert(`Saldo insuficiente! ${saldoAtual.toFixed(2)} ${de.toUpperCase()}.`);
+        return;
+      }
+
+      if (de === 'token' && valor < 1000) {
+        alert("Valor mínimo para troca de ADZ Token é 1000.");
+        return;
+      }
+
+      if (de === 'usdt' && valor < 1) {
+        alert("Valor mínimo para troca de USDT é 1.");
+        return;
+      }
+
+      try {
+    	  const resultado = await realizarSwap(de, para, valor, getUsuarioLogadoId());
+
+    	  if (resultado.sucesso) {
+    	    if (de === 'token') {
+    	      saldoTokens -= valor;
+    	      saldoUsdt += resultado.valorRecebido;
+    	    } else {
+    	      saldoUsdt -= valor;
+    	      saldoTokens += resultado.valorRecebido;
+    	    }
+
+    	    document.getElementById('saldoTokens').innerText = saldoTokens.toFixed(2);
+    	    document.getElementById('saldoUsdt').innerText = saldoUsdt.toFixed(2);
+
+    	    fromAmount.value = '';
+    	    toAmount.value = '';
+    	    preview.innerHTML = '';
+
+    	    // Mostra mensagem de sucesso imediatamente
+    	    logMensagem(`✅ Troca realizada: ${valor} ${de.toUpperCase()} → ${resultado.valorRecebido.toFixed(2)} ${para.toUpperCase()}`, 'wite');
+
+    	    // Após 10 segundos, exibe "Realizar nova troca"
+    	    setTimeout(() => {
+    	     preview.innerHTML = '';
+    	      logMensagem('🔄 Realizar nova troca?', 'wite'); // você pode mudar a cor ou deixar sem cor
+    	    }, 10000); // 10 segundos = 10000 ms
+
+    	  } else {
+    	    logMensagem(`❌ Erro na troca: ${resultado.erro || 'Erro desconhecido'}`, 'red');
+    	  }
+    	} catch (err) {
+    	  logMensagem(`❌ Erro ao realizar troca: ${err.message}`, 'red');
+    	}
+
+    });
+
+    fromToken.addEventListener('change', atualizarResultado);
+    toToken.addEventListener('change', atualizarResultado);
+    fromAmount.addEventListener('input', atualizarResultado);
+
+    atualizarResultado(); // Atualiza ao iniciar
+  });
+
+  function atualizarSaldoTokens() {
+    return fetch('/api/saldo')
+      .then(res => res.ok ? res.json() : Promise.reject("Erro na requisição saldo"))
+      .then(data => {
+        saldoTokens = data.saldo;
+        document.getElementById('saldoTokens').innerText = saldoTokens.toFixed(2);
+      })
+      .catch(err => console.error(err));
+  }
+
+  function atualizarSaldoUsdt() {
+    return fetch('/api/saldoUsdt')
+      .then(res => res.ok ? res.json() : Promise.reject("Erro na requisição saldoUsdt"))
+      .then(data => {
+        saldoUsdt = data.saldoUsdt;
+        document.getElementById('saldoUsdt').innerText = saldoUsdt.toFixed(2);
+      })
+      .catch(err => console.error(err));
+  }
+
+  async function realizarSwap(from, to, fromAmount, userId) {
+    const url = '/api/swap';
+    const swapRequest = {
+      from: from,
+      to: to,
+      fromAmount: fromAmount,
+      userId: userId
+    };
+
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(swapRequest)
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      return { sucesso: false, erro: errorData.erro || 'Erro desconhecido' };
+    }
+
+    const data = await response.json();
+    return data;
+  }
+
+  atualizarSaldoTokens();
+  atualizarSaldoUsdt();
+  
+  
+  
+</script>
 
 
 
@@ -415,7 +688,14 @@
 
 
   </main>
-</div>
+  
+  
+
+<script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+<script src="js/metamask.js" defer></script>
+<script src="js/deposito.js" defer></script>
+
+
 <script src="/js/dashboard-nav.js" defer></script>
 <script src="/js/verificarBloqueio.js" defer></script>
 <script src="/js/atualizarSaldo.js" defer></script>
@@ -423,7 +703,6 @@
 <script src="/js/session-timeout.js" defer></script>
 <script src="/js/verAnuncios.js" defer></script>
 <script src="/js/advertise.js" defer></script>
-<script src="/js/wallet.js" defer></script>
 <script src="/js/slogans.js" defer></script>
 <script src="/js/mission.js" defer></script>
 <script src="/js/avisos.js" defer></script>
@@ -433,10 +712,9 @@
 <script src="/js/bannersModal.js" defer></script> 
 <script src="/js/bonusModal.js" defer></script>
 <script src="/js/missaoBanner.js" defer></script>  
-<script src="/js/finance.js" defer></script>   
 <script src="/js/historicoDepositos.js" defer></script>
 <script src="/js/historicoSaques.js" defer></script>  
-<script src="/js/formRetirada.js" defer></script>
+
 
 </body>
 </html>

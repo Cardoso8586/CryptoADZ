@@ -66,8 +66,8 @@ public class SecurityConfig {
             .authenticationProvider(authenticationProvider())
             .authorizeHttpRequests(auth -> auth
             		.requestMatchers(
-            			    "/login",
-            			    "/cadastro",
+            			    "/login/**",
+            			    "/cadastro/**",
             			    "/css/**",
             			    "/js/**",
             			    "/usuarios/quantidade",
@@ -92,7 +92,11 @@ public class SecurityConfig {
                             "/api/visualizacoes/banner/status/**",
                             "/api/depositos/fazer/**",
                             "/api/depositos/status/**",
-                            "/api/depositos/historico/**"
+                            "/api/depositos/historico/**",
+                            "/api/saques/solicitar/**",
+                            "/api/saques/pendentes/**",
+                            "/api/saques/historico/**",
+                            "/api/saques/status/**" 
                          
                         
             			   
