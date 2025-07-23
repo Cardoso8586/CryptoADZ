@@ -1,50 +1,19 @@
+/* ===== Container principal com flexbox para sidebar e conteúdo ===== */
+.container {
+  display: flex;
+  height: 100vh;
+}
 
 /* ===== Estilos básicos do body ===== */
 body {
-  background-color: #f0f4f8; /* Fundo azul bem claro, combina com sidebar escura */
-  color: #333;               /* Cor padrão do texto */
-  margin-top: 130px;  
-       /* Espaço no topo para header fixo */
-   cursor: url('img/cursor.cur'), auto !important;
+  background-color: #f0f4f8;
+  color: #333;
+  margin-top: 130px;
+  cursor: url('img/cursor.cur'), auto !important;
 }
 
-/* ===== Container principal com flexbox para sidebar e conteúdo ===== */
-.container {
-  display: flex;      /* Layout flexível em linha */
-  height: 100vh;      /* Altura total da viewport */
-}
+/* ... aqui todo o restante que você já tinha, exceto a sidebar ... */
 
-/* ===== Sidebar lateral ===== */
-.sidebar {
-  width: 200px;               /* Largura fixa reduzida da sidebar */
-  height: 200vh;              /* Altura total da tela */
-  background-color: #2c3e50; /* Cor azul escuro */
-  padding: 20px;              /* Espaçamento interno */
-
-  color: white;               /* Cor do texto na sidebar */
-  z-index: 400;              /* Fica acima de outros elementos */
-}
-
-/* Título dentro da sidebar */
-.sidebar h2 {
-  font-size: 18px;
-  margin-bottom: 20px;        /* Espaço abaixo do título */
-}
-
-/* Lista dentro da sidebar */
-.sidebar ul {
-  list-style: none;   /* Remove marcadores da lista */
-  padding-left: 5;    /* Remove espaçamento padrão */
-  margin: 20; 
-  font-size: 28px;         /* Remove margem padrão */
-}
-
-/* Itens da lista da sidebar */
-.sidebar ul li {
-  margin-bottom: 40px;  /* Espaço entre itens da lista */
-  color: #ecf0f1;      /* Cor clara para texto */
-  cursor: pointer;     /* Cursor de mãozinha para indicar clicável */
-}
 
 
 
@@ -61,26 +30,6 @@ p[id^="contador-"] {
   width: fit-content;        /* Ajusta largura ao conteúdo */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   user-select: none;         /* Impede seleção do texto */
-}
-
-/* ===== Itens da sidebar ===== */
-.sidebar li {
-  margin: 20px 0; /* Espaço entre itens */
-}
-
-/* Links e botões logout da sidebar */
-.sidebar a, .logout {
-  color: white;          /* Texto branco */
-  text-decoration: none; /* Remove sublinhado */
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-/* Efeito hover para links e logout */
-.sidebar a:hover, .logout:hover {
-  text-decoration: underline;
 }
 
 /* Área principal do conteúdo */

@@ -14,8 +14,9 @@
  <meta name="user-id" th:content="${usuario.id}" />
   <!-- CSS Styles -->
   <link rel="stylesheet" href="css/missoes.css" />
-  <link rel="stylesheet" href="/css/dashboard.css">
-  <link rel="stylesheet" href="/css/wallet.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/wallet.css">
   <link rel="stylesheet" href="css/advertise.css" />
   <link rel="stylesheet" href="css/anuncio.css" />
   <link rel="stylesheet" href="css/avisos.css" />
@@ -24,10 +25,16 @@
    <link rel="stylesheet" href="css/publicitarios.css" />    
    <link rel="stylesheet" href="css/bonusModal.css" />
    <link rel="stylesheet" href="css/swap.css" />
-  
+    <link rel="stylesheet" href="css/SidebarMobile.css" />         
+    <link rel="stylesheet" href="css/footerSistema.css" /> 
+    
+    
+    
 </head>
 
 <body>
+
+
 
   
 <div class="container">
@@ -80,6 +87,25 @@
 
 </main>
 
+<script>
+  const toggleButton = document.getElementById("menuToggle");
+  const sidebar = document.querySelector(".sidebar");
+
+  toggleButton.addEventListener("click", () => {
+    sidebar.classList.toggle("visible");
+  });
+
+  // Esconde a sidebar quando clicar fora (opcional)
+  document.addEventListener("click", (e) => {
+    if (
+      !sidebar.contains(e.target) &&
+      !toggleButton.contains(e.target) &&
+      sidebar.classList.contains("visible")
+    ) {
+      sidebar.classList.remove("visible");
+    }
+  });
+</script>
 
 
 <!-- ========== LISTAGEM DE ANÚNCIOS ========== -->
@@ -684,17 +710,20 @@ document.addEventListener('DOMContentLoaded', function () {
 </div>
 
 
-   <!-- <script src="/js/bloqueioAbas.js" defer></script> -->
+ 
+
 
 
   </main>
   
-  
+  </div>
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 <script src="js/metamask.js" defer></script>
 <script src="js/deposito.js" defer></script>
-
+  <!-- <script src="/js/bloqueioAbas.js" defer></script> -->
 
 <script src="/js/dashboard-nav.js" defer></script>
 <script src="/js/verificarBloqueio.js" defer></script>
@@ -714,6 +743,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <script src="/js/missaoBanner.js" defer></script>  
 <script src="/js/historicoDepositos.js" defer></script>
 <script src="/js/historicoSaques.js" defer></script>  
+
 
 
 </body>

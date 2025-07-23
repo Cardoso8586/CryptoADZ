@@ -1,0 +1,112 @@
+/* === RESPONSIVIDADE GERAL === */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    height: auto;
+    padding: 15px;
+    text-align: center;
+  }
+
+  .sidebar ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    font-size: 20px;
+  }
+
+  .sidebar ul li {
+    margin: 10px 15px;
+  }
+
+  .main-content-fixed {
+    position: relative;
+    height: auto;
+    padding: 20px 10px;
+    text-align: center;
+  }
+
+  .saudacao-usuario {
+    font-size: 1.4rem;
+    padding: 10px 15px;
+    display: block;
+    width: 100%;
+  }
+
+  .token-info {
+    font-size: 1rem;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 8px auto;
+    width: 100%;
+  }
+
+  .token-info img {
+    width: 40px;
+    height: 40px;
+    margin-right: 8px;
+  }
+
+  .token-info strong {
+    font-size: 1rem;
+    margin-left: 8px;
+  }
+
+  .crypto-adz img {
+    position: static;
+    width: 180px;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .slogan-crypto-adz {
+    position: static;
+    transform: none;
+    font-size: 1rem;
+    margin-top: 10px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar ul {
+    font-size: 16px;
+  }
+
+  .token-info img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .token-info strong {
+    font-size: 0.9rem;
+  }
+
+  .saudacao-usuario {
+    font-size: 1.2rem;
+    padding: 10px;
+  }
+
+  .slogan-crypto-adz {
+    font-size: 0.9rem;
+  }
+
+  .paginacao {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .paginacao a {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+  }
+}
+
