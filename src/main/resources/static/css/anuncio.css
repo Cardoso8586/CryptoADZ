@@ -57,6 +57,7 @@
   white-space: normal;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  width: 90%;
 }
 
 /* Descrição separada (caso use .descricao-anuncio) */
@@ -82,6 +83,7 @@
   text-align: center;
   margin: 1.5rem 0;
   font-family: Arial, sans-serif;
+  
 }
 
 .anuncio-detalhes p:first-child {
@@ -89,6 +91,7 @@
   color: #2c3e50;
   margin-bottom: 0.5rem;
   font-weight: 500;
+   
 }
 
 /* Contador */

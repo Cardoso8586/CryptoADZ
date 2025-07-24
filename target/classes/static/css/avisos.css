@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
-  padding: 50px;
+  padding: 500px;
   max-width: 800px;
   margin: 0 auto;
   background: linear-gradient(135deg, #e0f7fa, #e1f5fe); /* Degradê azul claro */

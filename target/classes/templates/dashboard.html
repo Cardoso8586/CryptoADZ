@@ -89,27 +89,7 @@
   </script>
   
 <div class="container">
- 
- <!-- ========== SIDEBAR MENU ========== -->
-<nav class="sidebar">
-  <ul>
-    <li><a href="#" id="btnBanners">🚀 Anunciantes</a></li>
-    <li><a href="#" id="btnVerAnuncios">👁 Ver Anúncios</a></li>
-    <li><a href="#" id="btnAnunciar">📢 Anunciar</a></li>
-    <li><a href="#" id="btnRanking">👤 Ranking</a></li>
-    <li><a href="#" id="btnSwap">🔄 Troca</a></li>
-    <li><a href="#" id="btnWallet">💼 Carteira</a></li> <!-- Nova seção -->
-    <li><a href="#" id="btnMissoes">🎯 Missões</a></li>
-    <li><a href="#" id="btnAvisos">🔔 Avisos</a></li>
-  </ul>
-
-    <!-- Logout button -->
-    <form th:action="@{/logout}" method="post" style="margin: 0;">
-      <button class="logout">🚪 Encerrar sessão</button>
-    </form>
-  </nav>
-
-<!-- ========== CONTEÚDO PRINCIPAL ========== -->
+ <!-- ========== CONTEÚDO PRINCIPAL ========== -->
 <main class="main-content-fixed">
 
 
@@ -155,6 +135,35 @@
     }
   });
 </script>
+<!-- Cartão de Avisos na Home -->
+<div id="cardAvisos" class="card-avisos">
+  <div class="card-avisos-header">
+    <h3>📢 Avisos</h3>
+    <h6>Detalhes</h6>
+  </div>
+  <p id="textoAvisos"></p>
+</div>
+
+
+ 
+ <!-- ========== SIDEBAR MENU ========== -->
+<nav class="sidebar">
+  <ul>
+    <li><a href="#" id="btnBanners">🚀 Anunciantes</a></li>
+    <li><a href="#" id="btnVerAnuncios">👁 Ver Anúncios</a></li>
+    <li><a href="#" id="btnAnunciar">📢 Anunciar</a></li>
+    <li><a href="#" id="btnRanking">👤 Ranking</a></li>
+    <li><a href="#" id="btnSwap">🔄 Troca</a></li>
+    <li><a href="#" id="btnWallet">💼 Carteira</a></li> <!-- Nova seção -->
+    <li><a href="#" id="btnMissoes">🎯 Missões</a></li>
+    <li><a href="#" id="btnAvisos">🔔 Avisos</a></li>
+  </ul>
+
+    <!-- Logout button -->
+    <form th:action="@{/logout}" method="post" style="margin: 0;">
+      <button class="logout">🚪 Encerrar sessão</button>
+    </form>
+  </nav>
 
 
 <!-- ========== LISTAGEM DE ANÚNCIOS ========== -->
@@ -539,15 +548,6 @@ document.addEventListener('DOMContentLoaded', function () {
   </div>
 </div>
 
-
-<!-- Cartão de Avisos na Home -->
-<div id="cardAvisos" class="card-avisos">
-  <div class="card-avisos-header">
-    <h3>📢 Avisos</h3>
-    <h6>Detalhes</h6>
-  </div>
-  <p id="textoAvisos"></p>
-</div>
 
 
 
