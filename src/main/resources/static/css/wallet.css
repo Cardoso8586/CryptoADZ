@@ -19,22 +19,36 @@
 }
 
 /* Botão Conectar (mesmo estilo dos botões do form) */
-#connectButton {
-  background-color: #00cc99;
-  color: #fff;
-  padding: 14px;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  cursor: pointer;
-  width: 100%;
-  font-size: 1rem;
-  transition: background-color 0.3s;
-  margin-bottom: 20px;
+#connectButton.metamask-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 20px;
+    background-color: #00b388;/* Cor  MetaMask */
+    color: #fff;
+    font-size: 1rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+#connectButton.metamask-button:hover {
+    background-color:  #444;
+    transform: scale(1.2);
+}
+
+.metamask-icon {
+    width: 24px;
+    height: 24px;
 }
 
 #connectButton:hover {
   background-color: #00b388;
+   transform: scale(1.2);
 }
 
 /* Inputs */
@@ -53,6 +67,7 @@ input[type="number"] {
 
 input[type="number"]:focus {
   border-color: #00ffcc;
+  
 }
 
 /* Botões dentro dos formulários */
@@ -69,8 +84,9 @@ form button {
 }
 
 form button:hover {
-  background-color: #00b388;
+  background-color: #444;
 }
+
 
 /* Formulários alinhados em coluna com espaçamento */
 form {

@@ -47,7 +47,6 @@ function limparFormulario() {
   formAnuncio.reset();
 }
 
-// Cálculo automático do custo do anúncio
 tempoInput.addEventListener('input', calcularCustoEstimado);
 maxVisInput.addEventListener('input', calcularCustoEstimado);
 
@@ -74,7 +73,7 @@ function calcularCustoEstimado() {
   } else if (tempo === 10) {
     tokensPorView = 1.10;
   } else {
-    tokensPorView = 1.30; // valor padrão se tempo for algo inesperado
+    tokensPorView = 1.30;
   }
 
   custoEstimado = tokensPorView * maxVis;
@@ -85,6 +84,17 @@ function calcularCustoEstimado() {
 formAnuncio.addEventListener('submit', async e => {
   e.preventDefault();
 
+  // ✅ VERIFICA SE O CHECKBOX FOI MARCADO
+  const checkboxTermos = document.getElementById('aceitoTermosAnuncio');
+  if (!checkboxTermos || !checkboxTermos.checked) {
+	alert('Você precisa aceitar os termos de privacidade para continuar.');
+    feedback.textContent = '⛔ Você deve aceitar os Termos de Uso para continuar.';
+    feedback.style.color = 'red';
+    checkboxTermos?.focus();
+    return;
+  }
+
+
   const tempo = parseInt(tempoInput.value, 10);
   const maxVis = parseInt(maxVisInput.value, 10);
 
@@ -94,7 +104,6 @@ formAnuncio.addEventListener('submit', async e => {
     return;
   }
 
-  // Validação de mínimos por tempo
   const limitesMinimos = {
     10: 300,
     20: 500,
@@ -111,7 +120,6 @@ formAnuncio.addEventListener('submit', async e => {
     return;
   }
 
-  // DTO do anúncio
   const dto = {
     titulo: document.getElementById('titulo').value,
     descricao: document.getElementById('descricao').value,
@@ -132,13 +140,12 @@ formAnuncio.addEventListener('submit', async e => {
     if (!response.ok) {
       const err = await response.text();
 
-      // Ajuste: tratar erro específico de saldo insuficiente
       if (err.toLowerCase().includes('saldo insuficiente')) {
         feedback.textContent = '⛔ Saldo insuficiente para cadastrar o anúncio. Por favor, recarregue sua conta.';
       } else {
         feedback.textContent = 'Erro: ' + err;
       }
-      
+
       feedback.style.color = 'red';
       return;
     }
@@ -153,17 +160,16 @@ formAnuncio.addEventListener('submit', async e => {
     registrarMissaoCadastrar();
     infoPagamento.textContent = '';
     atualizarSaldo();
-    
+
     setInterval(() => {
       carregarQuantidadeDeAnuncios();
-    }, 3000); // Atualiza a cada 3 segundos
+    }, 3000);
 
   } catch (error) {
     feedback.textContent = 'Falha ao salvar o anúncio: ' + error.message;
     feedback.style.color = 'red';
   }
 });
-
 
 function registrarMissaoCadastrar() {
   const usuarioId = document.querySelector('meta[name="user-id"]')?.content;
@@ -179,13 +185,12 @@ function registrarMissaoCadastrar() {
     })
     .then(msg => {
       console.log('Missão de cadastro registrada:', msg);
-      // Agora incrementa
       return fetch(`/missoes/incrementar-cadastro/${usuarioId}`, { method: 'POST' });
     })
     .then(res => {
       if (!res.ok) throw new Error('Falha ao incrementar cadastro');
       console.log('Incremento de cadastro realizado com sucesso.');
-      carregarStatusMissoes(); // Atualiza os contadores na tela
+      carregarStatusMissoes();
     })
     .catch(err => {
       console.error('Erro ao registrar/incrementar missão de cadastro:', err);
@@ -201,7 +206,7 @@ descricaoInput.addEventListener('input', () => {
   const restante = limiteDescricao - descricaoInput.value.length;
 
   if (restante < 0) {
-    descricaoInput.value = descricaoInput.value.substring(0, limiteDescricao); // Corta o excesso
+    descricaoInput.value = descricaoInput.value.substring(0, limiteDescricao);
     spanRestantes.textContent = '0';
   } else {
     spanRestantes.textContent = restante;
@@ -216,7 +221,6 @@ descricaoInput.addEventListener('input', () => {
   }
 });
 
-
 const tituloInput = document.getElementById('titulo');
 const restantesTitulo = document.getElementById('restantesTitulo');
 
@@ -227,13 +231,9 @@ tituloInput.addEventListener('input', () => {
 
   restantesTitulo.textContent = restantes;
 
-  // Opcional: alerta visual se atingir o limite
   if (restantes <= 0) {
     restantesTitulo.style.color = 'red';
   } else {
     restantesTitulo.style.color = 'gray';
   }
 });
-
-
-

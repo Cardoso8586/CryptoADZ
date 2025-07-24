@@ -1,112 +1,125 @@
+/* ===== Seção de Missões Diárias ===== */
 #secaoMissoes {
-
-  width: 50%;
-  background: linear-gradient(90deg, #0d47a1, #1976d2);
-  color: #fff;
-  border-bottom: 4px solid #ffca28;
-  padding: 100px 40px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-  z-index: 1100;
+  display: none;
+  background-color:  #1e2733;
+  border-radius: 16px;
+  padding: 30px 25px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  margin-top: 30px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  user-select: none;
 }
 
+/* Título da seção */
 #secaoMissoes h2 {
-  font-size: 2em;
-  margin: 0 0 15px 0;
-  text-shadow: 0 2px 5px rgba(0,0,0,0.4);
-  letter-spacing: 1.2px;
-  
+  font-size: 1.8rem;
+  margin-bottom: 24px;
+  color:  #f4f4f4;
+  text-align: center;
 }
 
+/* Lista de missões */
 #secaoMissoes ul {
   list-style: none;
   padding: 0;
   margin: 0;
-  display: flex;
-  gap: 10px;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+  display: grid;
+  gap: 20px;
 }
 
+/* Cada missão individual */
 #secaoMissoes li {
+  background: linear-gradient(135deg, #f8f9fc, #e8eef6);
+  border-left: 6px solid #0d6efd;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.04);
+  display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  word-break: break-word;
-  overflow-wrap: break-word;
-}
-
-#secaoMissoes strong {
-  flex-wrap: wrap;
-  word-break: break-word;
-  overflow-wrap: break-word;
+  gap: 10px;
+  transition: transform 0.2s ease;
 }
 
 #secaoMissoes li:hover {
-  background: rgba(255, 255, 255, 0.3);
-}
-
-
-#secaoMissoes span {
-  font-size: 1.6em;
-  user-select: none;
-  transition: transform 0.3s ease;
-}
-
-#secaoMissoes span[style*="display:none"] {
-  display: inline-block !important; /* garantir que o span sempre apareça */
-}
-
-#secaoMissoes span.status-completo {
-  color: #4caf50;
-  transform: scale(1.3);
-}
-
-#secaoMissoes button {
-  background-color: #ffca28;
-  border: none;
-  color: #0d47a1;
-  font-weight: 100;
-  padding: 8px 16px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 1em;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  user-select: none;
-}
-
-#secaoMissoes button:hover {
-  background-color: #ffc107;
   transform: translateY(-2px);
 }
 
-#secaoMissoes button:active {
-  transform: translateY(0);
+/* Texto em destaque (título da missão) */
+#secaoMissoes li strong {
+  font-size: 1.1rem;
+  color: #2d3436;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-#secaoMissoes p#mensagemMissao {
-  margin-top: 18px;
-  font-weight: 600;
-  font-size: 1.15em;
-  color: #ffd54f;
-  text-shadow: 0 1px 3px rgba(0,0,0,0.4);
-  min-height: 24px;
-}
-
-/* Responsividade */
-@media (max-width: 720px) {
-  #secaoMissoes ul {
-    flex-direction: column;
-    gap: 20px;
-  }
-  #secaoMissoes li {
-    min-width: 100%;
-  }
-}
-#secaoMissoes img {
-  width: 35px;
-  height: 35px;
+/* Ícones de token dentro dos títulos */
+#secaoMissoes li strong img {
+  width: 22px;
+  height: 22px;
   vertical-align: middle;
-  margin-left: 4px;
+  margin-left: 6px;
+}
+
+/* Status da missão (ex: 0/20) */
+#secaoMissoes li span[id^="status"] {
+  font-size: 0.95rem;
+  color: #6c757d;
+  background-color: #f1f3f5;
+  padding: 6px 12px;
+  border-radius: 8px;
+  display: inline-block;
+  width: fit-content;
+  font-weight: 500;
+}
+
+/* Botões "Resgatar" escondidos por padrão */
+#secaoMissoes li button {
+  align-self: flex-start;
+  padding: 10px 18px;
+  background-color: #198754;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: none;
+}
+
+#secaoMissoes li button:hover {
+  background-color: #157347;
+}
+
+/* Mensagem final de missão */
+#mensagemMissao {
+  margin-top: 20px;
+  font-size: 1rem;
+  color: #333;
+  background-color: #e9f5e9;
+  border-left: 4px solid #27ae60;
+  padding: 12px 20px;
+  border-radius: 10px;
+  display: none;
+}
+
+/* ===== Responsivo ===== */
+@media (max-width: 768px) {
+  #secaoMissoes {
+    padding: 20px;
+  }
+
+  #secaoMissoes li {
+    padding: 16px;
+  }
+
+  #secaoMissoes li strong {
+    font-size: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  #secaoMissoes li button {
+    width: 100%;
+    text-align: center;
+  }
 }

@@ -70,6 +70,7 @@ public class SecurityConfig {
             			    "/cadastro/**",
             			    "/css/**",
             			    "/js/**",
+            			    "/icones/**",
             			    "/usuarios/quantidade",
             			    "/api/anuncio/quantidade",
             			    "/api/anuncio/quantidade-cliks",
@@ -114,6 +115,7 @@ public class SecurityConfig {
             		    .anyRequest().authenticated()
             		    
             )
+            
             .formLogin(form -> form
                 .loginPage("/login")
                 .defaultSuccessUrl("/dashboard", true)

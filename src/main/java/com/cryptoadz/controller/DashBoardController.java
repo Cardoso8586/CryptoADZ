@@ -29,7 +29,7 @@ public class DashBoardController {
 
     @GetMapping("/dashboard")
     public String dashboard(@RequestParam(defaultValue = "0") int page,
-                            @RequestParam(defaultValue = "20") int size,
+                            @RequestParam(defaultValue = "15") int size,
                             Authentication authentication, Model model) {
 
         String username = authentication.getName();

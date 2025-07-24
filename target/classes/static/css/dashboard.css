@@ -6,7 +6,7 @@
 
 /* ===== Estilos básicos do body ===== */
 body {
-  background-color: #f0f4f8;
+  background-color: #333;
   color: #333;
   margin-top: 130px;
   cursor: url('img/cursor.cur'), auto !important;
@@ -190,7 +190,7 @@ body {
 
 .crypto-adz img {
   position: fixed;
-  top: -60px; /* <- Aqui está o ajuste para subir */
+  top: 10px; /* <- Aqui está o ajuste para subir */
   left: 60%;
  
   width: 240px;
@@ -224,3 +224,4 @@ body {
 
  
 }
+

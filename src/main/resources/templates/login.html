@@ -3,16 +3,24 @@
 <head>
     <title>Login</title>
     
-    <link rel="stylesheet" href="/css/login.css">
+  
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
     <!-- Turnstile script -->
-    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script> 
+    <link rel="stylesheet" href="css/login.css">
+     <link rel="stylesheet" href="css/sitePromo.css" />
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+     
 </head>
+
+ 
+
 <body>
 
  <p class="crypto-adz-login">
-<img src="./icones/cryptoAdzLogin.png" alt="CryptoADZ Login" />
+<img src="/icones/cryptoAdzLogin.png" />
+
 </p>
 
 <p class="slogan-crypto-adz-login">Cada clique ganha ADZ!</p>
@@ -50,11 +58,46 @@
 <p class="ptc-ads">Anúncios PTC.<span id="quantidadeUsuarios">Clique, visualize e ganhe instantaneamente.</span></p>
 
 
+<!-- PROPAGANDA DO SITE -->
+<div class="site-promo">
+  <h2 class="promo-title">Ganhe Dinheiro Clicando em Anúncios</h2>
+  <p class="promo-text">
+    Cadastre-se gratuitamente e comece a ganhar clicando em anúncios.
+    Anunciantes também podem divulgar seus sites pagando por cliques reais.
+  </p>
+
+  <div class="promo-sections">
+    <div class="promo-box">
+      <div class="promo-icon">
+        <i class="fas fa-mouse-pointer"></i>
+      </div>
+      <h3>Para Usuários</h3>
+      <p>Clique em anúncios e ganhe por cada visualização.</p>
+    </div>
+
+    <div class="promo-box">
+      <div class="promo-icon">
+        <i class="fas fa-bullhorn"></i>
+      </div>
+      <h3>Para Anunciantes</h3>
+      <p>Promova seu site com tráfego real e direcionado.</p>
+    </div>
+
+    <div class="promo-box">
+      <div class="promo-icon">
+        <i class="fas fa-shield-alt"></i>
+      </div>
+      <h3>Pagamentos Seguros</h3>
+      <p>Sistema transparente com controle total de ganhos.</p>
+    </div>
+  </div>
+</div>
+<!-- PROPAGANDA DO SITE -->
 
 <script src="/js/atualizarQuantidadeUsuarios.js"></script>
 <script src="/js/atualizarQuantidadeAnuncios.js"></script>
 <script src="/js/quantidadeCliks.js"></script>
-<script src="/js/bloqueioAbas.js"></script>
+
 <script src="/js/slogans.js" defer></script>
 
 </body>

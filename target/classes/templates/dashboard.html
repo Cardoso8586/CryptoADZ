@@ -20,22 +20,73 @@
   <link rel="stylesheet" href="css/advertise.css" />
   <link rel="stylesheet" href="css/anuncio.css" />
   <link rel="stylesheet" href="css/avisos.css" />
-   <link rel="stylesheet" href="css/avisoFixado.css" />
-   <link rel="stylesheet" href="css/bannersPublicitarios.css" />
-   <link rel="stylesheet" href="css/publicitarios.css" />    
-   <link rel="stylesheet" href="css/bonusModal.css" />
-   <link rel="stylesheet" href="css/swap.css" />
-    <link rel="stylesheet" href="css/SidebarMobile.css" />         
-    <link rel="stylesheet" href="css/footerSistema.css" /> 
-    
+  <link rel="stylesheet" href="css/avisoFixado.css" />
+  <link rel="stylesheet" href="css/bannersPublicitarios.css" />
+  <link rel="stylesheet" href="css/publicitarios.css" />    
+  <link rel="stylesheet" href="css/bonusModal.css" />
+  <link rel="stylesheet" href="css/swap.css" />
+  <link rel="stylesheet" href="css/SidebarMobile.css" />      
+  <link rel="stylesheet" href="css/bannerModal.css" />
+ 
+   
     
     
 </head>
 
 <body>
 
+ <!-- Loader -->
+<div id="loader">
+  <div>
+    <img src="/icones/cryptoAdz.png?v=032" alt="Logo" width="100">
+    <div class="spinner"></div>
+    <p>Preparando o conteúdo...</p>
+  </div>
+</div>
 
+ <style>
+    /* Estilo do loader */
+    #loader {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
 
+    .spinner {
+      border: 8px solid #f3f3f3;
+      border-top: 8px solid #3498db;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Esconde o conteúdo da página até o carregamento */
+    body.loaded #loader {
+      display: none;
+    }
+
+    body:not(.loaded) #content {
+      display: none;
+    }
+  </style>
+   <!-- Script para esconder o loader depois que a página carregar -->
+  <script>
+    window.addEventListener('load', () => {
+      document.body.classList.add('loaded');
+    });
+  </script>
   
 <div class="container">
  
@@ -69,8 +120,6 @@
 
     <p class="token-info">
       <img src="/icones/adz-token.png" alt="Token ADZ" title="Saldo em ADZ" aria-label="Token ADZ">
-
-      
       <strong id="saldoTokens" th:text="${saldoTokens}">0.00</strong>
     </p>
 
@@ -146,6 +195,22 @@
   </div>
 </section>
 
+<div id="anuncioModal" class="modal">
+  <div class="modal-content">
+    <span id="fecharModal" class="fechar">&times;</span>
+    <h2 id="tituloAnuncio">Aguardando Visualização...</h2>
+    <p id="contadorModal">Tempo restante: 30s</p>
+    <img id="imagemAnuncio" src="" alt="Banner do Anúncio" style="width: 100%; max-height: 200px; object-fit: contain; display: none;" />
+    <p><a id="linkAnuncio" href="#" target="_blank" style="word-break: break-all;"></a></p>
+    <p>Mantenha a janela aberta até o tempo finalizar para receber os tokens.</p>
+    <img src="/icones/adz-token.png?v=032" alt="USDT" style="width: 30px; vertical-align: middle; margin-right: 5px;">
+     <strong id="saldoTokens" th:text="${saldoTokens}">0.00</strong>
+      
+  </div>
+</div>
+
+
+
 
 
 <!-- ========== SEÇÃO DE CRIAÇÃO DE ANÚNCIOS ========== -->
@@ -212,8 +277,14 @@
   <!-- EXIBIR CÁLCULO DE PAGAMENTO -->
   <div id="infoPagamento" style="margin-top:10px; font-weight:bold; color:blue;"></div>
 
+<label>
+  <input type="checkbox" id="aceitoTermosAnuncio">
+  Aceito os <a href="/termos.html" target="_blank">Termos de Uso</a>
+</label>
+  <div id="feedback"></div>
   <button type="submit">Enviar Anúncio</button>
   <button type="button" id="btnCancelar">Cancelar</button>
+  
 </form>
 
 <section id="upload-banner">
@@ -281,24 +352,35 @@
 </p>
 
 
+<label>
+  <input type="checkbox" id="aceitoTermos">
+  Aceito os <a href="/termos.html" target="_blank">Termos de Uso</a>
+
+</label>
 
         <div id="custo-preview"></div>
         <div id="saldo-tokens"></div>
-
+         <div id="feedbackBanner"></div>
         <button id="btn-confirmar-cadastro">✅ Confirmar Cadastro</button>
     </form>
+
+    
 </section>
-    <div id="feedback"></div>
+   
   </section>
 
-
+<!-- ==========  SEÇÃO DE CRIAÇÃO DE ANÚNCIOS  ========== -->
 
 
 
 <!-- ========== SEÇÃO CARTEIRA ========== -->
 <div id="wallet-container">
   <h2>Minha Carteira</h2>
-  <button id="connectButton">Conectar MetaMask</button>
+  <button id="connectButton" class="metamask-button">
+  <img src="/icones/metamask-icon.webp" alt="MetaMask" class="metamask-icon">
+  Conectar MetaMask
+</button>
+
   <p id="status"></p>
   <p id="walletAddress">Carteira: não conectada</p>
 
@@ -443,217 +525,7 @@ document.addEventListener('DOMContentLoaded', function () {
   </div>
 </section>
 
-<script>
-  let saldoTokens = 0;
-  let saldoUsdt = 0;
 
-  document.addEventListener('DOMContentLoaded', () => {
-    const fromToken = document.getElementById('fromToken');
-    const toToken = document.getElementById('toToken');
-    const fromAmount = document.getElementById('fromAmount');
-    const toAmount = document.getElementById('toAmount');
-    const preview = document.getElementById('previewSwap');
-    const btnConfirmSwap = document.getElementById('btnConfirmSwap');
-    const taxa = 0.02; // 2%
-
-    function getUsuarioLogadoId() {
-      const meta = document.querySelector('meta[name="user-id"]');
-      return meta ? parseInt(meta.getAttribute('content')) : null;
-    }
-
-    function obterSaldo(token) {
-      if (token === 'token') return saldoTokens;
-      if (token === 'usdt') return saldoUsdt;
-      return 0;
-    }
-
-    async function getCotacao(from, to) {
-      if (from === 'token' && to === 'usdt') return 0.001;
-      if (from === 'usdt' && to === 'token') return 1000;
-      return 1;
-    }
-
-    function logMensagem(msg, cor = 'black') {
-      const logEntry = document.createElement('div');
-      logEntry.style.color = cor;
-      logEntry.innerHTML = `📝 ${msg}`;
-      preview.appendChild(logEntry);
-    }
-
-    async function atualizarResultado() {
-      const from = fromToken.value;
-      const to = toToken.value;
-      const valor = parseFloat(fromAmount.value);
-
-      preview.innerHTML = ''; // limpa os logs anteriores
-
-      if (!valor || valor <= 0) {
-        toAmount.value = '';
-        return;
-      }
-
-      if (from === to) {
-        toAmount.value = valor.toFixed(2);
-        logMensagem('Selecione moedas diferentes para trocar.', 'red');
-        return;
-      }
-
-      const saldoAtual = obterSaldo(from);
-      if (valor > saldoAtual) {
-        toAmount.value = '';
-        logMensagem(`Saldo insuficiente! ${saldoAtual.toFixed(2)} ${from.toUpperCase()}.`, 'red');
-        return;
-      }
-
-      if (from === 'token' && valor < 1000) {
-        logMensagem('O valor mínimo para troca de ADZ Token é 1000.', 'red');
-        toAmount.value = '';
-        return;
-      }
-
-      if (from === 'usdt' && valor < 1) {
-        logMensagem('O valor mínimo para troca de USDT é 1.', 'red');
-        toAmount.value = '';
-        return;
-      }
-
-      const cotacao = await getCotacao(from, to);
-      const bruto = valor * cotacao;
-      const taxaAplicada = bruto * taxa;
-      const liquido = bruto - taxaAplicada;
-
-      toAmount.value = liquido.toFixed(2);
-      logMensagem(`Valor líquido: ${liquido.toFixed(2)} ${to.toUpperCase()}`, 'wite');
-      
-    }
-
-    btnConfirmSwap.addEventListener('click', async () => {
-      const valor = parseFloat(fromAmount.value);
-      const de = fromToken.value;
-      const para = toToken.value;
-
-      if (!valor || valor <= 0) {
-      //  alert("Digite um valor válido.");
-        logMensagem('Digite um valor válido.');
-        return;
-      }
-
-      if (de === para) {
-       // alert("Selecione moedas diferentes.");
-       logMensagem('Selecione moedas diferentes.');
-        return;
-      }
-
-      const saldoAtual = obterSaldo(de);
-      if (valor > saldoAtual) {
-      //  alert(`Saldo insuficiente! ${saldoAtual.toFixed(2)} ${de.toUpperCase()}.`);
-        return;
-      }
-
-      if (de === 'token' && valor < 1000) {
-        alert("Valor mínimo para troca de ADZ Token é 1000.");
-        return;
-      }
-
-      if (de === 'usdt' && valor < 1) {
-        alert("Valor mínimo para troca de USDT é 1.");
-        return;
-      }
-
-      try {
-    	  const resultado = await realizarSwap(de, para, valor, getUsuarioLogadoId());
-
-    	  if (resultado.sucesso) {
-    	    if (de === 'token') {
-    	      saldoTokens -= valor;
-    	      saldoUsdt += resultado.valorRecebido;
-    	    } else {
-    	      saldoUsdt -= valor;
-    	      saldoTokens += resultado.valorRecebido;
-    	    }
-
-    	    document.getElementById('saldoTokens').innerText = saldoTokens.toFixed(2);
-    	    document.getElementById('saldoUsdt').innerText = saldoUsdt.toFixed(2);
-
-    	    fromAmount.value = '';
-    	    toAmount.value = '';
-    	    preview.innerHTML = '';
-
-    	    // Mostra mensagem de sucesso imediatamente
-    	    logMensagem(`✅ Troca realizada: ${valor} ${de.toUpperCase()} → ${resultado.valorRecebido.toFixed(2)} ${para.toUpperCase()}`, 'wite');
-
-    	    // Após 10 segundos, exibe "Realizar nova troca"
-    	    setTimeout(() => {
-    	     preview.innerHTML = '';
-    	      logMensagem('🔄 Realizar nova troca?', 'wite'); // você pode mudar a cor ou deixar sem cor
-    	    }, 10000); // 10 segundos = 10000 ms
-
-    	  } else {
-    	    logMensagem(`❌ Erro na troca: ${resultado.erro || 'Erro desconhecido'}`, 'red');
-    	  }
-    	} catch (err) {
-    	  logMensagem(`❌ Erro ao realizar troca: ${err.message}`, 'red');
-    	}
-
-    });
-
-    fromToken.addEventListener('change', atualizarResultado);
-    toToken.addEventListener('change', atualizarResultado);
-    fromAmount.addEventListener('input', atualizarResultado);
-
-    atualizarResultado(); // Atualiza ao iniciar
-  });
-
-  function atualizarSaldoTokens() {
-    return fetch('/api/saldo')
-      .then(res => res.ok ? res.json() : Promise.reject("Erro na requisição saldo"))
-      .then(data => {
-        saldoTokens = data.saldo;
-        document.getElementById('saldoTokens').innerText = saldoTokens.toFixed(2);
-      })
-      .catch(err => console.error(err));
-  }
-
-  function atualizarSaldoUsdt() {
-    return fetch('/api/saldoUsdt')
-      .then(res => res.ok ? res.json() : Promise.reject("Erro na requisição saldoUsdt"))
-      .then(data => {
-        saldoUsdt = data.saldoUsdt;
-        document.getElementById('saldoUsdt').innerText = saldoUsdt.toFixed(2);
-      })
-      .catch(err => console.error(err));
-  }
-
-  async function realizarSwap(from, to, fromAmount, userId) {
-    const url = '/api/swap';
-    const swapRequest = {
-      from: from,
-      to: to,
-      fromAmount: fromAmount,
-      userId: userId
-    };
-
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(swapRequest)
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      return { sucesso: false, erro: errorData.erro || 'Erro desconhecido' };
-    }
-
-    const data = await response.json();
-    return data;
-  }
-
-  atualizarSaldoTokens();
-  atualizarSaldoUsdt();
-  
-  
-  
-</script>
 
 
 
@@ -700,7 +572,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
     <!-- 🔥 Bloco de Anúncios Patrocinados -->
 <div class="ads-section" style="margin-top: 20px;">
  
@@ -710,11 +581,12 @@ document.addEventListener('DOMContentLoaded', function () {
 </div>
 
 
- 
-
 
 
   </main>
+  
+
+  
   
   </div>
 
@@ -723,7 +595,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 <script src="js/metamask.js" defer></script>
 <script src="js/deposito.js" defer></script>
-  <!-- <script src="/js/bloqueioAbas.js" defer></script> -->
+
 
 <script src="/js/dashboard-nav.js" defer></script>
 <script src="/js/verificarBloqueio.js" defer></script>
@@ -738,12 +610,13 @@ document.addEventListener('DOMContentLoaded', function () {
 <script src="/js/avisoFixado.js" defer></script>
 <script src="/js/bannerAdvertise.js" defer></script>
 <script src="/js/publicitarios.js" defer></script> 
-<script src="/js/bannersModal.js" defer></script> 
-<script src="/js/bonusModal.js" defer></script>
+<script src="/js/bannersPublicitarios.js" defer></script>
+<script src="/js/bonusModal.js" defer></script> 
 <script src="/js/missaoBanner.js" defer></script>  
 <script src="/js/historicoDepositos.js" defer></script>
 <script src="/js/historicoSaques.js" defer></script>  
-
+<script src="/js/swap.js" defer></script> 
+  <!--    -->
 
 
 </body>

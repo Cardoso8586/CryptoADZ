@@ -1,7 +1,7 @@
 /* Container principal dos banners publicitários */
 #bannersPublicitarios {
     padding: 20px;
-    background-color: #fff;
+    background-color: #333;
     border-radius: 10px;
     box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
     margin: 20px auto;      /* centraliza horizontalmente */
@@ -15,6 +15,7 @@
     color: #333;
     margin-bottom: 15px;
     font-size: 24px;
+    color: #f4f4f4;
 }
 
 /* Container interno para banners - flex container */
@@ -23,6 +24,7 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 20px;
+    
 }
 
 /* Cada banner */
@@ -31,7 +33,7 @@
     border-radius: 12px;
     padding: 10px;
     text-align: center;
-    background-color: #fafafa;
+    background-color: #333;
     box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
     flex: 1 1 calc(25% - 30px); /* 4 por linha */
     max-width: 320px;            /* tamanho máximo do banner */
@@ -39,6 +41,7 @@
     overflow: hidden;
     box-sizing: border-box;
 }
+
 
 /* Hover suave */
 #bannersPublicitarios .banner:hover {
