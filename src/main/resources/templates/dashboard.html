@@ -98,15 +98,50 @@
       <span id="nomeUsuario" th:text="${usuario.username}">Usuário</span>
     </h1>
 
+<div class="header-saldos-container">
+
+
+  <!-- Blocos de saldos -->
+  <div id="blocoAdz" class="bloco-saldo">
     <p class="token-info">
-      <img src="/icones/adz-token.png" alt="Token ADZ" title="Saldo em ADZ" aria-label="Token ADZ">
+      <img src="/icones/adz-token.png" alt="Token ADZ" title="Saldo em ADZ">
       <strong id="saldoTokens" th:text="${saldoTokens}">0.00</strong>
     </p>
+  </div>
 
+  <div id="blocoUsdt" class="bloco-saldo">
     <p class="token-info">
-   <img src="icones/tether-usdt-logo.png?v=032" alt="USDT" title="Saldo em USDT" aria-label="Token USDT">
+      <img src="/icones/tether-usdt-logo.png" alt="Token USDT" title="Saldo em USDT">
       <strong id="saldoUsdt" th:text="${saldoUsdt}">0.00</strong>
     </p>
+  </div>
+  
+    <!-- Seletor de moedas -->
+  <select id="moedaSelect">
+    <option value="ADZ">ADZ</option>
+    <option value="USDT">USDT</option>
+  </select>
+  
+</div>
+
+
+<script>
+const seletor = document.getElementById("moedaSelect");
+const blocoAdz = document.getElementById("blocoAdz");
+const blocoUsdt = document.getElementById("blocoUsdt");
+
+function atualizarBlocos() {
+  const valor = seletor.value;
+
+  blocoAdz.style.display = valor === "ADZ" ? "flex" : "none";
+  blocoUsdt.style.display = valor === "USDT" ? "flex" : "none";
+}
+
+seletor.addEventListener("change", atualizarBlocos);
+atualizarBlocos();
+
+</script>
+
 
    <p class="crypto-adz">
   <img src="/icones/cryptoAdz.png?v=032" alt="CryptoADZ Logo">

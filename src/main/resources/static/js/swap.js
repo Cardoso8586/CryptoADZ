@@ -137,9 +137,10 @@ let saldoTokens = 0;
    	    logMensagem(`✅ Troca realizada: ${valor} ${de.toUpperCase()} → ${resultado.valorRecebido.toFixed(2)} ${para.toUpperCase()}`, 'wite');
 
    	    // Após 10 segundos, exibe "Realizar nova troca"
+		
    	    setTimeout(() => {
    	     preview.innerHTML = '';
-   	      logMensagem('🔄 Realizar nova troca?', 'wite'); // você pode mudar a cor ou deixar sem cor
+   	      logMensagem('🔄 Realizar nova troca?', 'wite'); 
    	    }, 10000); // 10 segundos = 10000 ms
 
    	  } else {
