@@ -83,16 +83,44 @@
 
 
 <div class="login-container">
-    <h2>Login</h2>
-    <form th:action="@{/login}" method="post" class="login-form">
-        <input type="text" name="username" placeholder="Usuário" required />
-        <input type="password" name="password" placeholder="Senha" required />
-        
-        <!-- CAPTCHA -->
-       <div class="cf-turnstile" data-sitekey="0x4AAAAAABhDBlDrEgbq9kdW" data-callback="onTurnstileSuccess"></div>
+  <h2>Login</h2>
+  <form th:action="@{/login}" method="post" class="login-form">
+    <input type="text" name="username" placeholder="Usuário" required />
+    <input type="password" name="password" placeholder="Senha" required />
 
-        <button type="submit">Entrar</button>
-    </form>
+    <!-- CAPTCHA -->
+    <div class="cf-turnstile" 
+         data-sitekey="0x4AAAAAABhDBlDrEgbq9kdW" 
+         data-callback="onTurnstileSuccess"
+         data-error-callback="onTurnstileError"
+         data-expired-callback="onTurnstileExpired"></div>
+
+    <!-- Campo oculto para enviar o token do CAPTCHA -->
+    <input type="hidden" id="captcha-response-login" name="response" />
+
+    <button type="submit" id="loginBtn" disabled>Entrar</button>
+  </form>
+</div>
+
+<script>
+  function onTurnstileSuccess(token) {
+    document.getElementById('captcha-response-login').value = token;
+    document.getElementById('loginBtn').disabled = false;
+  }
+
+  function onTurnstileError() {
+    document.getElementById('captcha-response-login').value = '';
+    document.getElementById('loginBtn').disabled = true;
+  }
+
+  function onTurnstileExpired() {
+    document.getElementById('captcha-response-login').value = '';
+    document.getElementById('loginBtn').disabled = true;
+  }
+</script>
+
+    
+    
     <p class="cadastro-link">Não tem uma conta? <a th:href="@{/cadastro}">Cadastre-se aqui</a></p>
 </div>
 

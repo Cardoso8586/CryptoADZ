@@ -12,7 +12,7 @@ import com.cryptoadz.repository.UsuarioRepository;
 import com.cryptoadz.service.MissaoService;
 
 @RestController
-@RequestMapping("/missoes")
+@RequestMapping("api/missoes")
 @CrossOrigin(origins = "https://cryptoadz-production.up.railway.app") 
 public class MissaoController {
 
