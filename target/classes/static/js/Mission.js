@@ -214,6 +214,7 @@
     const secaoMissoesVisivel = sections.missoes.style.display === 'block' || sections.missoes.style.visibility === 'visible';
     if (secaoMissoesVisivel) {
       carregarStatusMissoes();
+	  atualizarUIStatusMissoes();
     }
   }, 30000);
 
