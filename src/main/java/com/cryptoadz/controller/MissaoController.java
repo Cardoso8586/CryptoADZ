@@ -12,8 +12,8 @@ import com.cryptoadz.repository.UsuarioRepository;
 import com.cryptoadz.service.MissaoService;
 
 @RestController
-@RequestMapping("api/missoes")
-@CrossOrigin(origins = "https://cryptoadz-production.up.railway.app") 
+@RequestMapping("/api/missoes")
+
 public class MissaoController {
 
     @Autowired
