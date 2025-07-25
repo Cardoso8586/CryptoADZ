@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+
   const sections = {
     verAnuncios: document.getElementById('VerAnuncios'),
     anunciar:    document.getElementById('Anunciar'),
@@ -217,6 +217,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }, 30000);
 
-});
+
 
 
