@@ -265,7 +265,8 @@ atualizarBlocos();
   <button id="btnMostrarForm">Criar Novo Anúncio</button>
   <button id="btnMostrarFormBanner">Criar Novo Banner</button>
 
-  <p>Você criou <span id="quantidadeSpan">0</span> anúncios.</p>
+  <p>Você criou <span id="quantidadeSpan">0</span> anúncios.</p> 
+  <div id="feedbackCadastro"></div>
 
   <script>
     async function carregarQuantidadeDeAnuncios() {
@@ -517,7 +518,7 @@ document.addEventListener('DOMContentLoaded', function () {
       <strong>
       📺 Assista aos anúncios e ganhe!:<span id="recompensaMissaorAssistir">
       <img src="/icones/adz-token.png" alt="ADZ Token"> </span></strong>
-      <span id="statusAssistir">0/20</span>
+      <span id="statusAssistir"></span>
       <button id="btnColetarAssistir" style="display:none;">Resgatar</button>
     </li>
     
@@ -533,7 +534,7 @@ document.addEventListener('DOMContentLoaded', function () {
       <strong>
       📢 Cadastre 1 anúncio e ganhe! <span id="recompensaMissaorRegister">
       <img src="/icones/adz-token.png" alt="ADZ Token"> </span> </strong>
-      <span id="statusCadastro">1</span>
+      <span id="statusCadastro"></span>
       <button id="btnColetarCadastrar" style="display:none;">Resgatar</button>
     </li>
   </ul>

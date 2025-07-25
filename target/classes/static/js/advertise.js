@@ -7,6 +7,7 @@ const btnCancelar     = document.getElementById('btnCancelar');
 const tempoInput      = document.getElementById('tempoVisualizacao');
 const maxVisInput     = document.getElementById('maxVisualizacoes');
 const infoPagamento   = document.getElementById('infoPagamento');
+const feedbackCadastro  = document.getElementById('feedbackCadastro');
 
 // Mostrar/ocultar a seção de anúncio
 btnAnunciar.addEventListener('click', e => {
@@ -153,14 +154,16 @@ formAnuncio.addEventListener('submit', async e => {
     const data = await response.json();
     console.log('Server response:', data);
 
-    feedback.textContent = '✅ Anúncio cadastrado com sucesso!';
-    feedback.style.color = 'green';
+    feedbackCadastro.textContent = '✅ Anúncio cadastrado com sucesso!';
+	alert('✅ Anúncio cadastrado com sucesso!');
+    feedbackCadastro.style.color = 'green';
     esconderFormulario();
     limparFormulario();
     registrarMissaoCadastrar();
     infoPagamento.textContent = '';
     atualizarSaldo();
 
+	
     setInterval(() => {
       carregarQuantidadeDeAnuncios();
     }, 3000);
@@ -178,14 +181,14 @@ function registrarMissaoCadastrar() {
     return;
   }
 
-  fetch(`/missoes/incrementar-cadastro/${usuarioId}`, { method: 'POST' })
+  fetch(`/api/missoes/incrementar-cadastro/${usuarioId}`, { method: 'POST' })
     .then(res => {
       if (!res.ok) throw new Error('Falha ao registrar missão de cadastro');
       return res.text();
     })
     .then(msg => {
       console.log('Missão de cadastro registrada:', msg);
-      return fetch(`/missoes/incrementar-cadastro/${usuarioId}`, { method: 'POST' });
+      return fetch(`/api/missoes/incrementar-cadastro/${usuarioId}`, { method: 'POST' });
     })
     .then(res => {
       if (!res.ok) throw new Error('Falha ao incrementar cadastro');

@@ -94,10 +94,6 @@ public class SecurityConfig {
                             "/api/depositos/fazer/**",
                             "/api/depositos/status/**",
                             "/api/depositos/historico/**",
-                            "/api/saques/confirmar/**",
-                            "/api/saques/pendentes/**",
-                            "/api/saques/historico/**",
-                            "/api/saques/status/**",
                             "/api/swap/**"
                          
                         

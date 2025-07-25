@@ -189,7 +189,7 @@ function registrarMissaoAssistir() {
     return;
   }
 
-  fetch(`/missoes/incrementar-assistir/${usuarioId}`, {
+  fetch(`/api/missoes/incrementar-assistir/${usuarioId}`, {
     method: 'POST'
   })
     .then(res => res.text())
