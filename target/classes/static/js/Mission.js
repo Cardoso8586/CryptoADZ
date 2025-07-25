@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    fetch(`api/missoes/status/${usuarioId}`, { credentials: 'include' })
+    fetch(`/api/missoes/status/${usuarioId}`, { credentials: 'include' })
       .then(res => {
         if (res.status === 404) {
           return { contadorAssistir: 0, contadorCadastrar: 0, recompensa_Assistir: 0, recompensa_Registrar: 0 };
