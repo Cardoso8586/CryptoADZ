@@ -65,7 +65,7 @@ public class UsuarioController {
 
    //============================================================================
     
-   
+  /** 
     @PostMapping("/cadastro")
     public String cadastrarUsuario(
             @ModelAttribute Usuario usuario,
@@ -93,12 +93,12 @@ public class UsuarioController {
         //return "redirect:/login";
     }
    
-   
+   */
     
    //========================================= Cadastro controlado por IP   ===========================================================
     
   
-  /**  @PostMapping("/cadastro")
+   @PostMapping("/cadastro")
    public String cadastrarUsuario(
             @ModelAttribute Usuario usuario,
             @RequestParam(name = "cf-turnstile-response") String captchaToken,
@@ -164,7 +164,7 @@ public class UsuarioController {
         //return "redirect:/login";
    
     }
-    */
+    
 //========================================================================================================
     
     //Recupera o IP real do cliente, mesmo por trás de proxies.
