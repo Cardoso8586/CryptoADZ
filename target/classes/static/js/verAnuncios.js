@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let janelaAnuncio = null;
   let checagemJanela = null;
 
+  
   const modal = document.getElementById('anuncioModal');
   const contadorModal = document.getElementById('contadorModal');
   const fecharModal = document.getElementById('fecharModal');
@@ -17,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   fecharModal.onclick = () => {
     if (contagemAtiva) {
       cancelarContagem('Contagem cancelada pelo usuário. Tokens não serão creditados.');
+	  
     } else {
       modal.style.display = 'none';
     }
@@ -36,10 +38,17 @@ document.addEventListener('DOMContentLoaded', () => {
       checagemJanela = null;
     }
 
-    alert(mensagem);
+	Swal.fire({
+	  		    icon: 'erro',
+	  		    title: 'Erro',
+	  		    text: mensagem,
+	  		    timer: 5000,
+	  		    timerProgressBar: true,
+	  		    showConfirmButton: false
+	  		  });
     modal.style.display = 'none';
     atualizarEstadoDosBotoes();
-    setTimeout(() => location.reload(), 1000);
+    setTimeout(() => location.reload(), 5000);
   }
 
   function atualizarEstadoDosBotoes() {
@@ -83,7 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
       // Abrir janela do anúncio
       janelaAnuncio = window.open(url, '_blank');
       if (!janelaAnuncio) {
-        alert('Falha ao abrir o anúncio. Verifique seu bloqueador de pop-ups.');
+       // alert('Falha ao abrir o anúncio. Verifique seu bloqueador de pop-ups.');
+	
         cancelarContagem('Falha ao abrir anúncio. Contagem cancelada.');
         return;
       }
@@ -97,7 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!resTempo.ok) throw new Error();
         resposta = await resTempo.json();
       } catch (err) {
-        alert('Falha ao obter o tempo do anúncio.');
+       alert('Falha ao obter o tempo do anúncio.');
+		
         cancelarContagem('Erro ao obter tempo do anúncio.');
         return;
       }

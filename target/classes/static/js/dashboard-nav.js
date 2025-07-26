@@ -7,12 +7,15 @@ document.addEventListener('DOMContentLoaded', () => {
     btnBanners: 'bannersPublicitarios',
     btnWallet: 'wallet-container',
     btnMissoes: 'secaoMissoes',
-    btnAvisos: 'Avisos'
+    btnAvisos: 'Avisos',
+	btnUsuario: 'painelUsuario' 
   };
 
   const adsSection = document.querySelector('.ads-section');
   const cardAvisos = document.getElementById('cardAvisos');
   const btnAvisos = document.getElementById('btnAvisos');
+
+  
 
   if (cardAvisos && btnAvisos) {
     cardAvisos.addEventListener('click', e => {
@@ -54,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (adsSection) {
-        if (secaoId === 'bannersPublicitarios' || secaoId === 'wallet-container') {
+        if (secaoId === 'bannersPublicitarios' || secaoId === 'wallet-container' || secaoId === 'painelUsuario') {
           adsSection.style.display = 'none';
         } else {
           adsSection.style.display = 'block';

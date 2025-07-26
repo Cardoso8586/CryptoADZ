@@ -27,7 +27,7 @@
   <link rel="stylesheet" href="css/swap.css" />
   <link rel="stylesheet" href="css/SidebarMobile.css" />      
   <link rel="stylesheet" href="css/bannerModal.css" />
- 
+  <link rel="stylesheet" href="css/painelUsuario.css" />
    
     
     
@@ -38,7 +38,7 @@
  <!-- Loader -->
 <div id="loader">
   <div>
-    <img src="/icones/cryptoAdzLoarder.png?v=032" alt="Logo" width="100">
+   
     <div class="spinner"></div>
     <p>Preparando o conteúdo...</p>
   </div>
@@ -184,8 +184,9 @@ atualizarBlocos();
  <!-- ========== SIDEBAR MENU ========== -->
 <nav class="sidebar">
   <ul>
-    <li><a href="#" id="btnBanners">🚀 Anunciantes</a></li>
     <li><a href="#" id="btnVerAnuncios">👁 Ver Anúncios</a></li>
+    <li><a href="#" id="btnBanners">🚀 Anunciantes</a></li>
+    <li><a href="#" id="btnUsuario">👤 Painel do Usuário</a></li>
     <li><a href="#" id="btnAnunciar">📢 Anunciar</a></li>
     <li><a href="#" id="btnRanking">👤 Ranking</a></li>
     <li><a href="#" id="btnSwap">🔄 Troca</a></li>
@@ -548,21 +549,29 @@ document.addEventListener('DOMContentLoaded', function () {
     <h2>Trocar </h2>
     
     <div class="swap-box">
-      <label for="fromToken">De:</label>
-      <select id="fromToken">
-        <option value="token">ADZ Token</option>
-        <option value="usdt">USDT</option>
-      </select>
+     <label for="fromToken">De:</label>
+<div style="display: flex; align-items: center; gap: 8px;">
+ <img id="fromTokenIcon" src="/icones/adz-token.png" alt="Ícone do token" width="24" height="24">
+  <select id="fromToken" onchange="atualizarIcone('fromToken', 'fromTokenIcon')">
+    <option value="token">ADZ Token</option>
+    <option value="usdt">USDT</option>
+  </select>
+ 
+</div>
 
-      <input type="number" id="fromAmount" placeholder="Valor" min="0" />
+<input type="number" id="fromAmount" placeholder="Valor" min="0" />
 
-      <label for="toToken">Para:</label>
-      <select id="toToken">
-        <option value="usdt">USDT</option>
-        <option value="token">ADZ Token</option>
-      </select>
+<label for="toToken">Para:</label>
+<div style="display: flex; align-items: center; gap: 8px;">
+ <img id="toTokenIcon" src="/icones/tether-usdt-logo.png" alt="Ícone do token" width="24" height="24">
+  <select id="toToken" onchange="atualizarIcone('toToken', 'toTokenIcon')">
+    <option value="usdt">USDT</option>
+    <option value="token">ADZ Token</option>
+  </select>
+ 
+</div>
 
-      <input type="number" id="toAmount" placeholder="Valor Recebido" readonly />
+<input type="number" id="toAmount" placeholder="Valor Recebido" readonly />
 
       <div id="previewSwap" class="preview-swap">
         <!-- A prévia da troca será exibida aqui -->
@@ -573,6 +582,19 @@ document.addEventListener('DOMContentLoaded', function () {
   </div>
 </section>
 
+<script>
+function atualizarIcone(selectId, imgId) {
+  const select = document.getElementById(selectId);
+  const icon = document.getElementById(imgId);
+
+  const icones = {
+    'token': '/icones/adz-token.png',
+    'usdt': '/icones/tether-usdt-logo.png'
+  };
+
+  icon.src = icones[select.value] || '';
+}
+</script>
 
 
 
@@ -611,13 +633,42 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-    <!-- 🔥 Bloco de Anúncios Patrocinados -->
+<!-- 🔥 Bloco de Anúncios Patrocinados -->
 <div class="ads-section" style="margin-top: 20px;">
- 
   <div class="ads-container" id="adsContainer">
     <!-- Os banners serão inseridos aqui dinamicamente pelo backend -->
   </div>
 </div>
+
+<!-- 👤 Painel do Usuário -->
+<section id="painelUsuario">
+  <h2>👤 Painel do Usuário</h2>
+
+  <!-- Perfil -->
+  <div class="painel-box">
+    <h3>📄 Meu Perfil</h3>
+    <span id="nomeUsuario" th:text="${usuario.username}">Usuário</span>
+    <button onclick="toggleFormulario('formEditarPerfil')">✏️ Editar Usuário</button>
+
+    <form id="formEditarPerfil" style="display: none; margin-top: 15px;" onsubmit="salvarNovoNome(event)">
+      <input type="text" id="inputNovoNome" placeholder="Novo nome de usuário" required>
+      <button type="submit">Salvar</button>
+    </form>
+  </div>
+
+  <!-- Configurações -->
+  <div class="painel-box">
+    <h3>⚙️ Configurações</h3>
+    <button onclick="toggleFormulario('formAlterarSenha')">🔒 Alterar Senha</button>
+
+    <form id="formAlterarSenha" style="display: none; margin-top: 15px;" onsubmit="salvarNovaSenha(event)">
+      <input type="password" id="inputNovaSenha" placeholder="Nova senha" required>
+      <button type="submit">Salvar</button>
+    </form>
+  </div>
+</section>
+
+
 
 
 
@@ -630,12 +681,11 @@ document.addEventListener('DOMContentLoaded', function () {
   </div>
 
 
-
+ <!--    -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 <script src="js/metamask.js" defer></script>
 <script src="js/deposito.js" defer></script>
-
-
 <script src="/js/dashboard-nav.js" defer></script>
 <script src="/js/verificarBloqueio.js" defer></script>
 <script src="/js/atualizarSaldo.js" defer></script>
@@ -655,6 +705,7 @@ document.addEventListener('DOMContentLoaded', function () {
 <script src="/js/historicoDepositos.js" defer></script>
 <script src="/js/historicoSaques.js" defer></script>  
 <script src="/js/swap.js" defer></script> 
+<script src="/js/painelUsuario.js" defer></script> 
   <!--    -->
 
 

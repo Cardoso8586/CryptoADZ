@@ -12,10 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.cryptoadz.dto.AtualizacaoNomeDTO;
+import com.cryptoadz.dto.AtualizacaoSenhaDTO;
 import com.cryptoadz.model.TentativaCadastro;
 import com.cryptoadz.model.Usuario;
 import com.cryptoadz.model.UsuarioDetails;
@@ -195,8 +198,25 @@ public class UsuarioController {
         return ResponseEntity.ok(resposta);
     }
 
+//================================================= atualizarNome =========================================================
+    
+    @PostMapping("/atualizar-nome/{id}")
+    public ResponseEntity<?> atualizarNome(@PathVariable Long id, @RequestBody AtualizacaoNomeDTO dto) {
+        usuarioService.atualizarNome(id, dto.getNovoNome());
+        return ResponseEntity.ok("Nome atualizado com sucesso");
+      
+    }
 
+ //=============================================== atuslizar senha ===================================================
+    
+    @PostMapping("/atualizar-senha/{id}")
+    public ResponseEntity<?> atualizarSenha(@PathVariable Long id, @RequestBody AtualizacaoSenhaDTO dto) {
+        usuarioService.atualizarSenha(id, dto.getNovaSenha());
+        return ResponseEntity.ok("Senha atualizada com sucesso!");
+    }
 
+    
+    
 }
 
 

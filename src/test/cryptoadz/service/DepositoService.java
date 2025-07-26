@@ -32,14 +32,7 @@ import jakarta.transaction.Transactional;
 @Service
 public class DepositoService {
 	
-   
-    
-    
-	@Value("${tron.api.key}")
-	private String tronApiKey ;
-	
-    @Value("${deposito.endereco.fixo}")
-    private String enderecoFixo; // endereço fixo da carteira
+  
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -59,20 +52,24 @@ public class DepositoService {
 
         Usuario user = buscarUsuario(userId);
 
+        // Credita saldo
+        BigDecimal saldoAtual = user.getUsdtSaldo() != null ? user.getUsdtSaldo() : BigDecimal.ZERO;
+        user.setUsdtSaldo(saldoAtual.add(amount));
+        usuarioRepository.save(user);
+
+        // Registra depósito
         DepositoPendente deposito = new DepositoPendente();
         deposito.setUser(user);
         deposito.setValorEsperado(amount);
-        deposito.setConfirmado(false);
+        deposito.setConfirmado(true);
         deposito.setDataSolicitacao(LocalDateTime.now());
-        deposito.setEnderecoDeposito(enderecoFixo);
-        deposito.setStatus("PENDENTE");
-        deposito.setTransactionId(UUID.randomUUID().toString());
-
+        deposito.setStatus("CONFIRMADO");
         depositoPendenteRepository.save(deposito);
-   
-    }//================================ fim solicitarDeposito  =============================================
 
-    
+        // Histórico
+        criarHistorico(user, amount, "CONFIRMADO");
+    }
+
     
     @Transactional
     public void creditarDeposito(Long userId, BigDecimal amount) {
@@ -87,37 +84,7 @@ public class DepositoService {
             .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
     }
 
-    @Scheduled(fixedRate = 10_000) // Executa a cada 10 segundos (evita sobrecarga)
-    @Transactional
-    public void verificarDepositosPendentes() {
-        List<DepositoPendente> pendentes = depositoPendenteRepository.findByStatus("PENDENTE");
-
-        LocalDateTime agora = LocalDateTime.now();
-
-        for (DepositoPendente deposito : pendentes) {
-            // Se passou mais de 1 hora, rejeita
-            if (deposito.getDataSolicitacao().isBefore(agora.minusHours(1))) {
-                deposito.setStatus("REJEITADO");
-                depositoPendenteRepository.save(deposito);
-
-                criarHistorico(deposito.getUser(), deposito.getValorEsperado(), "REJEITADO");
-                continue;
-            }
-
-            // Verifica se há depósito na TRON
-            Optional<String> txIdConfirmada = verificarDepositoNaTron(deposito);
-
-            if (txIdConfirmada.isPresent()) {
-                deposito.setStatus("CONFIRMADO");
-                deposito.setTransactionId(txIdConfirmada.get());
-                depositoPendenteRepository.save(deposito);
-
-                creditarDeposito(deposito.getUser().getId(), deposito.getValorEsperado());
-
-                criarHistorico(deposito.getUser(), deposito.getValorEsperado(), "CONFIRMADO");
-            }
-        }
-    }
+    
 
     @Transactional
     public void criarHistorico(Usuario user, BigDecimal valor, String status) {
@@ -134,47 +101,7 @@ public class DepositoService {
 
 
     
-    public Optional<String> verificarDepositoNaTron(DepositoPendente deposito) {
-        try {
-            String endereco = deposito.getEnderecoDeposito();
-            BigDecimal valorEsperado = deposito.getValorEsperado();
-            String url = "https://api.trongrid.io/v1/accounts/" + enderecoFixo + "/transactions/trc20?limit=20";
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(url))
-                    .header("TRON-PRO-API-KEY", tronApiKey)
-                    .GET()
-                    .build();
-
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            if (response.statusCode() == 200) {
-                JSONObject json = new JSONObject(response.body());
-                JSONArray transacoes = json.getJSONArray("data");
-
-                for (int i = 0; i < transacoes.length(); i++) {
-                    JSONObject tx = transacoes.getJSONObject(i);
-
-                    String to = tx.getString("to");
-                    if (!to.equalsIgnoreCase(endereco)) continue;
-
-                    JSONObject tokenInfo = tx.optJSONObject("token_info");
-                    if (tokenInfo == null || !"USDT".equalsIgnoreCase(tokenInfo.optString("symbol"))) continue;
-
-                    BigDecimal valorUSDT = new BigDecimal(tx.getString("value")).divide(BigDecimal.valueOf(1_000_000));
-                    if (valorUSDT.compareTo(valorEsperado) >= 0) {
-                        return Optional.of(tx.getString("transaction_id")); // ou tx.getString("transaction_id")
-                    }
-                }
-            }
-
-        } catch (Exception e) {
-            System.err.println("Erro ao verificar depósito na TRON: " + e.getMessage());
-        }
-
-        return Optional.empty();
-    }
-
+   
 
   
     

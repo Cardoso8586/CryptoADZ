@@ -76,5 +76,5 @@ document.addEventListener('DOMContentLoaded', () => {
   
 
   verificarStatusVisualizacoes();
-  setInterval(verificarStatusVisualizacoes, 5000);
+  setInterval(verificarStatusVisualizacoes, 30000);
 });

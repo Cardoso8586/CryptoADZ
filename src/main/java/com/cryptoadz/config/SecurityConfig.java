@@ -94,7 +94,8 @@ public class SecurityConfig {
                             "/api/depositos/fazer/**",
                             "/api/depositos/status/**",
                             "/api/depositos/historico/**",
-                            "/api/swap/**"
+                            "/api/swap/**",
+                            "/atualizar-nome/**"
                          
                         
             			   

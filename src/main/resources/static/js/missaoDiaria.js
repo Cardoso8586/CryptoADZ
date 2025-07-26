@@ -52,7 +52,18 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch(`/api/missoes/reivindicar-cadastro/${usuarioId}`, { method: 'POST' })
       .then(res => res.text())
       .then(msg => {
-        alert(msg);
+        //alert(msg);
+		Swal.fire({
+		  icon: 'info',
+		  title: 'Mensagem',
+		  text: msg,
+		  timer: 2500,
+		  timerProgressBar: true,
+		  showConfirmButton: false,
+		  background: '#fff',
+		  color: '#000'
+		});
+
         const btn = document.getElementById('btnColetarCadastrar');
         if (btn) {
           btn.innerText = msg;
@@ -72,7 +83,18 @@ document.addEventListener('DOMContentLoaded', () => {
     fetch(`/api/missoes/reivindicar-assistir/${usuarioId}`, { method: 'POST' })
       .then(res => res.text())
       .then(msg => {
-        alert(msg);
+		
+		Swal.fire({
+		  icon: 'info',
+		  title: 'Mensagem',
+		  text: msg,
+		  timer: 2500,
+		  timerProgressBar: true,
+		  showConfirmButton: false,
+		  background: '#fff',
+		  color: '#000'
+		});
+		
         const btn = document.getElementById('btnColetarAssistir');
         if (btn) {
           btn.innerText = msg;

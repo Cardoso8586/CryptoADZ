@@ -22,20 +22,69 @@ async function depositUSDT(amount) {
     const balance = await usdt.balanceOf(userAccount);
     if (balance.lt(amountInWei)) {
       status.innerText = "❌ Saldo insuficiente de USDT para este depósito.";
+	  Swal.fire({
+	    icon: 'error',
+	    title: 'Saldo Insuficiente!',
+	    text: '❌ Saldo insuficiente de USDT para este depósito.',
+	    confirmButtonText: 'Entendi',
+	    background: '#fff',
+	    color: '#000'
+	  });
+	  
       return;
     }
 
     status.innerText = "⏳ Enviando transação...";
+	Swal.fire({
+	  title: '⏳ Enviando transação...',
+	  text: 'Por favor, aguarde.',
+	  allowOutsideClick: false,
+	  allowEscapeKey: false,
+	  showConfirmButton: false,
+	  didOpen: () => {
+	    Swal.showLoading();
+	  },
+	  background: '#fff',
+	  color: '#000'
+	});
 
     const tx = await usdt.transfer(PLATFORM_RECEIVER, amountInWei);
     status.innerText = "⏳ Transação enviada. Aguardando confirmação...";
-
+	Swal.fire({
+	  title: '⏳ Transação enviada',
+	  text: 'Aguardando confirmação...',
+	  allowOutsideClick: false,
+	  allowEscapeKey: false,
+	  showConfirmButton: false,
+	  didOpen: () => {
+	    Swal.showLoading();
+	  },
+	  background: '#fff',
+	  color: '#000'
+	});
+	
     const receipt = await tx.wait();
     const userId = getUsuarioLogadoId();
 
     if (receipt.status === 1) {
       status.innerText = "✅ Depósito confirmado com sucesso!";
+	  
+	  // Fecha o alerta de carregamento
+	  Swal.close();
+	  Swal.fire({
+	    icon: 'success',
+	    title: 'Depósito Confirmado!',
+	    text: '✅ Depósito confirmado com sucesso!',
+	    timer: 3000,
+	    timerProgressBar: true,
+	    showConfirmButton: false,
+	    background: '#fff',
+	    color: '#000'
+		
 
+	  });
+   
+	  
       await fetch('/api/depositos/fazer', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -48,6 +97,16 @@ async function depositUSDT(amount) {
 
     } else {
       status.innerText = "❌ Transação rejeitada ou falhou.";
+	
+	  Swal.fire({
+	    icon: 'error',
+	    title: '❌ Transação falhou',
+	    text: 'Transação rejeitada ou falhou.',
+	    confirmButtonText: 'OK',
+	    background: '#fff',
+	    color: '#000'
+	  });
+
     }
 
   } catch (err) {
@@ -58,6 +117,7 @@ async function depositUSDT(amount) {
       status.innerText = "❌ Erro: A chamada foi revertida. Isso pode acontecer por falta de permissão ou saldo.";
     } else {
       status.innerText = "❌ Erro ao fazer depósito: " + (err.reason || err.message);
+	  
     }
   }
 }
@@ -71,6 +131,14 @@ document.getElementById('depositForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   if (!userAccount) {
     status.innerText = "⚠️ Conecte sua carteira MetaMask antes.";
+	Swal.fire({
+		  icon: 'warning',
+		  title: '⚠️ Carteira não conectada',
+		  text: 'Conecte sua carteira MetaMask antes de continuar.',
+		  confirmButtonText: 'OK',
+		  background: '#fff',
+		  color: '#000'
+		});
     return;
   }
 
@@ -88,6 +156,16 @@ document.getElementById('withdrawForm').addEventListener('submit', (e) => {
   e.preventDefault();
   if (!userAccount) {
     status.innerText = "⚠️ Conecte sua carteira MetaMask antes.";
+	
+	Swal.fire({
+	  icon: 'warning',
+	  title: '⚠️ Carteira não conectada',
+	  text: 'Conecte sua carteira MetaMask antes de continuar.',
+	  confirmButtonText: 'OK',
+	  background: '#fff',
+	  color: '#000'
+	});
+
     return;
   }
 

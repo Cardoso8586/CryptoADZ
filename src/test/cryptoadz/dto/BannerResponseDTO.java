@@ -14,6 +14,7 @@ public class BannerResponseDTO {
     private String urlDestino;
     private String imagemUrl;
     private boolean ativo;
+    private Integer tempoExibicao;
     
     @Column(columnDefinition = "DATETIME")
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
@@ -134,5 +135,15 @@ public class BannerResponseDTO {
     public void setMensagem(String mensagem) {
         this.mensagem = mensagem;
     }
+
+
+	public Integer getTempoExibicao() {
+		return tempoExibicao;
+	}
+
+
+	public void setTempoExibicao(Integer tempoExibicao) {
+		this.tempoExibicao = tempoExibicao;
+	}
 }
 

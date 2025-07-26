@@ -49,6 +49,8 @@ let saldoTokens = 0;
      if (from === to) {
        toAmount.value = valor.toFixed(2);
        logMensagem('Selecione moedas diferentes para trocar.', 'red');
+	   
+	   
        return;
      }
 
@@ -56,6 +58,7 @@ let saldoTokens = 0;
      if (valor > saldoAtual) {
        toAmount.value = '';
        logMensagem(`Saldo insuficiente! ${saldoAtual.toFixed(2)} ${from.toUpperCase()}.`, 'red');
+	 
        return;
      }
 
@@ -87,30 +90,75 @@ let saldoTokens = 0;
      const para = toToken.value;
 
      if (!valor || valor <= 0) {
-     //  alert("Digite um valor válido.");
+  
        logMensagem('Digite um valor válido.');
+	   Swal.fire({
+	        icon: 'warning',
+	        title: 'Atenção!',
+	        text: '⚠️ Digite um valor válido.',
+	        confirmButtonText: 'OK',
+	        background: '#fff',
+	        color: '#000'
+	      });
        return;
      }
 
      if (de === para) {
-      // alert("Selecione moedas diferentes.");
+   
       logMensagem('Selecione moedas diferentes.');
+	  Swal.fire({
+	       icon: 'warning',
+	       title: 'Atenção!',
+	       text: '⚠️ Selecione moedas diferentes.',
+	       confirmButtonText: 'OK',
+	       background: '#fff',
+	       color: '#000'
+	     });
        return;
      }
 
      const saldoAtual = obterSaldo(de);
      if (valor > saldoAtual) {
-     //  alert(`Saldo insuficiente! ${saldoAtual.toFixed(2)} ${de.toUpperCase()}.`);
+    
+	 logMensagem(`Saldo insuficiente! ${saldoAtual.toFixed(2)} ${de.toUpperCase()}.`);
+	 Swal.fire({
+	      icon: 'error',
+	      title: '❌ Saldo insuficiente!',
+	      text: `Você tem apenas ${saldoAtual.toFixed(2)} ${de.toUpperCase()}.`,
+	      timer: 3000,
+	      timerProgressBar: true,
+	      showConfirmButton: false,
+	      background: '#fff',
+	      color: '#000'
+	    });
        return;
      }
 
      if (de === 'token' && valor < 1000) {
-       alert("Valor mínimo para troca de ADZ Token é 1000.");
+      
+	   Swal.fire({
+	     icon: 'warning',
+	     title: 'Atenção!',
+	     text: '⚠️ Valor mínimo para troca de ADZ Token é 1000.',
+	     confirmButtonText: 'OK',
+	     background: '#fff',
+	     color: '#000'
+	   });
+
        return;
      }
 
      if (de === 'usdt' && valor < 1) {
-       alert("Valor mínimo para troca de USDT é 1.");
+     
+	   Swal.fire({
+	     icon: 'warning',
+	     title: 'Atenção!',
+	     text: '⚠️ Valor mínimo para troca de USDT é 1.',
+	     confirmButtonText: 'OK',
+	     background: '#fff',
+	     color: '#000'
+	   });
+
        return;
      }
 
@@ -133,18 +181,31 @@ let saldoTokens = 0;
    	    toAmount.value = '';
    	    preview.innerHTML = '';
 
+		
    	    // Mostra mensagem de sucesso imediatamente
-   	    logMensagem(`✅ Troca realizada: ${valor} ${de.toUpperCase()} → ${resultado.valorRecebido.toFixed(2)} ${para.toUpperCase()}`, 'wite');
+		Swal.fire({
+		  icon: 'success',
+		  title: 'Troca realizada!',
+		  text: `✅ Troca realizada: ${valor} ${de.toUpperCase()} → ${resultado.valorRecebido.toFixed(2)} ${para.toUpperCase()}`,
+		  timer: 3000,
+		  timerProgressBar: true,
+		  showConfirmButton: false,
+		  background: '#fff',  // cor branca do fundo
+		  color: '#000'        // texto preto (pode ajustar se quiser)
+		});
+
 
    	    // Após 10 segundos, exibe "Realizar nova troca"
 		
    	    setTimeout(() => {
    	     preview.innerHTML = '';
-   	      logMensagem('🔄 Realizar nova troca?', 'wite'); 
-   	    }, 10000); // 10 segundos = 10000 ms
+   	      logMensagem('🔄 Realizar nova troca?', 'wite');
+		  
+   	    }, 1000); // 10 segundos = 10000 ms
 
    	  } else {
    	    logMensagem(`❌ Erro na troca: ${resultado.erro || 'Erro desconhecido'}`, 'red');
+	
    	  }
    	} catch (err) {
    	  logMensagem(`❌ Erro ao realizar troca: ${err.message}`, 'red');

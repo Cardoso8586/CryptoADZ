@@ -88,7 +88,16 @@ formAnuncio.addEventListener('submit', async e => {
   // ✅ VERIFICA SE O CHECKBOX FOI MARCADO
   const checkboxTermos = document.getElementById('aceitoTermosAnuncio');
   if (!checkboxTermos || !checkboxTermos.checked) {
-	alert('Você precisa aceitar os termos de privacidade para continuar.');
+	
+	Swal.fire({
+	  icon: 'warning',
+	  title: 'Atenção',
+	  text: 'Você precisa aceitar os termos de privacidade para continuar.',
+	  confirmButtonText: 'Ok',
+	  background: '#fff',
+	  color: '#000'
+	});
+
     feedback.textContent = '⛔ Você deve aceitar os Termos de Uso para continuar.';
     feedback.style.color = 'red';
     checkboxTermos?.focus();
@@ -115,6 +124,15 @@ formAnuncio.addEventListener('submit', async e => {
   const minimoExigido = limitesMinimos[tempo];
 
   if (minimoExigido && maxVis < minimoExigido) {
+	Swal.fire({
+	  icon: 'warning',
+	  title: 'Aviso!',
+	  text: `⚠️ O número mínimo de visualizações para ${tempo} segundos é ${minimoExigido}.`,
+	  confirmButtonText: 'Entendi',
+	  background: '#fff',
+	  color: '#000'
+	});
+
     feedback.textContent = `⚠️ O número mínimo de visualizações para ${tempo} segundos é ${minimoExigido}.`;
     feedback.style.color = 'red';
     maxVisInput.focus();
@@ -143,6 +161,15 @@ formAnuncio.addEventListener('submit', async e => {
 
       if (err.toLowerCase().includes('saldo insuficiente')) {
         feedback.textContent = '⛔ Saldo insuficiente para cadastrar o anúncio. Por favor, recarregue sua conta.';
+		Swal.fire({
+		  icon: 'warning',
+		  title: 'Aviso!',
+		  text: `⛔ Saldo insuficiente para cadastrar o anúncio. Por favor, recarregue sua conta.`,
+		  confirmButtonText: 'Entendi',
+		  background: '#fff',
+		  color: '#000'
+		});
+
       } else {
         feedback.textContent = 'Erro: ' + err;
       }
@@ -155,7 +182,17 @@ formAnuncio.addEventListener('submit', async e => {
     console.log('Server response:', data);
 
     feedbackCadastro.textContent = '✅ Anúncio cadastrado com sucesso!';
-	alert('✅ Anúncio cadastrado com sucesso!');
+	Swal.fire({
+	  icon: 'success',
+	  title: 'Sucesso',
+	  text: '✅ Anúncio cadastrado com sucesso!',
+	  timer: 2500,
+	  timerProgressBar: true,
+	  showConfirmButton: false,
+	  background: '#fff',
+	  color: '#000'
+	});
+
     feedbackCadastro.style.color = 'green';
     esconderFormulario();
     limparFormulario();

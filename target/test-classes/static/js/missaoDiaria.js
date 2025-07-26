@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const usuarioId = getUsuarioLogadoId();
     if (!usuarioId) return;
 
-    fetch(`/missoes/reivindicar-cadastro/${usuarioId}`, { method: 'POST' })
+    fetch(`/api/missoes/reivindicar-cadastro/${usuarioId}`, { method: 'POST' })
       .then(res => res.text())
       .then(msg => {
         alert(msg);
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const usuarioId = getUsuarioLogadoId();
     if (!usuarioId) return;
 
-    fetch(`/missoes/reivindicar-assistir/${usuarioId}`, { method: 'POST' })
+    fetch(`/api/missoes/reivindicar-assistir/${usuarioId}`, { method: 'POST' })
       .then(res => res.text())
       .then(msg => {
         alert(msg);
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    fetch(`/missoes/status/${usuarioId}`, { credentials: 'include' })
+    fetch(`/api/missoes/status/${usuarioId}`, { credentials: 'include' })
       .then(res => {
         if (res.status === 404) {
           return { contadorAssistir: 0, contadorCadastrar: 0, recompensa_Assistir: 0, recompensa_Registrar: 0 };
@@ -214,9 +214,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const secaoMissoesVisivel = sections.missoes.style.display === 'block' || sections.missoes.style.visibility === 'visible';
     if (secaoMissoesVisivel) {
       carregarStatusMissoes();
+	  atualizarUIStatusMissoes();
     }
   }, 30000);
 
-});
 
+  });
 

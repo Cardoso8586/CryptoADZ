@@ -14,7 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const tempoSelect = document.getElementById('tempo-banner');
   const custoPreview = document.getElementById('custo-preview');
   const btnConfirmar = document.getElementById('btn-confirmar-cadastro');
-
+  const feedback        = document.getElementById('feedbackBanner');
+  
   let saldoAtual = 0;
   let imagemUrl = '';
 
@@ -148,12 +149,22 @@ document.addEventListener('DOMContentLoaded', () => {
   // Confirmar cadastro do banner
   btnConfirmar.addEventListener('click', async e => {
     e.preventDefault();
+
     if (btnConfirmar.disabled) return;
     btnConfirmar.disabled = true;
 
+    // Verifica se o checkbox dos termos está marcado
+    if (!checkboxTermos.checked) {
+      alert('Você precisa aceitar os termos de privacidade para continuar.');
+	  feedback.textContent = '⛔ Você deve aceitar os Termos de Uso para continuar.';
+	     feedback.style.color = 'red';
+	     checkboxTermos?.focus();
+      btnConfirmar.disabled = false;
+      return;
+    }
+
     const titulo = tituloInput.value.trim();
     const urlDestino = linkInput.value.trim();
-   // const dataExp = dataExpInput.value;
     const dataExp = `${dataExpInput.value}T00:00:00`;
     const ativo = statusSelect.value === 'ativo';
     const tempo = parseInt(tempoSelect.value, 10);
@@ -190,10 +201,12 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(bannerDTO)
       });
+
       if (!res.ok) {
         const err = await res.json();
         throw new Error(err.message || 'Falha ao criar banner');
       }
+
       const data = await res.json();
       alert(data.mensagem || 'Banner criado com sucesso!');
 
@@ -208,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // Atualiza saldo para refletir o gasto
       await buscarSaldo();
       atualizarCustoEBotao();
-	  location.reload();
+      location.reload();
 
     } catch (err) {
       alert(err.message);
@@ -225,5 +238,26 @@ document.addEventListener('DOMContentLoaded', () => {
 	
   	}, 3000); // Atualiza a cada 3 segundos
  
+});
+
+const tituloBannerInput = document.getElementById('titulo-banner');
+const restantesTituloBanner = document.getElementById('restantes-titulo-banner');
+const formCadastro = document.getElementById('form-cadastro');
+const checkboxTermos = document.getElementById('aceitoTermos');
+
+
+
+tituloBannerInput.addEventListener('input', () => {
+  const max = 30;
+  const atual = tituloBannerInput.value.length;
+  const restantes = max - atual;
+
+  restantesTituloBanner.textContent = restantes;
+
+  if (restantes <= 0) {
+    restantesTituloBanner.style.color = 'red';
+  } else {
+    restantesTituloBanner.style.color = 'gray';
+  }
 });
 

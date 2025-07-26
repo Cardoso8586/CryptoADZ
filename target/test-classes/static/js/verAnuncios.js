@@ -2,6 +2,45 @@ document.addEventListener('DOMContentLoaded', () => {
   const botaoAnuncios = document.querySelectorAll('.ver-anuncio');
   const vistos = JSON.parse(localStorage.getItem('anunciosVistos') || '{}');
   let anuncioEmContagem = false;
+  let contagemAtiva = false;
+  let cancelado = false;
+  let janelaAnuncio = null;
+  let checagemJanela = null;
+
+  const modal = document.getElementById('anuncioModal');
+  const contadorModal = document.getElementById('contadorModal');
+  const fecharModal = document.getElementById('fecharModal');
+  const tituloAnuncio = document.getElementById('tituloAnuncio');
+  const imagemAnuncio = document.getElementById('imagemAnuncio');
+  const linkAnuncio = document.getElementById('linkAnuncio');
+
+  fecharModal.onclick = () => {
+    if (contagemAtiva) {
+      cancelarContagem('Contagem cancelada pelo usuário. Tokens não serão creditados.');
+    } else {
+      modal.style.display = 'none';
+    }
+  };
+
+  function cancelarContagem(mensagem) {
+    cancelado = true;
+    anuncioEmContagem = false;
+    contagemAtiva = false;
+
+    if (janelaAnuncio && !janelaAnuncio.closed) {
+      janelaAnuncio.close();
+    }
+
+    if (checagemJanela) {
+      clearInterval(checagemJanela);
+      checagemJanela = null;
+    }
+
+    alert(mensagem);
+    modal.style.display = 'none';
+    atualizarEstadoDosBotoes();
+    setTimeout(() => location.reload(), 1000);
+  }
 
   function atualizarEstadoDosBotoes() {
     const agora = Date.now();
@@ -21,45 +60,75 @@ document.addEventListener('DOMContentLoaded', () => {
       if (link.disabled || anuncioEmContagem) return;
 
       anuncioEmContagem = true;
+      contagemAtiva = true;
+      cancelado = false;
       atualizarEstadoDosBotoes();
 
       const anuncioId = link.dataset.id;
       const url = link.dataset.url;
-      const display = document.getElementById(`contador-${anuncioId}`);
+      const titulo = link.dataset.titulo || 'Aguardando Visualização...';
+      const imagem = link.dataset.imagem;
 
-      window.open(url, '_blank');
+      // Preencher dados no modal
+      tituloAnuncio.textContent = titulo;
+      if (imagem) {
+        imagemAnuncio.src = imagem;
+        imagemAnuncio.style.display = 'block';
+      } else {
+        imagemAnuncio.style.display = 'none';
+      }
+      linkAnuncio.href = url;
+      linkAnuncio.textContent = url;
 
-      let resposta;
-      try {
-        // ✅ Correção aqui: chamada para GET /tempo/{id}
-        const resTempo = await fetch(`/api/visualizacoes/tempo/${anuncioId}`, {
-          credentials: 'include'
-        });
-
-        if (!resTempo.ok) throw new Error();
-
-        resposta = await resTempo.json(); // { tempo }
-
-      } catch (err) {
-        alert('Falha ao obter o tempo do anúncio.');
-        anuncioEmContagem = false;
-        atualizarEstadoDosBotoes();
+      // Abrir janela do anúncio
+      janelaAnuncio = window.open(url, '_blank');
+      if (!janelaAnuncio) {
+        alert('Falha ao abrir o anúncio. Verifique seu bloqueador de pop-ups.');
+        cancelarContagem('Falha ao abrir anúncio. Contagem cancelada.');
         return;
       }
 
-      let restante = resposta.tempo ?? 30; // segundos
+      modal.style.display = 'block';
+      contadorModal.textContent = `Tempo restante: ...`;
+
+      let resposta;
+      try {
+        const resTempo = await fetch(`/api/visualizacoes/tempo/${anuncioId}`, { credentials: 'include' });
+        if (!resTempo.ok) throw new Error();
+        resposta = await resTempo.json();
+      } catch (err) {
+        alert('Falha ao obter o tempo do anúncio.');
+        cancelarContagem('Erro ao obter tempo do anúncio.');
+        return;
+      }
+
+      let restante = resposta.tempo ?? 30;
       const desbloqueioTimestamp = Date.now() + (restante * 1000);
       vistos[anuncioId] = desbloqueioTimestamp;
       localStorage.setItem('anunciosVistos', JSON.stringify(vistos));
-
       link.classList.add('visto');
       link.disabled = true;
 
+      // Checar se a janela foi fechada antes
+      checagemJanela = setInterval(() => {
+        if (!janelaAnuncio || janelaAnuncio.closed) {
+          cancelarContagem('Janela do anúncio fechada antes do tempo. Tokens não serão creditados.');
+        }
+      }, 500);
+
       const iniciarContagem = (regressiva) => {
         const tick = async () => {
+          if (cancelado) {
+            clearInterval(checagemJanela);
+            checagemJanela = null;
+            return;
+          }
+
           if (regressiva <= 0) {
+            clearInterval(checagemJanela);
+            checagemJanela = null;
+
             try {
-              // Registrar visualização
               const resRegistrar = await fetch(`/api/visualizacoes/registrar-visualizacao/${anuncioId}`, {
                 method: 'POST',
                 credentials: 'include'
@@ -67,7 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
               if (!resRegistrar.ok) throw new Error();
 
-              // Buscar tokens creditados
               try {
                 const resTokens = await fetch(`/api/visualizacoes/tokens-creditados/${anuncioId}`, {
                   credentials: 'include'
@@ -78,33 +146,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 const finalData = await resTokens.json();
                 const tokensFinais = finalData.tokensCreditados ?? 0;
 
-                display.innerHTML = `<strong style="color:green;">Você recebeu ${tokensFinais.toFixed(2)} tokens!</strong>`;
+                tituloAnuncio.textContent = 'Concluído!';
+                contadorModal.innerHTML = `<strong style="color:green;">Você recebeu ${tokensFinais.toFixed(2)} tokens!</strong>`;
                 document.title = `+${tokensFinais.toFixed(2)} Tokens creditados ✔`;
 
               } catch (e) {
-                display.innerHTML = `<strong style="color:orange;">Tokens creditados ✔ (quantia oculta ou indisponível)</strong>`;
+                contadorModal.innerHTML = `<strong style="color:orange;">Tokens creditados ✔ (quantia oculta)</strong>`;
                 document.title = `Tokens creditados ✔`;
               }
 
             } catch (e) {
-              display.innerHTML = `<strong style="color:red;">Falha ao registrar visualização e creditar tokens.</strong>`;
+              contadorModal.innerHTML = `<strong style="color:red;">Falha ao registrar visualização.</strong>`;
               document.title = `Erro`;
             }
 
-            setInterval(() => {
-              // Pode deixar vazio ou para futuras ações
-            }, 3000);
-
             anuncioEmContagem = false;
+            contagemAtiva = false;
             atualizarEstadoDosBotoes();
             registrarMissaoAssistir();
-            setTimeout(() => {
-              location.reload();
-            }, 1000);
+
+            setTimeout(() => location.reload(), 1000);
 
           } else {
-            display.textContent = `Tempo restante: ${regressiva}s`;
-            document.title = `${regressiva}s - Por favor, mantenha esta página aberta`;
+            contadorModal.textContent = `Tempo restante: ${regressiva}s`;
+            document.title = `${regressiva}s - Mantenha a página aberta`;
             setTimeout(() => tick(--regressiva), 1000);
           }
         };
@@ -120,19 +185,21 @@ document.addEventListener('DOMContentLoaded', () => {
 function registrarMissaoAssistir() {
   const usuarioId = document.querySelector('meta[name="user-id"]')?.content;
   if (!usuarioId) {
-    console.error('Usuário não encontrado para missão de assistir.');
+    console.error('Usuário não encontrado para missão.');
     return;
   }
 
-  fetch(`/missoes/incrementar-assistir/${usuarioId}`, {
+  fetch(`/api/missoes/incrementar-assistir/${usuarioId}`, {
     method: 'POST'
   })
-  .then(res => res.text())
-  .then(msg => {
-    console.log('Missão de assistir registrada:', msg);
-    carregarStatusMissoes(); // Atualiza contadores na tela
-  })
-  .catch(err => {
-    console.error('Erro ao registrar missão de assistir:', err);
-  });
+    .then(res => res.text())
+    .then(msg => {
+      console.log('Missão registrada:', msg);
+      carregarStatusMissoes?.();
+    })
+    .catch(err => {
+      console.error('Erro ao registrar missão:', err);
+    });
 }
+
+//============================================================  otimo  ============================================================

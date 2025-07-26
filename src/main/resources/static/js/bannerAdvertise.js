@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   }
-
+  
   // Calcula dias restantes da data expiração
   function diasRestantes() {
     const hoje = new Date();
@@ -155,7 +155,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Verifica se o checkbox dos termos está marcado
     if (!checkboxTermos.checked) {
-      alert('Você precisa aceitar os termos de privacidade para continuar.');
+		Swal.fire({
+		  icon: 'warning',
+		  title: 'Atenção',
+		  text: 'Você precisa aceitar os termos de privacidade para continuar.',
+		  confirmButtonText: 'OK',
+		  background: '#fff',
+		  color: '#000'
+		});
+
 	  feedback.textContent = '⛔ Você deve aceitar os Termos de Uso para continuar.';
 	     feedback.style.color = 'red';
 	     checkboxTermos?.focus();
@@ -171,7 +179,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const dias = diasRestantes();
 
     if (!validaCampos()) {
-      alert('Preencha todos os campos corretamente e faça upload da imagem.');
+		Swal.fire({
+		  icon: 'warning',
+		  title: 'Atenção',
+		  text: 'Preencha todos os campos corretamente e faça upload da imagem.',
+		  confirmButtonText: 'OK',
+		  background: '#fff',
+		  color: '#000'
+		});
+
       btnConfirmar.disabled = false;
       return;
     }
@@ -180,7 +196,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const custoTotal = custoDia * dias;
 
     if (saldoAtual < custoTotal) {
-      alert('Saldo insuficiente para o tempo e duração selecionados.');
+		Swal.fire({
+		  icon: 'error',
+		  title: 'Saldo insuficiente',
+		  text: 'Saldo insuficiente para o tempo e duração selecionados.',
+		  confirmButtonText: 'OK',
+		  background: '#fff',
+		  color: '#000'
+		});
+
       btnConfirmar.disabled = false;
       return;
     }
@@ -208,7 +232,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       const data = await res.json();
-      alert(data.mensagem || 'Banner criado com sucesso!');
+	  Swal.fire({
+	    icon: 'success',
+	    title: 'Sucesso!',
+	    text:  data.mensagem || 'Banner criado com sucesso!',
+	    timer: 2500,
+	    timerProgressBar: true,
+	    showConfirmButton: false,
+	    background: '#fff',
+	    color: '#000'
+	  });
+
 
       // Limpa tudo após cadastro
       formUpload.reset();

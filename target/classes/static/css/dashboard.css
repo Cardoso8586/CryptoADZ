@@ -89,14 +89,27 @@ section.active {
   display: inline-block;
 }
 
+.saudacao-usuario {
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #222;
+  background: linear-gradient(to right, #f0f0f0, #e2e8f0);
+  padding: 20px 30px;
+  border-left: 6px solid #4f46e5; /* Roxo elegante */
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 25px;
+  transition: all 0.3s ease;
+}
+
 .saudacao-usuario span#saudacao {
-  color: #0d6efd; /* Azul suave */
+  color: #4f46e5; /* Destaque da saudação */
+  font-weight: 700;
 }
 
 .saudacao-usuario span#nomeUsuario {
-  color: #198754; /* Verde moderno */
-  font-weight: bold;
-  margin-left: 6px;
+  color: #111827; /* Nome do usuário em destaque sutil */
+  font-weight: 700;
 }
 
 

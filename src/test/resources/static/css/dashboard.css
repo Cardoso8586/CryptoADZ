@@ -1,51 +1,19 @@
+/* ===== Container principal com flexbox para sidebar e conteúdo ===== */
+.container {
+  display: flex;
+  height: 100vh;
+}
 
 /* ===== Estilos básicos do body ===== */
 body {
-  background-color: #f0f4f8; /* Fundo azul bem claro, combina com sidebar escura */
-  color: #333;               /* Cor padrão do texto */
-  margin-top: 130px;  
-       /* Espaço no topo para header fixo */
-   cursor: url('img/cursor.cur'), auto !important;
+  background-color: #333;
+  color: #333;
+  margin-top: 130px;
+  cursor: url('img/cursor.cur'), auto !important;
 }
 
-/* ===== Container principal com flexbox para sidebar e conteúdo ===== */
-.container {
-  display: flex;      /* Layout flexível em linha */
-  height: 100vh;      /* Altura total da viewport */
-}
+/* ... aqui todo o restante que você já tinha, exceto a sidebar ... */
 
-/* ===== Sidebar lateral ===== */
-.sidebar {
-  width: 180px;               /* Largura fixa reduzida da sidebar */
-  height: 100vh;              /* Altura total da tela */
-  background-color: #2c3e50; /* Cor azul escuro */
-  padding: 0px;              /* Espaçamento interno */
-  box-sizing: border-box;     /* Inclui padding na largura */
-  overflow-y: auto;           /* Barra de rolagem vertical se necessário */
-  color: white;               /* Cor do texto na sidebar */
-  z-index: 1000;              /* Fica acima de outros elementos */
-}
-
-/* Título dentro da sidebar */
-.sidebar h2 {
-  font-size: 18px;
-  margin-bottom: 20px;        /* Espaço abaixo do título */
-}
-
-/* Lista dentro da sidebar */
-.sidebar ul {
-  list-style: none;   /* Remove marcadores da lista */
-  padding-left: 5;    /* Remove espaçamento padrão */
-  margin: 20; 
-  font-size: 28px;         /* Remove margem padrão */
-}
-
-/* Itens da lista da sidebar */
-.sidebar ul li {
-  margin-bottom: 40px;  /* Espaço entre itens da lista */
-  color: #ecf0f1;      /* Cor clara para texto */
-  cursor: pointer;     /* Cursor de mãozinha para indicar clicável */
-}
 
 
 
@@ -62,26 +30,6 @@ p[id^="contador-"] {
   width: fit-content;        /* Ajusta largura ao conteúdo */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   user-select: none;         /* Impede seleção do texto */
-}
-
-/* ===== Itens da sidebar ===== */
-.sidebar li {
-  margin: 20px 0; /* Espaço entre itens */
-}
-
-/* Links e botões logout da sidebar */
-.sidebar a, .logout {
-  color: white;          /* Texto branco */
-  text-decoration: none; /* Remove sublinhado */
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 16px;
-}
-
-/* Efeito hover para links e logout */
-.sidebar a:hover, .logout:hover {
-  text-decoration: underline;
 }
 
 /* Área principal do conteúdo */
@@ -126,11 +74,13 @@ section.active {
 }
 /* saudacao-usuario*/
 .saudacao-usuario {
+	  position: relative;
+  top: -30px; /* Sobe 20px */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 2rem;
   font-weight: 600;
   color: #222;
-  margin-top: 12px;
+  margin-top: 0px;
   text-align: center;
   background: linear-gradient(to right, #f8f9fa, #e9ecef);
   padding: 20px 30px;
@@ -149,12 +99,7 @@ section.active {
   margin-left: 6px;
 }
 
-/* Espaço para conteúdo não ficar atrás do header fixo */
-body {
-  margin-top: 130px; /* Ajuste para altura do header fixo */
-}
 
-/* ===== Paginação ===== */
 .paginacao {
   display: flex;
   justify-content: center; /* Centraliza os itens horizontalmente */
@@ -242,7 +187,7 @@ body {
 
 .crypto-adz img {
   position: fixed;
-  top: -60px; /* <- Aqui está o ajuste para subir */
+  top: 10px; /* <- Aqui está o ajuste para subir */
   left: 60%;
  
   width: 240px;
@@ -267,6 +212,53 @@ body {
   letter-spacing: 0.5px;
 }
 
+.header-saldos-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 2rem;
+  font-weight: 500;
+  color: #222;
+  margin-top: 0px;
+  text-align: center;
+  background: linear-gradient(to right, #f8f9fa, #e9ecef);
+  padding: 10px 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+}
+
+
+.header-saldos-container select {
+  padding: 3px 7px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  background-color: #f9f9f9;
+}
+
+.bloco-saldo {
+  display: none;
+  align-items: center;
+  gap: 6px;
+}
+
+.bloco-saldo p {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bloco-saldo img {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+}
+
+.bloco-saldo.ativo {
+  display: flex;
+}
+
+
 
 /* Responsividade */
 @media (max-width: 600px) {
@@ -276,3 +268,4 @@ body {
 
  
 }
+

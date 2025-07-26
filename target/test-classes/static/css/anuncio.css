@@ -1,45 +1,40 @@
-/* Espaçamento entre itens na área de anúncios */
+/* === CONTAINER GERAL DOS ANÚNCIOS (centralizado) === */
 .anuncios {
   display: flex;
-  flex-direction: column; /* Organiza em coluna */
-   gap: 50px;  /* espaçamento entre os anúncios */             /* Espaço entre os itens */
+  justify-content: center;
   margin-top: 20px;
- 
 }
 
-/* ===== Cartões de anúncio ===== */
+/* === GRID RESPONSIVO PARA OS CARDS === */
+.anuncios-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* até 4 por linha, responsivo */
+  gap: 20px;
+  padding: 0;
+  list-style: none;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* === CARTÃO DE ANÚNCIO === */
 .anuncio-card {
-  border: 1px solid #ccc;        /* Borda cinza clara */
-  padding:15px;                 /* Espaçamento interno */
-  border-radius: 15px;           /* Cantos arredondados */
-  background-color: #fafafa;     /* Fundo quase branco */
-  box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Sombra suave */
-  width: 600px; 
-  margin-bottom: 20px; /* aumenta o espaçamento entre os anúncios */                 /* Largura fixa */
+  border: 1px solid #ccc;
+  padding: 15px;
+  border-radius: 15px;
+  background-color: #fafafa;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  width: 100%;
+  box-sizing: border-box;
+  transition: transform 0.2s;
 }
 
-.ver-anuncio.visto {
-  background-color: #dc3545; /* vermelho */
-  cursor: default;
-  pointer-events: none; /* desativa clique no botão já visto */
-  opacity: 0.7;
+.anuncio-card:hover {
+  transform: translateY(-5px);
 }
 
-/* Título do cartão de anúncio */
+/* Título */
 .anuncio-card h3 {
-  max-height: 5.4em;             /* Limita altura para ~3 linhas */
-  overflow: hidden;              /* Esconde texto extra */
-  text-overflow: ellipsis;       /* Mostra "..." se texto for cortado */
-  display: -webkit-box;          /* Para clamping em Webkit */
-  -webkit-line-clamp: 3;         /* Limita a 3 linhas */
-  -webkit-box-orient: vertical;  /* Orientação vertical */
-  white-space: normal;           /* Permite quebra de linha */
-  word-wrap: break-word;         /* Quebra palavras longas */
-  overflow-wrap: break-word;     /* Suporte moderno para quebra */
-}
-
-/* Parágrafo do cartão de anúncio (mesma limitação de linhas) */
-.anuncio-card p {
   max-height: 5.4em;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -51,7 +46,21 @@
   overflow-wrap: break-word;
 }
 
-/* Classe para descrição dentro do anúncio, mesma regra */
+/* Parágrafos */
+.anuncio-card p {
+  max-height: 5.4em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  width: 90%;
+}
+
+/* Descrição separada (caso use .descricao-anuncio) */
 .descricao-anuncio {
   max-height: 5.4em;
   overflow: hidden;
@@ -64,53 +73,109 @@
   overflow-wrap: break-word;
 }
 
-/* Texto pequeno dentro do cartão (ex: data, autor) */
+/* Texto pequeno */
 .anuncio-card small {
-  color: #777; /* Cinza médio */
+  color: #777;
 }
 
-/* Container opcional para centralizar conteúdo dentro do anúncio */
+/* Texto e dados centralizados */
 .anuncio-detalhes {
   text-align: center;
   margin: 1.5rem 0;
   font-family: Arial, sans-serif;
+  
 }
 
-/* Primeiro parágrafo de detalhes (ex: ganhos) */
 .anuncio-detalhes p:first-child {
   font-size: 1.1rem;
-  color: #2c3e50;       /* Cor azul escuro */
+  color: #2c3e50;
   margin-bottom: 0.5rem;
   font-weight: 500;
+   
 }
 
-/* Temporizador do anúncio - seleciona elementos cujo id começa com 'contador-' */
+/* Contador */
 .anuncio-detalhes p[id^="contador-"] {
   font-size: 1rem;
-  color: #e67e22;       /* Laranja forte */
+  color: #e67e22;
   font-weight: bold;
   margin: 0.5rem 0;
 }
 
-/* Botão de visualizar anúncio */
+/* Imagem do token */
+#VerAnuncios .token-info img {
+  width: 35px;
+  height: 35px;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+
+/* Botão verde brilhante */
 .ver-anuncio {
   display: inline-block;
-  background-color: #28a745; /* Verde */
+  background: linear-gradient(135deg, #34d058, #28a745);
   color: white;
-  padding: 0.5rem 1.2rem;
-  text-decoration: none;
-  border-radius: 6px;
-  font-weight: bold;
-  transition: background-color 0.3s ease; /* Animação suave */
+  padding: 0.6rem 1.4rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 0 4px 12px rgba(40, 167, 69, 0.5);
+  transition: background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  cursor: pointer;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+  user-select: none;
 }
 
-/* Efeito hover do botão */
 .ver-anuncio:hover {
-  background-color: #218838; /* Verde mais escuro */
+  background: linear-gradient(135deg, #28a745, #23b33a);
+  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.8);
+  transform: translateY(-2px);
 }
 
-/*announcement-board*/
+/* Botão vermelho brilhante para estado "visto" */
+.ver-anuncio.visto {
+  background: linear-gradient(135deg, #ff4d4f, #dc3545);
+  cursor: default;
+  pointer-events: none;
+  opacity: 0.85;
+  box-shadow: 0 0 10px rgba(220, 53, 69, 0.7);
+  color: white;
+  border-radius: 8px;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
 
+/* Botão vermelho brilhante para estado "bloqueado" */
+.ver-anuncio.bloqueado {
+  background: linear-gradient(135deg, #e55353, #d9534f);
+  color: #fff;
+  cursor: not-allowed;
+  box-shadow: 0 2px 10px rgba(217, 83, 79, 0.7);
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease;
+  user-select: none;
+}
+
+.ver-anuncio.bloqueado:hover {
+  box-shadow: 0 4px 16px rgba(217, 83, 79, 1);
+}
+
+/* Botão verde brilhante para estado "liberado" */
+.ver-anuncio.liberado {
+  background: linear-gradient(135deg, #5cd65c, #5cb85c);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(92, 184, 92, 0.8);
+  border-radius: 8px;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.ver-anuncio.liberado:hover {
+  box-shadow: 0 6px 24px rgba(92, 184, 92, 1);
+  transform: translateY(-2px);
+}
+
+
+/* Título do quadro de anúncios */
 .announcement-board {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 1.4rem;
@@ -125,50 +190,63 @@
   letter-spacing: 1px;
   font-weight: 600;
   position: relative;
+
 }
 
-.announcement-board::before {
-  content: "📢";
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 1.5rem;
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
 }
 
-
-.ver-anuncio.bloqueado {
-  background-color: #d9534f; /* vermelho tomate */
-  color: #fff;
-  cursor: not-allowed;
-  box-shadow: 0 2px 6px rgba(217, 83, 79, 0.5); /* sombra suave avermelhada */
-  border-radius: 4px; /* cantos levemente arredondados */
-  transition: box-shadow 0.3s ease;
+.modal-content {
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 30px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  animation: slideIn 0.3s ease-out;
 }
 
-.ver-anuncio.bloqueado:hover {
-  box-shadow: 0 4px 12px rgba(217, 83, 79, 0.7); /* leve destaque ao passar o mouse */
+/* Estilo do link no modal */
+#linkAnuncio {
+  color: #1a73e8; /* azul escuro */
+  text-decoration: underline;
+  word-break: break-word;
 }
 
-.ver-anuncio.liberado {
-  background-color: #5cb85c; /* verde bootstrap */
-  color: #fff;
+#linkAnuncio:hover {
+  color: #0040c0; /* azul mais escuro no hover */
+  text-decoration: none;
+}
+
+.fechar {
+  color: #aaa;
+  float: right;
+  font-size: 24px;
+  font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 2px 6px rgba(92, 184, 92, 0.5); /* sombra verde suave */
-  border-radius: 4px;
-  transition: box-shadow 0.3s ease;
 }
 
-.ver-anuncio.liberado:hover {
-  box-shadow: 0 4px 12px rgba(92, 184, 92, 0.7); /* sombra mais forte no hover */
+.fechar:hover {
+  color: #333;
 }
 
-#VerAnuncios .token-info img {
-  width: 35px;
-  height: 35px;
-  vertical-align: middle;
-  margin-left: 4px;
-  
+@keyframes fadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
 }
 
+@keyframes slideIn {
+  from { transform: translateY(-30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
 

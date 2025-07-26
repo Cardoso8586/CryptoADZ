@@ -29,48 +29,25 @@ import com.cryptoadz.service.DepositoService;
 @RequestMapping("/api/depositos")
 public class DepositoController {
 
-    @Value("${deposito.endereco.fixo}")
-    private String enderecoFixo;
 
     @Autowired
     private DepositoPendenteRepository depositoRepo;
 
     @Autowired
     private DepositoHistoricoRepository depositoHistoricoRepository;
+ 
+
+    
     
     @Autowired
-    private UsuarioRepository usuarioRepository;
+    private DepositoService depositoService;
 
-    
     @PostMapping("/fazer")
     public ResponseEntity<?> fazerDeposito(@RequestBody SolicitacaoDepositoRequest request) {
-        Optional<Usuario> userOpt = usuarioRepository.findById(request.getUserId());
-        if (userOpt.isEmpty()) {
-            return ResponseEntity.badRequest().body("Usuário não encontrado");
-        }
-
-        Usuario usuario = userOpt.get();
-
-        DepositoPendente deposito = new DepositoPendente();
-        deposito.setUser(usuario);
-        deposito.setValorEsperado(request.getValor());
-        deposito.setConfirmado(false);
-        deposito.setDataSolicitacao(LocalDateTime.now());
-        deposito.setEnderecoDeposito(enderecoFixo);
-
-        depositoRepo.save(deposito);
-
-        return ResponseEntity.ok(new EnderecoDepositoResponse(enderecoFixo));
+        depositoService.solicitarDeposito(request.getUserId(), request.getValor());
+        return ResponseEntity.ok("Depósito registrado com sucesso");
     }
-    
-    /**@GetMapping("/historico/{userId}")
-    public List<DepositoHistorico> obterHistorico(@PathVariable Long userId) {
-        Usuario user = usuarioRepository.findById(userId)
-            .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
-        return depositoHistoricoRepository.findByUser(user);
-    }
-    */
-    
+
     
     @GetMapping("/historico/{userId}")
     public ResponseEntity<List<DepositoHistoricoDTO>> listarHistorico(@PathVariable Long userId) {

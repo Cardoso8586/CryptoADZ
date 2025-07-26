@@ -3,7 +3,7 @@
     margin-top: 20px;
     margin-left: 150px; /* aumenta bastante a distância da esquerda */
     width: 250px; /* largura fixa para manter o tamanho */
-    background-color: #fff;
+    background-color:#333;
     border-radius: 10px;
     box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
     padding: 20px;
@@ -24,24 +24,24 @@
     flex-direction: column;
     align-items: center;
     gap: 30px;
-    margin-top: 20px;
+    margin-top: 90px;/* ← Move cada banner mais para baixo */
 }
 
 /* Estilo de cada banner */
 .ad-box {
-    border: 2px solid #ccc;
+    border: #333;
     border-radius: 12px;
     padding: 10px;
     text-align: center;
     width: 100%;
-    Zbackground-color: #fafafa;
+    Zbackground-color:#333;
     box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
     transition: transform 0.3s ease;
 }
 
 /* Hover */
 .ad-box:hover {
-    transform: scale(1.50);
+    transform: scale(1.10);
 }
 
 /* Imagem */

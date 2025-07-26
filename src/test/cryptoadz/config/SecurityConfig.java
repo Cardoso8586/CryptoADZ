@@ -70,6 +70,7 @@ public class SecurityConfig {
             			    "/cadastro/**",
             			    "/css/**",
             			    "/js/**",
+            			    "/icones/**",
             			    "/usuarios/quantidade",
             			    "/api/anuncio/quantidade",
             			    "/api/anuncio/quantidade-cliks",
@@ -78,11 +79,11 @@ public class SecurityConfig {
             			    "/api/visualizacoes/tokens-creditados/**",
             			    "/api/visualizacoes/registrar-visualizacao/**",
             			    "/api/anuncio/meus-anuncios/**",
-            			    "/missoes/incrementar-assistir/**",
-            			    "/missoes/incrementar-cadastro/**",
-            			    "/missoes/reivindicar-cadastro/**",
-            			    "/missoes/reivindicar-assistir/",
-            			    "/missoes/status/**",
+            			    "/api/missoes/incrementar-assistir/**",
+            			    "/api/missoes/incrementar-cadastro/**",
+            			    "/api/missoes/reivindicar-cadastro/**",
+            			    "/api/missoes/reivindicar-assistir/**",
+            			    "/api/missoes/status/**",
             			    "/api/avisos/**",
             			    "/api/bonus/coletar/**",
             			    "/api/bonus/verificar/**",
@@ -93,10 +94,7 @@ public class SecurityConfig {
                             "/api/depositos/fazer/**",
                             "/api/depositos/status/**",
                             "/api/depositos/historico/**",
-                            "/api/saques/solicitar/**",
-                            "/api/saques/pendentes/**",
-                            "/api/saques/historico/**",
-                            "/api/saques/status/**" 
+                            "/api/swap/**"
                          
                         
             			   
@@ -113,6 +111,7 @@ public class SecurityConfig {
             		    .anyRequest().authenticated()
             		    
             )
+            
             .formLogin(form -> form
                 .loginPage("/login")
                 .defaultSuccessUrl("/dashboard", true)

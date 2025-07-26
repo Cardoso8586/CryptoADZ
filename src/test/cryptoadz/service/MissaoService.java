@@ -74,7 +74,7 @@ public class MissaoService {
         MissaoDiaria missao = getOuCriarMissao(usuario);
 
         if (missao.isRecompensaAssistiu()) {
-            return "⚠️ You have already claimed this reward today.";
+            return "⚠️ Você já resgatou essa recompensa hoje.";
         }
 
         if (missao.getContadorAssistir() >= REQUISITO_ASSISTIR) {
@@ -82,10 +82,10 @@ public class MissaoService {
             missao.setRecompensaAssistiu(true);
             usuarioRepo.save(usuario);
             missaoRepo.save(missao);
-            return "🎉 Congratulations! You’ve completed 20 views and earned +10 tokens!";
+            return "🎉 Parabéns! Você completou 20 visualizações e ganhou +10 tokens!";
         }
 
-        return "You have watched" + missao.getContadorAssistir() + "/" + REQUISITO_ASSISTIR + ". Keep going!";
+        return "Você assistiu" + missao.getContadorAssistir() + "/" + REQUISITO_ASSISTIR + ". Continue assim!" ;
     }
 
     // ✅ Incrementa apenas o contador de cadastro (sem recompensa)
@@ -102,7 +102,7 @@ public class MissaoService {
         MissaoDiaria missao = getOuCriarMissao(usuario);
 
         if (missao.isRecompensaCadastrou()) {
-            return "⚠️ You have already claimed this reward today.";
+            return "⚠️ Você já coletou esta recompensa hoje.";
         }
 
         if (missao.getContadorCadastrar() >= REQUISITO_CADASTRAR) {
@@ -110,9 +110,9 @@ public class MissaoService {
             missao.setRecompensaCadastrou(true);
             usuarioRepo.save(usuario);
             missaoRepo.save(missao);
-            return "🎉 Congrats! Your ad is live and you earned +100 tokens!";
+            return "🎉 Parabéns! Seu anúncio está ativo e você ganhou +100 tokens!";
         }
 
-        return "You registered successfully." + missao.getContadorCadastrar() + "/" + REQUISITO_CADASTRAR + ". Keep going!";
+        return "Você se registrou com sucesso." + missao.getContadorCadastrar() + "/" + REQUISITO_CADASTRAR + ". Continue assim!";
     }
 }

@@ -34,8 +34,21 @@ async function verificarStatusVisualizacoes() {
         textoColetado.style.color = 'green';
         textoColetado.style.marginLeft = '10px';
         btnClaim.parentNode.appendChild(textoColetado);
+		
       }
       textoColetado.textContent = 'Você já coletou hoje.';
+	
+	  Swal.fire({
+	    icon: 'info',
+	    title: 'Aviso',
+	    text: 'Você já coletou hoje.',
+	    timer: 2500,
+	    timerProgressBar: true,
+	    showConfirmButton: false,
+	    background: '#fff',
+	    color: '#000'
+	  });
+
       textoColetado.style.display = 'inline';
 
       statusSpan.textContent = `✅ Completo! (${bannersVistos}/${limitePorDia})`;
@@ -47,6 +60,7 @@ async function verificarStatusVisualizacoes() {
     }
   } catch (error) {
     console.error('Erro ao verificar status:', error.message);
+	
   }
 }
 
@@ -63,10 +77,31 @@ async function coletarRecompensaBanners() {
       throw new Error(err);
     }
 
-    alert('🎉 Recompensa coletada com sucesso!');
+  
+	Swal.fire({
+	  icon: 'success',
+	  title: '🎉 Recompensa coletada!',
+	  text: 'Recompensa coletada com sucesso!',
+	  timer: 2500,
+	  timerProgressBar: true,
+	  showConfirmButton: false,
+	  background: '#fff',
+	  color: '#000'
+	});
+
     verificarStatusVisualizacoes();
   } catch (error) {
-    alert('Erro ao coletar recompensa: ' + error.message);
+   
+	Swal.fire({
+			    icon: 'info',
+			    title: 'Aviso',
+			    text: '⚠️ Erro ao coletar recompensa:' + error.message,
+			    timer: 2500,
+			    timerProgressBar: true,
+			    showConfirmButton: false,
+			    background: '#fff',
+			    color: '#000'
+			  });
   }
 }
 
