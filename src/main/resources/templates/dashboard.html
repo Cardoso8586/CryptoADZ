@@ -648,6 +648,8 @@ function atualizarIcone(selectId, imgId) {
   <div class="painel-box">
     <h3>📄 Meu Perfil</h3>
     <span id="nomeUsuario" th:text="${usuario.username}">Usuário</span>
+    <p class="data-cadastro">📅 Cadastrado em: <span th:text="${dataCadastroFormatada}">01/01/2025 10:00</span></p>
+    
     <button onclick="toggleFormulario('formEditarPerfil')">✏️ Editar Usuário</button>
 
     <form id="formEditarPerfil" style="display: none; margin-top: 15px;" onsubmit="salvarNovoNome(event)">
@@ -659,6 +661,8 @@ function atualizarIcone(selectId, imgId) {
   <!-- Configurações -->
   <div class="painel-box">
     <h3>⚙️ Configurações</h3>
+     <p class="senha-usuario">🔑 Senha: <span>********</span> <button onclick="mostrarSenha()">👁️</button></p>
+
     <button onclick="toggleFormulario('formAlterarSenha')">🔒 Alterar Senha</button>
 
     <form id="formAlterarSenha" style="display: none; margin-top: 15px;" onsubmit="salvarNovaSenha(event)">

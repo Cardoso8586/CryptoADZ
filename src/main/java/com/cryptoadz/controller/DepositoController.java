@@ -1,11 +1,9 @@
 package com.cryptoadz.controller;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,14 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cryptoadz.dto.DepositoHistoricoDTO;
-import com.cryptoadz.dto.EnderecoDepositoResponse;
 import com.cryptoadz.dto.SolicitacaoDepositoRequest;
 import com.cryptoadz.model.DepositoHistorico;
 import com.cryptoadz.model.DepositoPendente;
-import com.cryptoadz.model.Usuario;
 import com.cryptoadz.repository.DepositoHistoricoRepository;
 import com.cryptoadz.repository.DepositoPendenteRepository;
-import com.cryptoadz.repository.UsuarioRepository;
 import com.cryptoadz.service.DepositoService;
 
 @RestController

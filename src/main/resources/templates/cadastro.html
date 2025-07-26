@@ -83,6 +83,8 @@
         <p th:text="${erroSenha}"></p>
     </div>
 
+
+
     <form th:action="@{/cadastro}" th:object="${usuario}" method="post" id="registerForm">
         <label for="username">Usuário:</label>
         <input type="text" th:field="*{username}" id="username" required>
@@ -108,11 +110,42 @@
 
     <p>Já tem uma conta? <a th:href="@{/login}">Faça login aqui</a></p>
     
-    
-    
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:if="${param.cadastroSucesso}">
+  Swal.fire({
+    title: '🎉 Bem-vindo à plataforma!',
+    html: `
+      <img src="/icones/adz-token-48.png" style="width:48px;height:48px;margin-bottom:10px;">
+      <p style="font-size:16px;margin-top:10px;">Sua conta foi <b>criada com sucesso</b>!<br>
+      Faça login e comece a ganhar tokens agora mesmo.</p>
+    `,
+    icon: 'success',
+    background: '#1e1e2f',
+    color: '#fff',
+    showConfirmButton: true,
+    confirmButtonColor: '#00c853',
+    confirmButtonText: 'Vamos lá!',
+    backdrop: `
+      rgba(0,0,123,0.4)
+      url("https://cdn.jsdelivr.net/gh/napthedev/swal2-assets/party.gif")
+      left top
+      no-repeat
+    `,
+    allowOutsideClick: false, // impede fechar clicando fora
+  }).then((result) => {
+    if (result.isConfirmed) {
+      window.location.href = '/login';
+    }
+  });
+</script>
+
+
+
+
 </div>
 
 <script src="/js/captcha-response.js"></script>
+
 
 
 </body>

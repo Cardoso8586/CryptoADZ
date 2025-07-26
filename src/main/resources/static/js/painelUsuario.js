@@ -17,7 +17,7 @@ function salvarNovoNome(event) {
       icon: 'error',
       title: 'Oops...',
       text: 'Nome inválido ou ID não encontrado.',
-      timer: 2500,
+      timer: 5000,
       timerProgressBar: true,
       showConfirmButton: false
     });
@@ -41,7 +41,7 @@ function salvarNovoNome(event) {
       icon: 'success',
       title: 'Nome atualizado!',
       text: msg,
-      timer: 2000,
+      timer: 5000,
       timerProgressBar: true,
       showConfirmButton: false
     }).then(() => {
@@ -79,7 +79,7 @@ function salvarNovaSenha(event) {
       icon: 'warning',
       title: '⚠️ Campo vazio',
       text: 'Por favor, insira a nova senha.',
-      timer: 3000,
+      timer: 5000,
       timerProgressBar: true,
       showConfirmButton: false
     });
@@ -101,7 +101,7 @@ function salvarNovaSenha(event) {
       icon: 'success',
       title: 'Senha Atualizada!',
       text: '✅ Sua senha foi alterada com sucesso.',
-      timer: 3000,
+      timer: 5000,
       timerProgressBar: true,
       showConfirmButton: false
     });
@@ -118,7 +118,7 @@ function salvarNovaSenha(event) {
       }).then(() => {
         window.location.href = '/logout';
       });
-    }, 1000);
+    }, 5000);
   })
   .catch(error => {
     Swal.fire({

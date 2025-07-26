@@ -1,6 +1,7 @@
 package com.cryptoadz.controller;
 
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -39,6 +40,9 @@ public class DashBoardController {
         model.addAttribute("usuario", usuario);
         model.addAttribute("saldoTokens", usuario.getSaldoTokens());
         model.addAttribute("saldoUsdt", usuario.getUsdtSaldo());
+        model.addAttribute("dataCadastroFormatada", usuario.getCreatedAt()
+        	    .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+        model.addAttribute("senha-usuario", usuario.getSenha());
 
         if (page < 0) {
             page = 0;

@@ -31,7 +31,7 @@ public class TentativaCadastroService {
 
     /**
      * Registra uma nova tentativa de cadastro.
-     * Bloqueia automaticamente após 3 tentativas.
+     * Bloqueia automaticamente após 5 tentativas.
      */
     public void registrarTentativa(TentativaCadastro tentativa) {
         int novasTentativas = tentativa.getTentativas() + 1;

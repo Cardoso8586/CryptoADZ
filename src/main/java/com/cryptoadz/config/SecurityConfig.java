@@ -96,6 +96,7 @@ public class SecurityConfig {
                             "/api/depositos/historico/**",
                             "/api/swap/**",
                             "/atualizar-nome/**"
+                           
                          
                         
             			   

@@ -91,3 +91,24 @@
   form button[type="submit"]:hover {
     background-color: #27ae60;
   }
+  
+  .data-cadastro {
+  font-size: 0.95rem;
+  color: #4b5563; /* cinza moderno */
+  margin: 5px 0 15px;
+  background-color: #f9fafb;
+  padding: 6px 12px;
+  border-left: 4px solid #10b981; /* verde suave */
+  border-radius: 6px;
+}
+  
+  .senha-usuario {
+  font-size: 0.95rem;
+  color: #374151;
+  background-color: #fef3c7;
+  padding: 6px 12px;
+  border-left: 4px solid #f59e0b;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+  
