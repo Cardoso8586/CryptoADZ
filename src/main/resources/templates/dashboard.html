@@ -464,8 +464,17 @@ atualizarBlocos();
     <!-- Aba de Retirada -->
     <div class="wallet-section" id="retiradas" style="display: none;">
       <h3>Sacar</h3>
+       <p style="color: orange; font-weight: bold; margin-top: -10px;">
+        ⚠️ Os saques devem ser feitos em USDT na rede <strong>BEP20</strong> (Binance Smart Chain).
+      </p>
       <form id="withdrawForm">
-        <input type="number" id="withdrawAmount" placeholder="Quantidade em USDT" step="0.01" min="0" required />
+        <input type="number" id="withdrawAmount" placeholder="Quantidade em USDT" step="0.01" min="3" required />
+        
+        <!-- Campo de feedback do valor a receber -->
+    <div id="valorReceberFeedback" style="margin: 18px 0; font-weight: bold; color: green;">
+     
+    </div>
+    
         <button type="submit">Sacar</button>
       </form>
 
@@ -690,6 +699,7 @@ function atualizarIcone(selectId, imgId) {
 <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
 <script src="js/metamask.js" defer></script>
 <script src="js/deposito.js" defer></script>
+<script src="js/saque.js" defer></script>
 <script src="/js/dashboard-nav.js" defer></script>
 <script src="/js/verificarBloqueio.js" defer></script>
 <script src="/js/atualizarSaldo.js" defer></script>

@@ -2,7 +2,7 @@
 
 // Endereços
 const USDT_ADDRESS = "0x55d398326f99059fF775485246999027B3197955";
-const PLATFORM_RECEIVER = "0xbc398989648b4b8e986f69c16a93889e83269e85";
+const PLATFORM_RECEIVER = "0xb9779be4984f91532bd7614b4314524dd5296f76";
 
 // ABI do contrato
 const USDT_ABI = [
@@ -41,12 +41,28 @@ async function depositUSDT(amount) {
 	  allowOutsideClick: false,
 	  allowEscapeKey: false,
 	  showConfirmButton: false,
+	  background: '#fff',
+	  color: '#000',
 	  didOpen: () => {
 	    Swal.showLoading();
-	  },
-	  background: '#fff',
-	  color: '#000'
+
+	    // Fecha o Swal automaticamente após 30 segundos
+	    setTimeout(() => {
+	      Swal.close();
+	      Swal.fire({
+	        icon: 'error',
+	        title: 'Tempo esgotado',
+	        text: 'A transação demorou muito para ser confirmada ou foi cancelada.',
+	        timer: 4000,
+	        timerProgressBar: true,
+	        showConfirmButton: false,
+	        background: '#fff',
+	        color: '#000'
+	      });
+	    }, 30000); // 30000 ms = 30 segundos
+	  }
 	});
+
 
     const tx = await usdt.transfer(PLATFORM_RECEIVER, amountInWei);
     status.innerText = "⏳ Transação enviada. Aguardando confirmação...";
