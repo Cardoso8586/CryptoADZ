@@ -2,7 +2,8 @@
 
 // Endereços
 const USDT_ADDRESS = "0x55d398326f99059fF775485246999027B3197955";
-const PLATFORM_RECEIVER = "0xb9779be4984f91532bd7614b4314524dd5296f76";
+const PLATFORM_RECEIVER = "0xbc398989648b4b8e986f69c16a93889e83269e85";
+                         //   MEXC
 
 // ABI do contrato
 const USDT_ABI = [

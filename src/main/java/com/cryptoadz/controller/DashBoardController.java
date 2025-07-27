@@ -43,6 +43,7 @@ public class DashBoardController {
         model.addAttribute("dataCadastroFormatada", usuario.getCreatedAt()
         	    .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
         model.addAttribute("senha-usuario", usuario.getSenha());
+        model.addAttribute("email-usuario", usuario.getEmail());
 
         if (page < 0) {
             page = 0;

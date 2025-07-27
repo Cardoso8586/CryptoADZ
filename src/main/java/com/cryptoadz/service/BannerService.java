@@ -40,6 +40,9 @@ public class BannerService {
     @Autowired
     private BannerVisualizacaoRepository bannerVisualizacaoRepository;
    
+    @Autowired
+    private EmailService emailService;
+    
     @Transactional
     public BannerResponseDTO criarBannerComUsuario(BannerDTO dto, String username) {
         Usuario usuario = usuarioRepository.findByUsername(username)
@@ -73,6 +76,22 @@ public class BannerService {
 
         bannerRepository.save(banner);
 
+        // ===  enviar e-mail de confirmação
+        try {
+            emailService.enviarConfirmacaoBannerHtml(
+                usuario.getUsername(),
+                usuario.getEmail(),
+                banner.getTitulo(),
+                banner.getUrlDestino(), 
+                banner.getImagemUrl(),
+                banner.getDataExpiracao()
+               
+                );	
+            
+        } catch (Exception e) {
+            System.err.println("Erro ao enviar e-mail de confirmação de criação de anúncio: " + e.getMessage());
+        }
+        
         // Retorna DTO com o banner criado, custo descontado e saldo atualizado
         return new BannerResponseDTO(banner, usuario.getSaldoTokens(), tokensGastos, username);
          

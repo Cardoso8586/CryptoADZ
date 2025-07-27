@@ -656,7 +656,10 @@ function atualizarIcone(selectId, imgId) {
   <!-- Perfil -->
   <div class="painel-box">
     <h3>📄 Meu Perfil</h3>
-    <span id="nomeUsuario" th:text="${usuario.username}">Usuário</span>
+    <span id="emailUsuario" th:text="'E-mail: ' + ${usuario.email}">E-mail: </span>
+  <span id="nomeUsuario">Usuário: <span th:text="${usuario.username}"></span>
+</span>
+
     <p class="data-cadastro">📅 Cadastrado em: <span th:text="${dataCadastroFormatada}">01/01/2025 10:00</span></p>
     
     <button onclick="toggleFormulario('formEditarPerfil')">✏️ Editar Usuário</button>

@@ -58,30 +58,6 @@ public class LoginController {
     }
 }
 
-//  Secret Key localhost  turnstile.secret=0x4AAAAAABeuEE4p3cvwuCkha8xhAxFWCJ4
-
-// data-sitekey=  0x4AAAAAABeuEKIL4oQVYiXR
-
-
-//===============================================================================
-
-///data-sitekey=    0x4AAAAAABhDBlDrEgbq9kdW               
-//                   
-
-//                       
-// Secret Key Railway   turnstile.secret=0x4AAAAAABhDBvnkevUzbkiH3mxAW-Ct3tg
-//          
-
-//====================================
-// server.port=8086
-
-
-/**cryptoadz-production-ptcrewards-adz.up.railway.app
- * 
- * data-sitekey= 0x4AAAAAABhDBlDrEgbq9kdW
- * turnstile.secret=0x4AAAAAABhDBiZ7lkln5XLQFCFW4C5hiRM
- */
-
 
 
 

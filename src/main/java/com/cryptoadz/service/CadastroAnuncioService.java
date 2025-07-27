@@ -28,7 +28,8 @@ public class CadastroAnuncioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-	
+    @Autowired
+    private EmailService emailService;
 
     @Transactional
     public AnuncioResponseDTO cadastrarAnuncio(AnuncioDTO dto, String username) {
@@ -39,23 +40,23 @@ public class CadastroAnuncioService {
         int bloqueioHoras;
 
         if (dto.getTempoVisualizacao() >= 45) {
-            tokensPorVisualizacao = new BigDecimal("0.90");
+            tokensPorVisualizacao = new BigDecimal("0.50");
             bloqueioHoras = 16;
         } 
         else if (dto.getTempoVisualizacao() >= 30) {
-        tokensPorVisualizacao = new BigDecimal("0.65");
+        tokensPorVisualizacao = new BigDecimal("0.35");
         bloqueioHoras = 22;
         }
         else if (dto.getTempoVisualizacao() >= 20) {
-        tokensPorVisualizacao = new BigDecimal("0.50");
+        tokensPorVisualizacao = new BigDecimal("0.20");
         bloqueioHoras = 26;
        } 
         else if (dto.getTempoVisualizacao() >= 10) {
-            tokensPorVisualizacao = new BigDecimal("0.35");
+            tokensPorVisualizacao = new BigDecimal("0.15");
             bloqueioHoras =30;
        } 
        else {
-       tokensPorVisualizacao = new BigDecimal("0.20");
+       tokensPorVisualizacao = new BigDecimal("0.10");
        bloqueioHoras =15;
          
        
@@ -89,6 +90,19 @@ public class CadastroAnuncioService {
         usuario.setMeusAnuncios(meusAnuncios.add(BigDecimal.ONE));
         usuarioRepository.save(usuario);
         anuncioRepository.save(anuncio);
+        
+        try {
+            emailService.enviarConfirmacaoAnuncioHtml(
+                usuario.getUsername(),
+                usuario.getEmail(),
+                anuncio.getTitulo(),
+                anuncio.getDescricao(), 
+                anuncio.getUrl()
+            );	
+        } catch (Exception e) {
+            System.err.println("Erro ao enviar e-mail de confirmação de criação de anúncio: " + e.getMessage());
+        }
+
 
         return new AnuncioResponseDTO(anuncio, tokensGastos, usuario.getSaldoTokens());
     }
