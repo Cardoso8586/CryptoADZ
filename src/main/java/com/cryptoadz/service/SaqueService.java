@@ -38,15 +38,15 @@ import jakarta.transaction.Transactional;
 @Service
 public class SaqueService {
 
-  @Value("${bsc.rpc.url}")
-  private String rpcUrl;  // URL do nó BSC RPC para conexão
+	@Value("${bsc.rpc.url}")
+	private String rpcUrl;
 
-   @Value("${wallet.private.key}")
-  private String privateKey;  // Chave privada da carteira que vai enviar os tokens (origem)
+	@Value("${wallet.private-key}")
+	private String privateKey;
 
-   @Value("${usdt.contract.address}")
-  private String usdtContractAddress;  // Endereço do contrato do token USDT na Binance Smart Chain
- 
+	@Value("${usdt.contract-address}")
+	private String usdtContractAddress;
+
 	//private final String rpcUrl = AppConfig.getBscRpcUrl();
 	//private final String privateKey = AppConfig.getWalletPrivateKey();
 	//private final String usdtContractAddress = AppConfig.getUsdtContractAddress();
