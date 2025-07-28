@@ -28,6 +28,7 @@ import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.utils.Numeric;
 
+import com.cryptoadz.config.AppConfig;
 import com.cryptoadz.model.SaqueHistorico;
 import com.cryptoadz.model.Usuario;
 import com.cryptoadz.repository.UsuarioRepository;
@@ -37,15 +38,20 @@ import jakarta.transaction.Transactional;
 @Service
 public class SaqueService {
 
-    @Value("${bsc.rpc.url}")
-    private String rpcUrl;  // URL do nó BSC RPC para conexão
+ // @Value("${bsc.rpc.url}")
+  // private String rpcUrl;  // URL do nó BSC RPC para conexão
 
-    @Value("${wallet.private.key}")
-    private String privateKey;  // Chave privada da carteira que vai enviar os tokens (origem)
+  //  @Value("${wallet.private.key}")
+ //  private String privateKey;  // Chave privada da carteira que vai enviar os tokens (origem)
 
-    @Value("${usdt.contract.address}")
-    private String usdtContractAddress;  // Endereço do contrato do token USDT na Binance Smart Chain
+   // @Value("${usdt.contract.address}")
+ //  private String usdtContractAddress;  // Endereço do contrato do token USDT na Binance Smart Chain
+ 
+	private final String rpcUrl = AppConfig.getBscRpcUrl();
+	private final String privateKey = AppConfig.getWalletPrivateKey();
+	private final String usdtContractAddress = AppConfig.getUsdtContractAddress();
 
+	
     private final List<SaqueHistorico> historico = new ArrayList<>(); // Histórico local em memória
 
     @Autowired

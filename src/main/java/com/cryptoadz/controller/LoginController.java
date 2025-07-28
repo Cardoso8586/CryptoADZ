@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
 
+import com.cryptoadz.config.AppConfig;
+
 import java.util.Map;
 
 
@@ -17,8 +19,11 @@ import java.util.Map;
 public class LoginController {
 
   
-    @Value("${turnstile.secret}")
-	private String turnstileSecret;
+   /// @Value("${turnstile.secret}")
+	//private String turnstileSecret;
+    private final String turnstileSecret = AppConfig.getTurnstileSecret();
+
+    
     @PostMapping("/login")
     public String login(
             @RequestParam String username,
