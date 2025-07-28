@@ -14,10 +14,10 @@ import java.util.Map;
 @Service
 public class CaptchaService {
 
-   // @Value("${turnstile.secret}")
-  //  private String secretKey;
+   @Value("${turnstile.secret}")
+   private String secretKey;
 
-	private final String secretKey = AppConfig.getTurnstileSecret();
+	//private final String secretKey = AppConfig.getTurnstileSecret();
 
     public boolean isValid(String token) {
         String url = "https://challenges.cloudflare.com/turnstile/v0/siteverify";

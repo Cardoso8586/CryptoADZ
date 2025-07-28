@@ -19,9 +19,9 @@ import java.util.Map;
 public class LoginController {
 
   
-   /// @Value("${turnstile.secret}")
-	//private String turnstileSecret;
-    private final String turnstileSecret = AppConfig.getTurnstileSecret();
+   @Value("${turnstile.secret}")
+	private String turnstileSecret;
+   // private final String turnstileSecret = AppConfig.getTurnstileSecret();
 
     
     @PostMapping("/login")
