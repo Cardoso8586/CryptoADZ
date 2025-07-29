@@ -1,52 +1,55 @@
-/* Container geral da seção */
+/* Container principal do Anunciar */
 #Anunciar {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #1e1e2f;
+  color: #f4f4f4;
+  border-radius: 16px;
+  padding: 25px 30px;
   max-width: 700px;
-  margin: 20px auto;
-  padding: 15px 25px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  margin: 40px auto;
+  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Títulos e textos */
+/* Título e textos */
 #Anunciar h2,
 #Anunciar p,
 #Anunciar label {
-  color: #333;
+  color: #00ffcc;
 }
 
 .advertisement-call {
   font-size: 1.25rem;
   font-weight: 600;
   margin-bottom: 15px;
-  color: #007bff;
+  color: #00ffcc;
 }
 
 /* Botões principais */
 #Anunciar button {
-  background-color: #007bff;
-  color: white;
+  background-color: #00cc99;
+  color: #111;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   padding: 10px 16px;
   cursor: pointer;
   font-size: 1rem;
   margin-right: 10px;
   transition: background-color 0.3s ease;
+  font-weight: 600;
 }
 
 #Anunciar button:hover {
-  background-color: #0056b3;
+  background-color: #00ffcc;
+  color: #000;
 }
 
 /* Formulários */
 #Anunciar form {
   margin-top: 20px;
-  background-color: #fff;
+  background-color: #222233;
   padding: 20px 18px;
-  border-radius: 6px;
-  box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+  border-radius: 10px;
+  box-shadow: inset 0 0 10px rgba(0, 255, 204, 0.15);
 }
 
 /* Inputs e textarea */
@@ -57,14 +60,16 @@
 #Anunciar select,
 #Anunciar textarea {
   width: 100%;
-  padding: 8px 10px;
+  padding: 10px 12px;
   margin-top: 6px;
   margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: 1px solid #00ffcc;
+  border-radius: 6px;
   font-size: 1rem;
   box-sizing: border-box;
   resize: vertical;
+  background-color: #2a2a3f;
+  color: #cceeee;
   font-family: inherit;
 }
 
@@ -77,29 +82,31 @@
 /* Preview do banner */
 .preview-container {
   margin-top: 15px;
-  border: 1px solid #ddd;
+  border: 1px solid #00cc99;
   padding: 10px;
   border-radius: 6px;
   text-align: center;
-  background-color: #fff;
+  background-color: #2a2a3f;
+  box-shadow: inset 0 0 8px rgba(0, 255, 204, 0.1);
 }
 
 .preview-container h3 {
   margin-bottom: 10px;
   font-weight: 600;
+  color: #00ffcc;
 }
 
 .preview-container img {
   max-width: 100%;
   max-height: 200px;
   border-radius: 4px;
-  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+  box-shadow: 0 0 6px rgba(0,0,0,0.2);
 }
 
 /* Feedback e info pagamento */
 #feedback {
   margin-top: 15px;
-  color: #d9534f; /* vermelho */
+  color: #ff6666; /* vermelho suave */
   font-weight: 600;
 }
 
@@ -108,13 +115,13 @@
 #saldo-tokens {
   margin-top: 10px;
   font-weight: 600;
-  color: #007bff;
+  color: #00ffcc;
 }
 
 /* Responsividade simples */
 @media (max-width: 480px) {
   #Anunciar {
-    padding: 10px 15px;
+    padding: 15px 20px;
   }
 
   #Anunciar button {
@@ -122,4 +129,3 @@
     width: 100%;
   }
 }
-

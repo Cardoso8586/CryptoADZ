@@ -1,95 +1,126 @@
-.ranking-container {
-  max-width: 500px;
-  margin: 80px auto;
-  padding: 30px 40px;
-  background-color: #1a1a1a;
-  border-radius: 12px;
-  box-shadow: 0 0 30px 8px rgba(0, 255, 204, 0.3);
-  font-family: 'Arial', sans-serif;
-  color: #ffffff;
-  box-sizing: border-box;
-  /* REMOVIDO overflow: hidden para evitar corte */
+/* Container principal do Ranking */
+#Ranking.ranking-container {
+  background-color: #1e1e2f;
+  color: #f4f4f4;
+  border-radius: 16px;
+  padding: 30px 25px;
+  max-width: 450px;
+  margin: 50px auto;
+  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 }
 
-.ranking-info {
-  background-color: #111;
-  border: 1px solid #00ffcc44;
-  border-radius: 10px;
-  padding: 15px 20px;
-  margin-bottom: 20px;
+/* Título do Ranking */
+#Ranking h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 25px;
   color: #00ffcc;
-  font-size: 14px;
-  line-height: 1.6;
-  box-shadow: inset 0 0 10px rgba(0, 255, 204, 0.1);
 }
 
-.ranking-info p,
-.ranking-info ul {
-  margin: 8px 0;
+/* Cabeçalho da lista de ranking */
+.ranking-header {
+  display: grid;
+  grid-template-columns: 1fr 3fr 2fr;
+  padding: 12px 15px;
+  background-color: #222233;
+  border-radius: 8px;
+  font-weight: 700;
+  color: #00ffcc;
+  box-shadow: 0 0 8px rgba(0, 255, 204, 0.3);
+  user-select: none;
+}
+
+/* Lista do ranking */
+.ranking-lista {
+  margin-top: 10px;
+  max-height: 500px;
+  overflow-y: auto;
+  border-radius: 8px;
+  box-shadow: inset 0 0 8px rgba(0, 255, 204, 0.15);
+}
+
+/* Item individual do ranking */
+.ranking-lista .ranking-item {
+  display: grid;
+  grid-template-columns: 1fr 3fr 2fr;
+  padding: 10px 15px;
+  border-bottom: 1px solid #444;
+  align-items: center;
+  color: #cceeee;
+  transition: background-color 0.3s;
+}
+
+.ranking-lista .ranking-item:hover {
+  background-color: #00cc99;
+  color: #111;
+  cursor: default;
+}
+
+/* Destaque para o usuário atual */
+#posicaoUsuario {
+  margin-top: 25px;
+  padding: 15px;
+  background-color: #222233;
+  border-radius: 8px;
+  color: #00ffcc;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
+}
+
+/* Área de informações e premiação */
+.ranking-info {
+  margin-top: 30px;
+  color: #e0e0e0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.ranking-info strong {
+  color: #00ffcc;
 }
 
 .ranking-info ul {
   list-style: none;
   padding-left: 0;
+  margin-bottom: 10px;
 }
 
-.ranking-info li::before {
-  content: '• ';
-  color: #00cc99;
-  margin-right: 5px;
-}
-
-.ranking-header,
-.ranking-item {
+.ranking-info ul li {
+  margin-bottom: 8px;
   display: flex;
-  justify-content: space-between;
-  padding: 10px 15px;
-  border-bottom: 1px solid #00ffcc55;
+  align-items: center;
+  gap: 8px;
+  color: #aaf0ff;
 }
 
-.ranking-header {
-  background-color: #00cc99;
-  color: #1a1a1a;
-  font-weight: bold;
-  border-radius: 8px 8px 0 0;
+/* Ajuste para o ícone de token */
+.ranking-info ul li img {
+  width: 16px;
+  height: 16px;
+  vertical-align: middle;
 }
 
-.ranking-item:nth-child(even) {
-  background-color: #2b2b2b;
+/* Responsivo */
+@media (max-width: 480px) {
+  #Ranking.ranking-container {
+    padding: 20px 15px;
+    margin: 20px 15px;
+  }
+
+  .ranking-header,
+  .ranking-lista .ranking-item {
+    grid-template-columns: 1fr 2fr 2fr;
+    font-size: 0.9rem;
+  }
+
+  #Ranking h2 {
+    font-size: 1.4rem;
+  }
+
+  .ranking-info {
+    font-size: 0.9rem;
+  }
 }
 
-.ranking-item:hover {
-  background-color: #00ffcc22;
-  cursor: default;
-}
-
-.ranking-item span {
-  flex: 1;
-  text-align: right;
-}
-
-.ranking-item span:first-child {
-  max-width: 60px;
-  color: #00ffcc;
-  font-weight: bold;
-  text-align: center;
-}
-
-.ranking-item span:last-child {
-  color: #00cc99;
-  font-weight: 600;
-  text-align: right;
-}
-
-#rankingLista {
-  max-height: 400px;  /* Limita altura, se quiser barra de rolagem */
-  overflow-y: auto;
-  border-radius: 0 0 8px 8px;
-  border: 1px solid #00cc99;
-}
-
-#posicaoUsuario {
-  margin: 15px 0 0;
-  font-weight: bold;
-  color: #00ffcc;
-}

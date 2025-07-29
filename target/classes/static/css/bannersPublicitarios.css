@@ -5,8 +5,8 @@
     border-radius: 10px;
     box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
     margin: 20px auto;      /* centraliza horizontalmente */
-    max-width: 1400px;      /* aumenta largura máxima da seção */
-    width: 95%;             /* ocupa quase toda a largura da tela */
+    max-width: 700px;      /* aumenta largura máxima da seção */
+    width: 100%;             /* ocupa quase toda a largura da tela */
 }
 
 /* Título principal da seção */
@@ -36,7 +36,7 @@
     background-color: #333;
     box-shadow: 2px 2px 8px rgba(0,0,0,0.2);
     flex: 1 1 calc(25% - 30px); /* 4 por linha */
-    max-width: 320px;            /* tamanho máximo do banner */
+    max-width:700px;            /* tamanho máximo do banner */
     transition: transform 0.3s ease;
     overflow: hidden;
     box-sizing: border-box;

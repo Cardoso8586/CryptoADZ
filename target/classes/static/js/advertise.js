@@ -185,8 +185,8 @@ formAnuncio.addEventListener('submit', async e => {
 	Swal.fire({
 	  icon: 'success',
 	  title: 'Sucesso',
-	  text: '✅ Anúncio cadastrado com sucesso!',
-	  timer: 2500,
+	  text: '✅ Tudo certo! Seu anúncio já está em processo de validação e será publicado em breve.',
+	  timer: 6000,
 	  timerProgressBar: true,
 	  showConfirmButton: false,
 	  background: '#fff',
