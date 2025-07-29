@@ -97,7 +97,12 @@ public class SecurityConfig {
                             "/api/swap/**",
                             "/atualizar-nome/**",
                             "/api/saques/historico/**",
-                            "/api/saques/**"
+                            "/api/saques/**",
+                            "/api/ranking-semanal/**",
+                            "/api/usuario/*/premio-pendente/**",
+                            "/api/usuario/*/confirmar-premio/**",
+                            "/api/minha-posicao/**"
+
                             
                            
                          

@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnMissoes: 'secaoMissoes',
     btnAvisos: 'Avisos',
 	btnUsuario: 'painelUsuario' 
+	
   };
 
   const adsSection = document.querySelector('.ads-section');
@@ -57,7 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (adsSection) {
-        if (secaoId === 'bannersPublicitarios' || secaoId === 'wallet-container' || secaoId === 'painelUsuario') {
+        if (secaoId === 'bannersPublicitarios' 
+			|| secaoId === 'wallet-container'
+		    || secaoId === 'painelUsuario' 
+			) {
           adsSection.style.display = 'none';
         } else {
           adsSection.style.display = 'block';

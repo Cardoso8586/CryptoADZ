@@ -2,6 +2,7 @@ package com.cryptoadz.service;
 
 import java.math.BigDecimal;
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -91,7 +92,11 @@ public class AnuncioVisualizacaoService {
 	            // Decremento maxVisualizacoes e outras lógicas continuam aqui
 	            processarVisualizacaoRestante(anuncio);
 	            
+	            usuario.setQuantidadeVisualizacaoSemanal(usuario.getQuantidadeVisualizacaoSemanal() + 1);
+	           
+	            usuarioRepo.save(usuario);
 
+	            
 	            return anuncio.getTempoVisualizacao() != null ? anuncio.getTempoVisualizacao() : 20;
 	            
 	        }

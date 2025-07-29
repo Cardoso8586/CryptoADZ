@@ -43,6 +43,10 @@ public class Usuario {
     @Column(name = "usdt_wallet", precision = 19, scale = 8)
     private BigDecimal usdtWallet = BigDecimal.ZERO;
 
+    
+    @Column(name = "quantidade_visualizacao_semanal")
+    private int quantidadeVisualizacaoSemanal;
+
     // ... construtores, outros getters e setters ...
 
     public BigDecimal getUsdtSaldo() {
@@ -89,6 +93,16 @@ public class Usuario {
     
     private String codigoConfirmacao;
     private boolean ativo = false;
+    @Column(name = "premio_pendente")
+    private BigDecimal premioPendente = BigDecimal.ZERO;
+
+    public BigDecimal getPremioPendente() {
+        return premioPendente;
+    }
+
+    public void setPremioPendente(BigDecimal premioPendente) {
+        this.premioPendente = premioPendente;
+    }
 
     
  // Getter
@@ -171,8 +185,16 @@ public class Usuario {
 		this.ativo = ativo;
 	}
 
+	public int getQuantidadeVisualizacaoSemanal() {
+		return quantidadeVisualizacaoSemanal;
+	}
 
-	
+	public void setQuantidadeVisualizacaoSemanal(int quantidadeVisualizacaoSemanal) {
+		this.quantidadeVisualizacaoSemanal = quantidadeVisualizacaoSemanal;
+	}
+
+
+
 
 
 	

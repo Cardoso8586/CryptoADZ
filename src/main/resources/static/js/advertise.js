@@ -206,7 +206,9 @@ formAnuncio.addEventListener('submit', async e => {
     }, 3000);
 
   } catch (error) {
-    feedback.textContent = 'Falha ao salvar o anúncio: ' + error.message;
+    feedback.textContent = 'Falha ao salvar o anúncio: Atualize essa Pagina ';
+	
+	
     feedback.style.color = 'red';
   }
 });
@@ -233,7 +235,7 @@ function registrarMissaoCadastrar() {
       carregarStatusMissoes();
     })
     .catch(err => {
-      console.error('Erro ao registrar/incrementar missão de cadastro:', err);
+      console.error('Erro ao registrar/incrementar missão de cadastro:');
     });
 }
 

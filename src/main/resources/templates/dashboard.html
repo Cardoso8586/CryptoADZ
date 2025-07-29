@@ -28,6 +28,8 @@
   <link rel="stylesheet" href="css/SidebarMobile.css" />      
   <link rel="stylesheet" href="css/bannerModal.css" />
   <link rel="stylesheet" href="css/painelUsuario.css" />
+  <link rel="stylesheet" href="css/ranking.css" />
+  <link rel="stylesheet" href="css/modalPremioSemana.css " />
    
     
     
@@ -662,19 +664,19 @@ function atualizarIcone(selectId, imgId) {
 
     <p class="data-cadastro">📅 Cadastrado em: <span th:text="${dataCadastroFormatada}">01/01/2025 10:00</span></p>
     
-    <button onclick="toggleFormulario('formEditarPerfil')">✏️ Editar Usuário</button>
-
-    <form id="formEditarPerfil" style="display: none; margin-top: 15px;" onsubmit="salvarNovoNome(event)">
-      <input type="text" id="inputNovoNome" placeholder="Novo nome de usuário" required>
-      <button type="submit">Salvar</button>
-    </form>
+    
   </div>
 
   <!-- Configurações -->
   <div class="painel-box">
     <h3>⚙️ Configurações</h3>
      <p class="senha-usuario">🔑 Senha: <span>********</span> <button onclick="mostrarSenha()">👁️</button></p>
+<button onclick="toggleFormulario('formEditarPerfil')">✏️ Editar Usuário</button>
 
+    <form id="formEditarPerfil" style="display: none; margin-top: 15px;" onsubmit="salvarNovoNome(event)">
+      <input type="text" id="inputNovoNome" placeholder="Novo nome de usuário" required>
+      <button type="submit">Salvar</button>
+    </form>
     <button onclick="toggleFormulario('formAlterarSenha')">🔒 Alterar Senha</button>
 
     <form id="formAlterarSenha" style="display: none; margin-top: 15px;" onsubmit="salvarNovaSenha(event)">
@@ -683,6 +685,57 @@ function atualizarIcone(selectId, imgId) {
     </form>
   </div>
 </section>
+
+
+<section id="Ranking" style="display: none;" class="ranking-container">
+  <h2>🏆 Ranking Semanal de Anúncios</h2>
+
+  <div class="ranking-info">
+    <p><strong>🎁 Premiação:</strong></p>
+    <ul>
+    <li>🥇 1º lugar: <strong>100 <img src="/icones/adz-token.png" alt="Token ADZ" style="width:16px; height:16px; vertical-align:middle; margin-left:4px;"></strong></li>
+    <li>🥈 2º lugar: <strong>50 <img src="/icones/adz-token.png" alt="Token ADZ" style="width:16px; height:16px; vertical-align:middle; margin-left:12px;"></strong></li>
+    <li>🥉 3º lugar: <strong>25 <img src="/icones/adz-token.png" alt="Token ADZ" style="width:16px; height:16px; vertical-align:middle; margin-left:12px;"></strong></li>
+
+    </ul>
+    <p>Os prêmios são distribuídos automaticamente <strong>todo domingo à meia-noite</strong>.</p>
+    <p>Dica: Quanto mais anúncios você visualizar durante a semana, maiores são suas chances de ganhar!</p>
+  </div>
+
+  <div class="ranking-header">
+    <span>Posição</span>
+    <span>Nome</span>
+    <span>Visualizações</span>
+  </div>
+
+  <div id="rankingLista" class="ranking-lista">
+    <!-- Itens do ranking serão adicionados aqui -->
+  </div>
+
+  <div id="posicaoUsuario"></div>
+</section>
+
+
+
+
+
+
+<div id="modalPremio" class="modal">
+  <div class="modal-content">
+    <span class="close" id="fecharModal">&times;</span>
+    <h2>🎉 Você ganhou um prêmio!</h2>
+    
+    <p id="mensagemPremio"></p> <!-- Mensagem de posição (1º, 2º, 3º lugar) -->
+    
+    <div style="display: flex; align-items: center; gap: 30px; justify-content: center; margin-bottom: 30px;">
+       <p style="margin: 0;">Valor do prêmio: <span id="valorPremio">0</span></p>
+      <img src="/icones/adz-token.png" alt="ADZ Token" style="width: 32px; height: 32px;">
+   
+    </div>
+    
+    <button id="confirmarPremio">Resgatar Prêmio</button>
+  </div>
+</div>
 
 
 
@@ -722,7 +775,10 @@ function atualizarIcone(selectId, imgId) {
 <script src="/js/historicoDepositos.js" defer></script>
 <script src="/js/historicoSaques.js" defer></script>  
 <script src="/js/swap.js" defer></script> 
-<script src="/js/painelUsuario.js" defer></script> 
+<script src="/js/painelUsuario.js" defer></script>  
+<script src="/js/mostrarRanking.js" defer></script>
+<script src="/js/modalPremioSemanal.js" defer></script> 
+
   <!--    -->
 
 

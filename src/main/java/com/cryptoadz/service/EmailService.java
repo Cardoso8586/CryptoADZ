@@ -252,6 +252,45 @@ System.err.println("Erro ao enviar e-mail de confirmação de banner: " + e.getM
 
 }
 
+	public void enviarConfirmacaoPremio(String username, String email, BigDecimal premio, String receberPremio) {
+	    String valorFormatado = premio.setScale(2, RoundingMode.HALF_UP).toPlainString();
+	    String assunto = "🎉 Você recebeu sua premiação semanal!";
+
+	    String htmlContent = """
+	    <html>
+	    <body style='font-family: Arial, sans-serif; background-color: #f9f9f9; padding: 20px;'>
+	    <div style='background-color: #ffffff; border-radius: 8px; padding: 20px; max-width: 600px; margin: auto; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
+	        <h2 style='color: #00cc99;'>Olá, %s!</h2>
+	        <p style='font-size: 16px; color: #333;'>Sua dedicação foi reconhecida! 🎯</p>
+	        <div style='font-size: 18px; background-color: #e6fff9; padding: 15px; border-radius: 8px; color: #006655; margin-top: 15px;'>
+	            %s<br><br>
+	            💰 Valor creditado: <strong>%s ADZ Tokens</strong>
+	        </div>
+	        <p style='font-size: 16px; margin-top: 20px; color: #333;'>⚠️ <strong>ATENÇÃO:</strong> Se você ainda não recebeu sua recompensa, <a href='https://seusite.com/login' style='color: #00cc99; text-decoration: none; font-weight: bold;'>acesse agora mesmo sua conta</a> e resgate seu prêmio antes que expire!</p>
+	        <p style='font-size: 15px; margin-top: 20px;'>Continue ativo, assista mais anúncios e aumente suas chances de ganhar ainda mais nas próximas rodadas!</p>
+	        <hr style='border: none; border-top: 1px solid #eee; margin: 20px 0;'>
+	        <p style='font-size: 13px; color: #999;'>Este e-mail foi enviado automaticamente. Em caso de dúvidas, entre em contato com o suporte.</p>
+	        <p style='font-size: 14px; color: #00cc99;'>Equipe CryptoADZ</p>
+	    </div>
+	    </body>
+	    </html>
+	    """.formatted(username, receberPremio, valorFormatado);
+
+	    try {
+	        MimeMessage mimeMessage = mailSender.createMimeMessage();
+	        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+	        helper.setTo(email);
+	        helper.setSubject(assunto);
+	        helper.setText(htmlContent, true);
+
+	        mailSender.send(mimeMessage);
+	    } catch (MessagingException e) {
+	        System.err.println("Erro ao enviar e-mail de premiação para " + email + ": " + e.getMessage());
+	    }
+	}
+
+
+
 
 
 
