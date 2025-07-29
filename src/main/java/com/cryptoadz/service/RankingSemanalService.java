@@ -88,6 +88,8 @@ public class RankingSemanalService {
         }).orElse(false);
     }
 
+    // Para testes: roda a cada 1 minuto
+   //@Scheduled(fixedRate = 360000)  // 60000 ms = 1 minuto
     @Scheduled(cron = "0 0 0 * * SUN", zone = "America/Sao_Paulo")
     public void distribuirPremiosAgendado() {
         distribuirPremios();
