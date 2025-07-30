@@ -9,15 +9,19 @@ function isMobile() {
   return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 }
 
+function isMetaMaskMobileBrowser() {
+  return navigator.userAgent.includes("MetaMaskMobile");
+}
+
 async function connectMetaMask() {
   if (typeof window.ethereum === "undefined") {
-    if (isMobile()) {
+    if (isMobile() && !isMetaMaskMobileBrowser()) {
       status.innerText = "⚠️ MetaMask não detectada no navegador.";
       Swal.fire({
         icon: 'warning',
         title: '⚠️ MetaMask não encontrada!',
         html: `Para conectar via celular, abra este site pelo navegador interno do app MetaMask:<br><br>
-        <a href="https://cryptoadz-production-ptcrewards-adz.up.railway.app/${window.location.hostname}" target="_blank">
+        <a href="https://metamask.app.link/dapp/${window.location.href}" target="_blank" style="color:#007bff; text-decoration: underline;">
           👉 Abrir no MetaMask Mobile
         </a>`,
         confirmButtonText: 'Entendi',
@@ -60,6 +64,9 @@ async function connectMetaMask() {
 
     walletAddress.innerText = "Carteira: " + userAccount;
     status.innerText = "✅ MetaMask conectada com sucesso.";
+    connectButton.innerText = "Conectado";
+    connectButton.disabled = true;
+
     Swal.fire({
       icon: 'success',
       title: '✅ MetaMask Conectada!',
