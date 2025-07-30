@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cryptoadz.dto.SaqueHistoricoDTO;
 import com.cryptoadz.model.SaqueHistorico;
 import com.cryptoadz.repository.SaqueHistoricoRepository;
+import com.cryptoadz.service.SaqueHistoricoService;
 import com.cryptoadz.service.SaqueService;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -22,15 +24,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class SaqueController {
 
 	
-	 @Autowired
-	 private SaqueHistoricoRepository saqueHistoricoRepository;
-	 
+	
+	 private final SaqueHistoricoService service;
 	 
     private final SaqueService saqueService;
-
-   
-    public SaqueController(SaqueService saqueService) {
+    @Autowired
+    public SaqueController(SaqueService saqueService, SaqueHistoricoService service) {
         this.saqueService = saqueService;
+        this.service = service;
     }
 
     @PostMapping
@@ -55,14 +56,13 @@ public class SaqueController {
 
     
    
-
     @GetMapping("/historico/{userId}")
-    public List<SaqueHistorico> listarHistoricoPorUsuario(@PathVariable Long userId) {
-        return saqueHistoricoRepository.findByUserIdOrderByDataHoraDesc(userId);
+    public List<SaqueHistoricoDTO> getHistorico(@PathVariable String userId) {
+        return service.listarHistoricoSemHash(userId);
     }
 
 }
-
+//======================================================================================================================
 class SaqueRequest {
 	  @JsonProperty("userId")
 	    private Long userId;

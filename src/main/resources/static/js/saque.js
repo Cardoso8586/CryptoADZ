@@ -128,12 +128,10 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
 
-      const txHash = await response.text();
-
       await Swal.fire({
         icon: 'success',
         title: 'Saque realizado com sucesso!',
-        html: `Você irá receber: <b>${valorReceber.toFixed(2)} USDT</b><br>Taxa: <b>${TAXA_SAQUE.toFixed(2)} USDT</b><br>TxHash: <a href="https://bscscan.com/tx/${txHash}" target="_blank">${txHash}</a>`,
+        html: `Você irá receber: <b>${valorReceber.toFixed(2)} USDT</b><br>Taxa: <b>${TAXA_SAQUE.toFixed(2)} USDT</b></a>`,
         timer: 6000,
         timerProgressBar: true,
         showConfirmButton: false,
@@ -145,7 +143,7 @@ document.addEventListener('DOMContentLoaded', () => {
       valorReceberFeedback.textContent = 'Valor a receber: ??? USDT';
       valorReceberFeedback.style.color = 'black';
 
-      adicionarHistorico(txHash, valorReceber, carteiraDestino);
+    
       atualizarSaldoUsdt();
 
     } catch (error) {
@@ -161,15 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  function adicionarHistorico(txHash, valor, carteira) {
-    const container = document.getElementById('historicoRetiradas');
-    const novoItem = document.createElement('div');
-    novoItem.innerHTML = `
-      💸 Saque de <b>${valor.toFixed(2)} USDT</b> para <code>${carteira}</code><br>
-      Tx: <a href="https://bscscan.com/tx/${txHash}" target="_blank">${txHash}</a>
-    `;
-    container.prepend(novoItem);
-  }
+
 
   async function atualizarSaldoUsdt() {
     try {

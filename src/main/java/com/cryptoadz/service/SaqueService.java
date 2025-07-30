@@ -136,16 +136,20 @@ public class SaqueService {
         usuarioRepository.save(usuario);
 
         
-        SaqueHistorico registro = new SaqueHistorico(userId, txHash, valorUSDT, txHash,LocalDateTime.now());
+    
+        String status = "COMFIRMADO";
+        SaqueHistorico registro = new SaqueHistorico(userId, txHash, valorEnviar, txHash,LocalDateTime.now());
         registro.setUserId(userId);
         registro.setCarteiraDestino(carteiraDestino);
-        registro.setValorUSDT(valorUSDT);
+        registro.setValorUSDT(valorEnviar);
         registro.setTxHash(txHash);
+        registro.setStatus(status);
         registro.setDataHora(LocalDateTime.now());
 
         saqueHistoricoRepository.save(registro);
-
-        historico.add(new SaqueHistorico(userId, carteiraDestino, valorUSDT, txHash, LocalDateTime.now()));
+      
+        
+        historico.add(new SaqueHistorico(userId, carteiraDestino, valorEnviar, status, LocalDateTime.now()));
 
         // Envia e-mail de confirmação
         

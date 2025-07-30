@@ -33,18 +33,18 @@ function atualizarHistoricoReal(container, lista) {
     return;
   }
 
-  // Cabeçalho da tabela
   const tabela = document.createElement('table');
   tabela.style.width = '100%';
   tabela.style.borderCollapse = 'collapse';
 
+  // Cabeçalho atualizado com a coluna Status
   tabela.innerHTML = `
       <thead>
         <tr style="background-color:#f8f9fa; color:#333;">
           <th style="border: 1px solid #dee2e6; padding: 10px;">Data</th>
           <th style="border: 1px solid #dee2e6; padding: 10px;">Carteira</th>
           <th style="border: 1px solid #dee2e6; padding: 10px;">Valor (USDT)</th>
-          <th style="border: 1px solid #dee2e6; padding: 10px;">TxHash</th>
+          <th style="border: 1px solid #dee2e6; padding: 10px;">Status</th> <!-- Coluna nova -->
         </tr>
       </thead>
       <tbody></tbody>
@@ -59,15 +59,14 @@ function atualizarHistoricoReal(container, lista) {
     const dataObj = new Date(saque.dataHora);
     const data = isNaN(dataObj.getTime()) ? 'Data inválida' : dataObj.toLocaleString('pt-BR');
 
-    const txHash = saque.txHash || '---';
-    const linkTx = `https://bscscan.com//tx/${txHash}`;
+    const status = saque.status || 'Desconhecido'; // Pega o status do objeto ou valor padrão
 
     const linha = document.createElement('tr');
     linha.innerHTML = `
       <td style="border: 1px solid #ccc; padding: 8px;">${data}</td>
       <td style="border: 1px solid #ccc; padding: 8px;">${saque.carteiraDestino}</td>
       <td style="border: 1px solid #ccc; padding: 8px;">${valor}</td>
-      <td style="border: 1px solid #ccc; padding: 8px;"><a href="${linkTx}" target="_blank">${txHash.slice(0, 10)}...</a></td>
+      <td style="border: 1px solid #ccc; padding: 8px;">${status}</td> <!-- Status -->
     `;
     corpo.appendChild(linha);
   });
@@ -75,7 +74,6 @@ function atualizarHistoricoReal(container, lista) {
   container.appendChild(tabela);
 }
 
-// Função para obter o ID do usuário logado da meta tag
 function getUsuarioLogadoId() {
   const meta = document.querySelector('meta[name="user-id"]');
   return meta ? parseInt(meta.getAttribute('content')) : null;

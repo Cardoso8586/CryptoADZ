@@ -17,7 +17,7 @@ public class SaqueHistorico {
     @Column(name = " user_Id", nullable = false)
     private Long userId;
     
-   
+    private String status;
     
     @Column(name = "carteira_destino", nullable = false)
     private String carteiraDestino;
@@ -63,6 +63,14 @@ public class SaqueHistorico {
 
     public LocalDateTime getDataHora() { return dataHora; }
     public void setDataHora(LocalDateTime dataHora) { this.dataHora = dataHora; }
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }
 
 
