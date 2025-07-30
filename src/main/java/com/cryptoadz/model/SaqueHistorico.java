@@ -3,13 +3,39 @@ package com.cryptoadz.model;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "saque_historico")
 public class SaqueHistorico {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+   
+    @Column(name = " user_Id", nullable = false)
     private Long userId;
+    
+   
+    
+    @Column(name = "carteira_destino", nullable = false)
     private String carteiraDestino;
+    
+    
+    @Column(name = "valor_usdt", nullable = false)
     private BigDecimal valorUSDT;
+    
+    
+    @Column(name = "tx_hash", nullable = false)
     private String txHash;
     
+   
+    @Column(name = " data_hora", nullable = false)
     private LocalDateTime dataHora;
+
+    public SaqueHistorico() {
+    }
 
     public SaqueHistorico(Long userId, String carteiraDestino, BigDecimal valorUSDT, String txHash, LocalDateTime dataHora) {
         this.userId = userId;
@@ -19,43 +45,25 @@ public class SaqueHistorico {
         this.dataHora = dataHora;
     }
 
-    // getters e setters
+    // Getters e setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
     public Long getUserId() { return userId; }
     public void setUserId(Long userId) { this.userId = userId; }
-    // outros getters/setters...
 
-	public String getCarteiraDestino() {
-		return carteiraDestino;
-	}
+    public String getCarteiraDestino() { return carteiraDestino; }
+    public void setCarteiraDestino(String carteiraDestino) { this.carteiraDestino = carteiraDestino; }
 
-	public void setCarteiraDestino(String carteiraDestino) {
-		this.carteiraDestino = carteiraDestino;
-	}
+    public BigDecimal getValorUSDT() { return valorUSDT; }
+    public void setValorUSDT(BigDecimal valorUSDT) { this.valorUSDT = valorUSDT; }
 
-	
-	public String getTxHash() {
-		return txHash;
-	}
+    public String getTxHash() { return txHash; }
+    public void setTxHash(String txHash) { this.txHash = txHash; }
 
-	public void setTxHash(String txHash) {
-		this.txHash = txHash;
-	}
-
-	public BigDecimal getValorUSDT() {
-		return valorUSDT;
-	}
-
-	public void setValorUSDT(BigDecimal valorUSDT) {
-		this.valorUSDT = valorUSDT;
-	}
-
-	public LocalDateTime getDataHora() {
-		return dataHora;
-	}
-
-	public void setDataHora(LocalDateTime dataHora) {
-		this.dataHora = dataHora;
-	}
+    public LocalDateTime getDataHora() { return dataHora; }
+    public void setDataHora(LocalDateTime dataHora) { this.dataHora = dataHora; }
 }
+
 
 

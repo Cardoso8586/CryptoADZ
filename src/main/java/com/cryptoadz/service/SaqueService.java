@@ -31,6 +31,7 @@ import org.web3j.utils.Numeric;
 import com.cryptoadz.config.AppConfig;
 import com.cryptoadz.model.SaqueHistorico;
 import com.cryptoadz.model.Usuario;
+import com.cryptoadz.repository.SaqueHistoricoRepository;
 import com.cryptoadz.repository.UsuarioRepository;
 
 import jakarta.transaction.Transactional;
@@ -53,6 +54,8 @@ public class SaqueService {
 
 	
     private final List<SaqueHistorico> historico = new ArrayList<>(); // Histórico local em memória
+    @Autowired
+    private SaqueHistoricoRepository saqueHistoricoRepository;
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -132,6 +135,16 @@ public class SaqueService {
         usuario.setUsdtSaldo(novoSaldo);
         usuarioRepository.save(usuario);
 
+        
+        SaqueHistorico registro = new SaqueHistorico(userId, txHash, valorUSDT, txHash,LocalDateTime.now());
+        registro.setUserId(userId);
+        registro.setCarteiraDestino(carteiraDestino);
+        registro.setValorUSDT(valorUSDT);
+        registro.setTxHash(txHash);
+        registro.setDataHora(LocalDateTime.now());
+
+        saqueHistoricoRepository.save(registro);
+
         historico.add(new SaqueHistorico(userId, carteiraDestino, valorUSDT, txHash, LocalDateTime.now()));
 
         // Envia e-mail de confirmação
@@ -193,27 +206,5 @@ public class SaqueService {
                 .collect(Collectors.toList());
     }
     
-    //======================================================== exibirSaldosCarteira   ==========================================
-   /** public void exibirSaldosCarteira() throws Exception {
-        // Conecta ao Web3
-        Web3j web3j = Web3j.build(new HttpService(rpcUrl));
-
-        // Cria as credenciais e pega o endereço da carteira origem
-        Credentials credentials = Credentials.create(privateKey);
-        String carteiraOrigem = credentials.getAddress();
-
-        // Consulta saldos
-        BigInteger saldoUSDT = consultarSaldoUSDT(carteiraOrigem);
-        BigInteger saldoBNB = consultarSaldoBNB(carteiraOrigem);
-
-        // Converte para valores decimais legíveis
-        BigDecimal saldoUSDTFormatado = new BigDecimal(saldoUSDT).divide(BigDecimal.TEN.pow(18)); // USDT = 6 casas decimais
-        BigDecimal saldoBNBFormatado = new BigDecimal(saldoBNB).divide(BigDecimal.TEN.pow(18)); // BNB = 18 casas decimais
-
-        // Exibe os saldos no console
-        System.out.println("Carteira origem: " + carteiraOrigem);
-        System.out.println("Saldo USDT: " + saldoUSDTFormatado.stripTrailingZeros().toPlainString());
-        System.out.println("Saldo BNB: " + saldoBNBFormatado.stripTrailingZeros().toPlainString());
-    }*/
-
+  
 }

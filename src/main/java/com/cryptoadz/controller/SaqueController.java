@@ -3,6 +3,7 @@ package com.cryptoadz.controller;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cryptoadz.model.SaqueHistorico;
+import com.cryptoadz.repository.SaqueHistoricoRepository;
 import com.cryptoadz.service.SaqueService;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -19,8 +21,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @RequestMapping("/api/saque")
 public class SaqueController {
 
+	
+	 @Autowired
+	 private SaqueHistoricoRepository saqueHistoricoRepository;
+	 
+	 
     private final SaqueService saqueService;
 
+   
     public SaqueController(SaqueService saqueService) {
         this.saqueService = saqueService;
     }
@@ -45,11 +53,12 @@ public class SaqueController {
         }
     }
 
+    
+   
 
     @GetMapping("/historico/{userId}")
-    public ResponseEntity<List<SaqueHistorico>> historicoPorUsuario(@PathVariable Long userId) {
-        List<SaqueHistorico> historico = saqueService.obterHistoricoPorUsuario(userId);
-        return ResponseEntity.ok(historico);
+    public List<SaqueHistorico> listarHistoricoPorUsuario(@PathVariable Long userId) {
+        return saqueHistoricoRepository.findByUserIdOrderByDataHoraDesc(userId);
     }
 
 }

@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
       await Swal.fire({
         icon: 'error',
         title: 'Erro',
-        text: 'Erro ao verificar saldo: ' + err.message,
+        text: 'Erro ao verificar saldo: ',
         confirmButtonColor: '#d33',
       });
       return;
@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
       await Swal.fire({
         icon: 'error',
         title: 'Erro na carteira',
-        text: "Erro ao conectar à carteira: " + err.message,
+        text: "Erro ao conectar à carteira: ",
         confirmButtonColor: '#d33',
       });
       return;
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
       await Swal.fire({
         icon: 'error',
         title: 'Erro',
-        text: 'Erro ao realizar saque: ' + error.message,
+        text: 'Erro ao realizar saque: ',
         confirmButtonColor: '#d33',
       });
     } finally {
@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
         saldoSpan.textContent = `${parseFloat(saldoData.saldoUsdt).toFixed(2)} USDT`;
       }
     } catch (err) {
-      console.error('Erro ao atualizar saldo:', err.message);
+      console.error('Erro ao atualizar saldo:');
     }
   }
 

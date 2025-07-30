@@ -183,6 +183,12 @@ p[style*="color: orange"] {
   margin-bottom: 8px;
 }
 
+#historicoDepositos,
+#historicoRetiradas {
+  scrollbar-color: #00ffcc #111;
+  scrollbar-width: thin;
+}
+
 /* Itens do histórico */
 .historico-item {
   padding: 12px;

@@ -33,22 +33,47 @@ function atualizarHistoricoReal(container, lista) {
     return;
   }
 
-  lista.forEach((saque, index) => {
+  // Cabeçalho da tabela
+  const tabela = document.createElement('table');
+  tabela.style.width = '100%';
+  tabela.style.borderCollapse = 'collapse';
+
+  tabela.innerHTML = `
+      <thead>
+        <tr style="background-color:#f8f9fa; color:#333;">
+          <th style="border: 1px solid #dee2e6; padding: 10px;">Data</th>
+          <th style="border: 1px solid #dee2e6; padding: 10px;">Carteira</th>
+          <th style="border: 1px solid #dee2e6; padding: 10px;">Valor (USDT)</th>
+          <th style="border: 1px solid #dee2e6; padding: 10px;">TxHash</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    `;
+
+  const corpo = tabela.querySelector('tbody');
+
+  lista.forEach((saque) => {
     const valorNum = parseFloat(saque.valorUSDT);
     const valor = isNaN(valorNum) ? '0.00' : valorNum.toFixed(2);
 
-    const dataObj = new Date(saque.data);
+    const dataObj = new Date(saque.dataHora);
     const data = isNaN(dataObj.getTime()) ? 'Data inválida' : dataObj.toLocaleString('pt-BR');
 
-    const status = saque.status || 'Desconhecido';
+    const txHash = saque.txHash || '---';
+    const linkTx = `https://bscscan.com//tx/${txHash}`;
 
-    const item = document.createElement('div');
-    item.classList.add('historico-item');
-    item.innerHTML = `<strong>#${index + 1}</strong>: R$ ${valor} | ${data} | Status: <span class="status">${status}</span>`;
-    container.appendChild(item);
+    const linha = document.createElement('tr');
+    linha.innerHTML = `
+      <td style="border: 1px solid #ccc; padding: 8px;">${data}</td>
+      <td style="border: 1px solid #ccc; padding: 8px;">${saque.carteiraDestino}</td>
+      <td style="border: 1px solid #ccc; padding: 8px;">${valor}</td>
+      <td style="border: 1px solid #ccc; padding: 8px;"><a href="${linkTx}" target="_blank">${txHash.slice(0, 10)}...</a></td>
+    `;
+    corpo.appendChild(linha);
   });
-}
 
+  container.appendChild(tabela);
+}
 
 // Função para obter o ID do usuário logado da meta tag
 function getUsuarioLogadoId() {
