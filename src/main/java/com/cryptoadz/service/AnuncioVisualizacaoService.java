@@ -43,6 +43,12 @@ public class AnuncioVisualizacaoService {
 
 	        AnuncioVisualizacao existente = visualizacaoRepo.findByUsernameAndAnuncio_Id(username, anuncioId);
 
+	        Optional<Usuario> usuarioOpt = usuarioRepo.findByUsername(username);
+	        if (usuarioOpt.isEmpty()) {
+	            throw new RuntimeException("Usuário não encontrado para creditar tokens.");
+	        }
+	        Usuario usuario = usuarioOpt.get();
+
 	        if (existente != null) {
 	            if (existente.getBloqueioExpiraEm() != null && agora.isBefore(existente.getBloqueioExpiraEm())) {
 	                long minutosRestantes = Duration.between(agora, existente.getBloqueioExpiraEm()).toMinutes();
@@ -55,17 +61,15 @@ public class AnuncioVisualizacaoService {
 	                existente.setTotalClicks(existente.getTotalClicks() + 1);
 
 	                // Credita tokens na renovação
-	                Optional<Usuario> usuarioOpt = usuarioRepo.findByUsername(username);
-	                if (usuarioOpt.isEmpty()) {
-	                    throw new RuntimeException("Usuário não encontrado para creditar tokens.");
-	                }
-	                Usuario usuario = usuarioOpt.get();
-
-	                //metodo resonsaavel de creditar tokens
 	                creditarTokens(usuario, anuncioId, BigDecimal.ZERO);
 
-	                // Decremento maxVisualizacoes e outras lógicas continuam aqui
-	 	           processarVisualizacaoRestante(anuncio);
+	                // Incrementa quantidadeVisualizacaoSemanal do usuário
+	                usuario.setQuantidadeVisualizacaoSemanal(usuario.getQuantidadeVisualizacaoSemanal() + 1);
+
+	                visualizacaoRepo.save(existente);
+	                usuarioRepo.save(usuario);
+
+	                processarVisualizacaoRestante(anuncio);
 	                return anuncio.getTempoVisualizacao() != null ? anuncio.getTempoVisualizacao() : 20;
 	            }
 	        } else {
@@ -73,36 +77,21 @@ public class AnuncioVisualizacaoService {
 	            nova.setUsername(username);
 	            nova.setAnuncio(anuncio);
 	            nova.setBloqueioExpiraEm(agora.plusHours(tempoBloqueioHoras));
-
-	            // Inicializa totalClicks com 1 na nova visualização
 	            nova.setTotalClicks(1L);
 
-	            visualizacaoRepo.save(nova);
+	            creditarTokens(usuario, anuncioId, BigDecimal.ZERO);
 
-	            Optional<Usuario> usuarioOpt = usuarioRepo.findByUsername(username);
-	            if (usuarioOpt.isEmpty()) {
-	                throw new RuntimeException("Usuário não encontrado para creditar tokens.");
-	            }
-	            Usuario usuario = usuarioOpt.get();
-                
-	            //metodo resonsaavel de creditar tokens
-	            creditarTokens(usuario,anuncioId, BigDecimal.ZERO);
-
-
-	            // Decremento maxVisualizacoes e outras lógicas continuam aqui
 	            processarVisualizacaoRestante(anuncio);
-	            
+
 	            usuario.setQuantidadeVisualizacaoSemanal(usuario.getQuantidadeVisualizacaoSemanal() + 1);
-	           
+
+	            visualizacaoRepo.save(nova);
 	            usuarioRepo.save(usuario);
 
-	            
 	            return anuncio.getTempoVisualizacao() != null ? anuncio.getTempoVisualizacao() : 20;
-	            
 	        }
 	    }
-	    
-	    
+
 //===================================== processarVisualizacaoRestante =============================================
 	    private void processarVisualizacaoRestante(Anuncios anuncio) {
 	        int max = anuncio.getMaxVisualizacoes();

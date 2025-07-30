@@ -85,40 +85,50 @@
 
 
 
-    <form th:action="@{/cadastro}" th:object="${usuario}" method="post" id="registerForm">
-        <label for="username">Usuário:</label>
-        <input type="text" th:field="*{username}" id="username" required>
+<form th:action="@{/cadastro}" th:object="${usuario}" method="post" id="registerForm">
+    <label for="username">Usuário:</label>
+    <input type="text" th:field="*{username}" id="username" required>
 
-        <label for="email">Email:</label>
-        <input type="email" th:field="*{email}" id="email" required>
+    <label for="email">Email:</label>
+    <input type="email" th:field="*{email}" id="email" required>
 
-        <label for="senha">Senha:</label>
-        <input type="password" th:field="*{senha}" id="senha" required>
+    <label for="senha">Senha:</label>
+    <input type="password" th:field="*{senha}" id="senha" required>
 
-        <!-- Turnstile CAPTCHA -->
-        <div class="cf-turnstile" 
-             data-sitekey="0x4AAAAAABhDBlDrEgbq9kdW"
-             data-callback="onTurnstileSuccess"
-             data-error-callback="onTurnstileError"
-             data-expired-callback="onTurnstileExpired"></div>
+    <!-- Turnstile CAPTCHA -->
+    <div class="cf-turnstile" 
+         data-sitekey="0x4AAAAAABhDBlDrEgbq9kdW"
+         data-callback="onTurnstileSuccess"
+         data-error-callback="onTurnstileError"
+         data-expired-callback="onTurnstileExpired"></div>
 
-        <!-- Campo oculto para enviar o token do CAPTCHA -->
-        <input type="hidden" id="captcha-response" name="response" />
+    <!-- Campo oculto para enviar o token do CAPTCHA -->
+    <input type="hidden" id="captcha-response" name="response" />
 
-        <button type="submit" id="submitBtn" disabled>Cadastrar</button>
-    </form>
+    <!-- Aceite dos Termos de Uso -->
+    <label style="font-size: 0.9em; color: #444;">
+      <input type="checkbox" id="aceitoTermosCadastro">Aceito os <a href="/termosCadastro.html" target="_blank">Termos de Uso</a>
 
-    <p>Já tem uma conta? <a th:href="@{/login}">Faça login aqui</a></p>
-    
-    <div class="container">
-   
-    <!-- Frase de chamada para ação -->
-    <p style="font-size: 1.1em; font-weight: bold; color: #00c853; margin-top: -10px; margin-bottom: 20px;">
-        Cadastre-se agora mesmo e comece a ganhar!<br>
-        Com anúncios reais e verificados, você ganha por participar!
-    </p>
-    
-    
+    </label>
+    <br>
+    <span id="erroTermos" style="color: red; font-size: 0.8em; display: none;">
+      Você precisa concordar com os termos.
+    </span>
+
+    <br><br>
+    <button type="submit" id="submitBtn" disabled>Cadastrar</button>
+</form>
+
+<p>Já tem uma conta? <a th:href="@{/login}">Faça login aqui</a></p>
+
+<div class="container">
+
+<!-- Copyright -->
+<p style="font-size: 0.8em; font-weight: bold; color: #666666; margin-top: 10px; margin-bottom: 20px;">
+    © 2025 CryptoADZ. Todos os direitos reservados.
+</p>
+
+<!-- SweetAlert Sucesso -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script th:if="${param.cadastroSucesso}">
   Swal.fire({
@@ -140,7 +150,7 @@
       left top
       no-repeat
     `,
-    allowOutsideClick: false, // impede fechar clicando fora
+    allowOutsideClick: false,
   }).then((result) => {
     if (result.isConfirmed) {
       window.location.href = '/login';
@@ -148,10 +158,37 @@
   });
 </script>
 
+<!-- Validação dos Termos -->
+<script>
+  const checkbox = document.getElementById('aceitoTermosCadastro');
+  const submitBtn = document.getElementById('submitBtn');
+  const erroTermos = document.getElementById('erroTermos');
+  const form = document.getElementById('registerForm');
 
+  checkbox.addEventListener('change', () => {
+    submitBtn.disabled = !checkbox.checked;
+    erroTermos.style.display = 'none';
+	
+  });
 
+  form.addEventListener('submit', function (e) {
+    if (!checkbox.checked) {
+      e.preventDefault();
+      erroTermos.style.display = 'inline';
+  	Swal.fire({
+  	  icon: 'warning',
+  	  title: 'Atenção',
+  	  text: 'Você precisa aceitar os termos de uso para continuar.',
+  	  confirmButtonText: 'Ok',
+  	  background: '#fff',
+  	  color: '#000'
+  	});
+    }
+  });
+</script>
 
 </div>
+
 
 <script src="/js/captcha-response.js"></script>
 

@@ -117,16 +117,4 @@ button:disabled {
     }
 }
 
-.chamada-acao {
-    background-color: #1e1e2f;
-    color: #00c853;
-    padding: 15px 50px;
-    border-left: 6px solid #00c853;
-    border-radius: 8px;
-    margin: 50px 0;
-    box-shadow: 0 0 10px rgba(0, 200, 83, 0.3);
-    font-size: 1.1em;
-    font-weight: bold;
-    text-align: center;
-}
 

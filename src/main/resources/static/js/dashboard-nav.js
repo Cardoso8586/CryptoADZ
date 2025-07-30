@@ -62,6 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			|| secaoId === 'wallet-container'
 		    || secaoId === 'painelUsuario' 
 			|| secaoId === 'Ranking'
+			|| secaoId === 'secaoMissoes'
 			) {
           adsSection.style.display = 'none';
         } else {
