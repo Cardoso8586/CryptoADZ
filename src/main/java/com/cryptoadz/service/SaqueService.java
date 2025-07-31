@@ -154,7 +154,7 @@ public class SaqueService {
         // Envia e-mail de confirmação
         
         try {
-            emailService.enviarConfirmacaoSaque(usuario.getUsername(), usuario.getEmail(), valorUSDT);
+            emailService.enviarConfirmacaoSaque(usuario.getUsername(), usuario.getEmail(), valorEnviar);
         } catch (Exception e) {
             System.err.println("Erro ao enviar e-mail de confirmação de Saque: " + e.getMessage());
         }
