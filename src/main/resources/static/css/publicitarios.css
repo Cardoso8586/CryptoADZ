@@ -2,11 +2,11 @@
 .ads-section {
     margin-top: 10px;
   
-    width: 350px; /* largura fixa para manter o tamanho */
+    width: 420px; /* largura fixa para manter o tamanho */
     background-color:#333;
     border-radius: 10px;
     box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-    padding: 20px;
+    padding: 30px;
 }
 
 /* Título */
@@ -23,8 +23,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 30px;
-    margin-top: 90px;/* ← Move cada banner mais para baixo */
+    gap: 10px;
+    margin-top: 50px;/* ← Move cada banner mais para baixo */
 }
 
 /* Estilo de cada banner */

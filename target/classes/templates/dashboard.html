@@ -241,11 +241,6 @@ atualizarBlocos();
     <a th:href="@{'/dashboard?page=' + ${paginaProxima}}" th:if="${paginaAtual < totalPaginas - 1}">Próximo</a>
     <p>Página <span th:text="${paginaAtual + 1}"></span> de <span th:text="${totalPaginas}"></span></p>
   </div>
-<p style="font-size: 0.8em; font-weight: bold; color: #666666; margin: 50px auto 20px; width: fit-content; text-align: center;">
-  © 2025 CryptoADZ. Todos os direitos reservados.
-</p>
-
-
 
 
 </section>
@@ -422,14 +417,51 @@ atualizarBlocos();
 </section>
    
    <div id="bannerAnunciarRodape"></div>
-   <p style="font-size: 0.8em; font-weight: bold; color: #666666; margin-top: 310px; margin-bottom: 20px;">
-    © 2025 CryptoADZ. Todos os direitos reservados.
-</p>
+
   </section>
 
 <!-- ==========  SEÇÃO DE CRIAÇÃO DE ANÚNCIOS  ========== -->
 
 
+<section id="Ranking" style="display: none;" class="ranking-container">
+  <h2>🏆 Ranking Semanal de Visualização de Anúncios</h2>
+
+  
+
+  <div class="ranking-header">
+    <span>Posição</span>
+    <span>Nome</span>
+    <span>Visualizações</span>
+  </div>
+
+  <div id="rankingLista" class="ranking-lista">
+    <!-- Itens do ranking serão adicionados aqui -->
+  </div>
+
+  <div id="posicaoUsuario"></div>
+  <div class="ranking-info">
+    <p><strong>🎁 Premiação:</strong></p>
+    <ul>
+    <li>🥇 1º lugar: <strong>100 <img src="/icones/adz-token.png" alt="Token ADZ" style="width:16px; height:16px; vertical-align:middle; margin-left:4px;"></strong></li>
+    <li>🥈 2º lugar: <strong>50 <img src="/icones/adz-token.png" alt="Token ADZ" style="width:16px; height:16px; vertical-align:middle; margin-left:12px;"></strong></li>
+    <li>🥉 3º lugar: <strong>25 <img src="/icones/adz-token.png" alt="Token ADZ" style="width:16px; height:16px; vertical-align:middle; margin-left:12px;"></strong></li>
+
+    </ul>
+    <p>Os prêmios são distribuídos automaticamente <strong>todo domingo à meia-noite</strong>.</p>
+    <p>Dica: Quanto mais anúncios você visualizar durante a semana, maiores são suas chances de ganhar!</p>
+  </div>
+  
+  
+ 
+
+<!-- Conteúdo da página -->
+
+<div id="bannerRankingRodape"></div>
+
+<p style="font-size: 0.8em; font-weight: bold; color: #666666; margin-top: 50px; margin-bottom: 20px;">
+    © 2025 CryptoADZ. Todos os direitos reservados.
+</p>
+</section>
 
 <!-- ========== SEÇÃO CARTEIRA ========== -->
 <div id="wallet-container">
@@ -565,9 +597,7 @@ document.addEventListener('DOMContentLoaded', function () {
   <p id="mensagemMissao"></p>
   
   <div id="bannerSecaoMissoesRodape"></div>
-  <p style="font-size: 0.8em; font-weight: bold; color: #666666; margin-top: 50px; margin-bottom: 20px;">
-    © 2025 CryptoADZ. Todos os direitos reservados.
-</p>
+
 </section>
 
 
@@ -608,9 +638,7 @@ document.addEventListener('DOMContentLoaded', function () {
       <button id="btnConfirmSwap">Confirmar Troca</button>
     </div>
   </div>
-  <p style="font-size: 0.8em; font-weight: bold; color: #666666; margin-top: 140px; margin-bottom: 20px;">
-    © 2025 CryptoADZ. Todos os direitos reservados.
-</p>
+
 </section>
 
 <script>
@@ -638,9 +666,6 @@ function atualizarIcone(selectId, imgId) {
   <div id="containerAvisos" class="container-avisos">
     <!-- Cards de avisos aparecerão aqui -->
   </div>
- <p style="font-size: 1.0em; font-weight: bold; color: #666666; margin: 150px auto 120px; width: fit-content; text-align: center;">
-  © 2025 CryptoADZ. Todos os direitos reservados.
-</p>
 
 </div>
 
@@ -664,11 +689,9 @@ function atualizarIcone(selectId, imgId) {
     <div id="bannerEsquerdo" style="width:48%; float:left;"></div>
     <div id="bannerDireito" style="width:48%; float:right;"></div>
     <div style="clear:both;"></div>
-    <div id="bannersPublicitariosRodape"></div>
-<p style="font-size: 0.8em; font-weight: bold; color: #666666; margin: 150px auto 120px; width: fit-content; text-align: center;">
-  © 2025 CryptoADZ. Todos os direitos reservados.
+ <p style="font-size: 0.8em; font-weight: bold; color: #666666; margin-top: 100px; margin-bottom: 20px;">
+    © 2025 CryptoADZ. Todos os direitos reservados.
 </p>
-
 </section>
 
 
@@ -678,6 +701,9 @@ function atualizarIcone(selectId, imgId) {
   <div class="ads-container" id="adsContainer">
     <!-- Os banners serão inseridos aqui dinamicamente pelo backend -->
   </div>
+  <p style="font-size: 0.8em; font-weight: bold; color: #666666; margin-top: 50px; margin-bottom: 20px;">
+    © 2025 CryptoADZ. Todos os direitos reservados.
+</p>
 </div>
 
 <!-- 👤 Painel do Usuário -->
@@ -722,51 +748,6 @@ function atualizarIcone(selectId, imgId) {
     © 2025 CryptoADZ. Todos os direitos reservados.
 </p>
 </section>
-
-
-<section id="Ranking" style="display: none;" class="ranking-container">
-  <h2>🏆 Ranking Semanal de Visualização de Anúncios</h2>
-
-  
-
-  <div class="ranking-header">
-    <span>Posição</span>
-    <span>Nome</span>
-    <span>Visualizações</span>
-  </div>
-
-  <div id="rankingLista" class="ranking-lista">
-    <!-- Itens do ranking serão adicionados aqui -->
-  </div>
-
-  <div id="posicaoUsuario"></div>
-  <div class="ranking-info">
-    <p><strong>🎁 Premiação:</strong></p>
-    <ul>
-    <li>🥇 1º lugar: <strong>100 <img src="/icones/adz-token.png" alt="Token ADZ" style="width:16px; height:16px; vertical-align:middle; margin-left:4px;"></strong></li>
-    <li>🥈 2º lugar: <strong>50 <img src="/icones/adz-token.png" alt="Token ADZ" style="width:16px; height:16px; vertical-align:middle; margin-left:12px;"></strong></li>
-    <li>🥉 3º lugar: <strong>25 <img src="/icones/adz-token.png" alt="Token ADZ" style="width:16px; height:16px; vertical-align:middle; margin-left:12px;"></strong></li>
-
-    </ul>
-    <p>Os prêmios são distribuídos automaticamente <strong>todo domingo à meia-noite</strong>.</p>
-    <p>Dica: Quanto mais anúncios você visualizar durante a semana, maiores são suas chances de ganhar!</p>
-  </div>
-  
-  
- 
-
-<!-- Conteúdo da página -->
-
-<div id="bannerRankingRodape"></div>
-
-<p style="font-size: 0.8em; font-weight: bold; color: #666666; margin-top: 50px; margin-bottom: 20px;">
-    © 2025 CryptoADZ. Todos os direitos reservados.
-</p>
-</section>
-
-
-
-
 
 
 <div id="modalPremio" class="modal">
@@ -832,8 +813,7 @@ function atualizarIcone(selectId, imgId) {
 <script src="/js/modalPremioSemanal.js" defer></script> 
 <script src="/js/rankingBanners.js" defer></script> 
 <script src="/js/bannerPerfilUsuarioRodape.js" defer></script>  
-<script src="/js/bannerAnunciarRodape.js" defer></script>        
-<script src="/js/bannersPublicitariosRodape.js" defer></script>  
+<script src="/js/bannerAnunciarRodape.js" defer></script>         
 <script src="/js/bannerSecaoMissoesRodape.js" defer></script> 
 
   <!--    -->
