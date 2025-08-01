@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cryptoadz.dto.DepositoHistoricoDTO;
 import com.cryptoadz.dto.SolicitacaoDepositoRequest;
 import com.cryptoadz.model.DepositoHistorico;
-import com.cryptoadz.model.DepositoPendente;
 import com.cryptoadz.repository.DepositoHistoricoRepository;
 import com.cryptoadz.repository.DepositoPendenteRepository;
 import com.cryptoadz.service.DepositoService;
@@ -54,18 +53,7 @@ public class DepositoController {
         return ResponseEntity.ok(dtoList);
     }
     
-    @GetMapping("/status/{userId}")
-    public ResponseEntity<String> obterStatusDeposito(@PathVariable Long userId) {
-       
-		Optional<DepositoPendente> depositoOpt = depositoRepo.findTopByUserIdAndStatusInOrderByDataSolicitacaoDesc(
-            userId, List.of("PENDENTE", "CONFIRMADO", "REJEITADO"));
-        
-        if (depositoOpt.isEmpty()) {
-            return ResponseEntity.ok("Nenhum depósito ativo");
-        }
-        
-        return ResponseEntity.ok(depositoOpt.get().getStatus());
-    }
+  
 
 
     

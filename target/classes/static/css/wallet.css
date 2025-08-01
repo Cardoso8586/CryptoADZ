@@ -183,6 +183,7 @@ p[style*="color: orange"] {
   margin-bottom: 8px;
 }
 
+/* Scrollbar customizada */
 #historicoDepositos,
 #historicoRetiradas {
   scrollbar-color: #00ffcc #111;
@@ -196,17 +197,28 @@ p[style*="color: orange"] {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
+  /* Responsividade: permitir quebra de linha */
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .historico-item:last-child {
   border-bottom: none;
 }
 
+/* Cada span dentro do item do histórico */
 .historico-item span {
   font-weight: 600;
   color: #aaf0ff;
+  
+  /* Tamanho flexível para ficar lado a lado ou quebrar */
+  flex: 1 1 45%;
+  min-width: 120px;
+  display: inline-block;
 }
 
+/* Data com estilo menor */
 .historico-item .data {
   font-size: 0.85em;
   color: #66cccc;
@@ -239,4 +251,18 @@ p[style*="color: orange"] {
   background-color: #00d1ff;
   color: #111;
   box-shadow: 0 0 12px rgba(0, 209, 255, 0.7);
+}
+
+/* Responsivo para histórico - telas pequenas */
+@media (max-width: 480px) {
+  .historico-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .historico-item span {
+    flex: 1 1 100%;
+    min-width: auto;
+    margin-bottom: 6px;
+  }
 }

@@ -4,9 +4,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,10 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.cryptoadz.dto.AtualizacaoNomeDTO;
-import com.cryptoadz.dto.AtualizacaoSenhaDTO;
 import com.cryptoadz.model.TentativaCadastro;
 import com.cryptoadz.model.Usuario;
-import com.cryptoadz.model.UsuarioDetails;
 import com.cryptoadz.repository.UsuarioRepository;
 import com.cryptoadz.service.CaptchaService;
 import com.cryptoadz.service.EmailService;
@@ -103,7 +98,7 @@ public class UsuarioController {
             @ModelAttribute Usuario usuario,
             @RequestParam(name = "cf-turnstile-response") String captchaToken,
             HttpServletRequest request,
-            Model model
+            Model model, @RequestParam(required = false) String ref
     ) {
         String ipUsuario = getClientIp(request);
 
@@ -144,7 +139,10 @@ public class UsuarioController {
             return "cadastro";
         }
 
-        // Cadastro bem-sucedido
+        
+     
+         // Cadastro bem-sucedido
+
         tentativaCadastroService.limparTentativas(tentativa);
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         usuario.setIpCadastro(ipUsuario);
@@ -165,6 +163,10 @@ public class UsuarioController {
    
     }
     
+   
+   
+
+
 //========================================================================================================
     
     //Recupera o IP real do cliente, mesmo por trás de proxies.
@@ -206,14 +208,9 @@ public class UsuarioController {
     }
 
  //=============================================== atuslizar senha ===================================================
-    
-    @PostMapping("/atualizar-senha/{id}")
-    public ResponseEntity<?> atualizarSenha(@PathVariable Long id, @RequestBody AtualizacaoSenhaDTO dto) {
-        usuarioService.atualizarSenha(id, dto.getNovaSenha());
-        return ResponseEntity.ok("Senha atualizada com sucesso!");
-    }
 
     
+
     
 }
 

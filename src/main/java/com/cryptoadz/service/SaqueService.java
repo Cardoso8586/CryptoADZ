@@ -28,7 +28,6 @@ import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.http.HttpService;
 import org.web3j.utils.Numeric;
 
-import com.cryptoadz.config.AppConfig;
 import com.cryptoadz.model.SaqueHistorico;
 import com.cryptoadz.model.Usuario;
 import com.cryptoadz.repository.SaqueHistoricoRepository;
@@ -72,7 +71,7 @@ public class SaqueService {
         BigInteger saldoUSDT = consultarSaldoUSDT(carteiraOrigem);
 
         // Valor a enviar na blockchain = valor solicitado menos taxa fixa 1 USDT
-        BigDecimal taxaFixa = BigDecimal.ONE; // 1 USDT fixo
+        BigDecimal taxaFixa = BigDecimal.ONE;
         BigDecimal valorEnviar = valorUSDT.subtract(taxaFixa);
         if (valorEnviar.compareTo(BigDecimal.ZERO) <= 0) {
             throw new Exception("Valor a enviar após taxa fixa deve ser maior que zero.");

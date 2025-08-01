@@ -14,7 +14,7 @@ public class SaqueHistorico {
     private Long id;
 
    
-    @Column(name = " user_Id", nullable = false)
+    @Column(name = "user_Id", nullable = false)
     private Long userId;
     
     private String status;
@@ -31,8 +31,9 @@ public class SaqueHistorico {
     private String txHash;
     
    
-    @Column(name = " data_hora", nullable = false)
+    @Column(name = "data_hora", nullable = false)
     private LocalDateTime dataHora;
+
 
     public SaqueHistorico() {
     }

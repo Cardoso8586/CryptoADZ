@@ -8,7 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
     btnWallet: 'wallet-container',
     btnMissoes: 'secaoMissoes',
     btnAvisos: 'Avisos',
-	btnUsuario: 'painelUsuario' 
+	btnUsuario: 'painelUsuario'
+	
 	
   };
 

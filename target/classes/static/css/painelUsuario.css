@@ -124,4 +124,36 @@ form button[type="submit"]:hover {
   margin-bottom: 15px;
 }
 
-  
+/* bannerPerfilUsuarioRodape 1 */
+#bannerPerfilUsuarioRodape {
+  margin-top: 80px; /* controla a distância do conteúdo acima */
+
+}
+
+/* Hover */
+#bannerPerfilUsuarioRodape:hover {
+  background: linear-gradient(135deg, #00695c, #003822);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  #bannerPerfilUsuarioRodape {
+    font-size: 1rem;
+    padding: 12px 15px;
+    max-width: 95%;
+  }
+}
+
+@media (max-width: 480px) {
+  #bannerPerfilUsuarioRodape {
+    font-size: 0.9rem;
+    padding: 10px 12px;
+  }
+}
+
+
+/* bannerPerfilUsuarioRodape 2 */
+
+
+
+

@@ -42,7 +42,6 @@ function atualizarHistoricoReal(container, lista) {
       <thead>
         <tr style="background-color:#f8f9fa; color:#333;">
           <th style="border: 1px solid #dee2e6; padding: 10px;">Data</th>
-          <th style="border: 1px solid #dee2e6; padding: 10px;">Carteira</th>
           <th style="border: 1px solid #dee2e6; padding: 10px;">Valor (USDT)</th>
           <th style="border: 1px solid #dee2e6; padding: 10px;">Status</th> <!-- Coluna nova -->
         </tr>
@@ -64,7 +63,6 @@ function atualizarHistoricoReal(container, lista) {
     const linha = document.createElement('tr');
     linha.innerHTML = `
       <td style="border: 1px solid #ccc; padding: 8px;">${data}</td>
-      <td style="border: 1px solid #ccc; padding: 8px;">${saque.carteiraDestino}</td>
       <td style="border: 1px solid #ccc; padding: 8px;">${valor}</td>
       <td style="border: 1px solid #ccc; padding: 8px;">${status}</td> <!-- Status -->
     `;

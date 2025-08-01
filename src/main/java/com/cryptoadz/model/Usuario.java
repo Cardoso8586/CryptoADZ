@@ -28,6 +28,7 @@ public class Usuario {
     
     private int bannersVistos;  // contador de banners vistos
 
+
     @Column(name = "meus-anuncios")
     private BigDecimal meusAnuncios = BigDecimal.ZERO;
     

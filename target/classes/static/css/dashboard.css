@@ -37,7 +37,7 @@ p[id^="contador-"] {
   flex: 1;                   /* Ocupa o espaço restante */
   padding: 30px;
   background-color: white;
-  overflow-y: auto;          /* Rolagem vertical se necessário */
+
 }
 
 /* Conteúdo principal dentro da área principal */
@@ -70,7 +70,7 @@ section.active {
   color: #ecf0f1;
   padding: 5px 20px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  z-index: 9999;
+  z-index: 700;
 }
 /* saudacao-usuario*/
 .saudacao-usuario {

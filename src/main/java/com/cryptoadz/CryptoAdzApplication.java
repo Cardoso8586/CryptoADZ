@@ -18,5 +18,11 @@ public class CryptoAdzApplication {
 }
 
 
-/** 
+/** // Carrega o arquivo .env na raiz do projeto (padrão)
+Dotenv dotenv = Dotenv.load();
+
+// Setando as variáveis do .env como propriedades do sistema para o Spring ler
+dotenv.entries().forEach(entry -> {
+    System.setProperty(entry.getKey(), entry.getValue());
+});
  */
