@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function registrarVisualizacao(bannerId) {
-    const usuarioId = getUsuarioLogadoId(); // sua lógica aqui
+    const usuarioId = getUsuarioLogadoId();
     if (!usuarioId || !bannerId) return;
 
     try {

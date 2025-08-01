@@ -49,6 +49,7 @@ public class BannerVisualizacaoService {
         LocalDate hoje = LocalDate.now();
         LocalDate dataUltimaVisualizacao = usuario.getDataUltimaVisualizacao();
         LocalDate dataUltimaColeta = usuario.getDataUltimaColeta();
+        
 
         // Reset diário APENAS se for novo dia E já tiver coletado ou nunca tiver coletado
         if ((dataUltimaVisualizacao == null || !dataUltimaVisualizacao.isEqual(hoje)) &&
@@ -57,6 +58,7 @@ public class BannerVisualizacaoService {
             log.info("Reset diário válido: novo dia e recompensa anterior coletada.");
             usuario.setBannersVistos(0);
             usuario.setDataUltimaVisualizacao(hoje);
+            
         }
         int limiteMissao = getLimiteMissaoParaHoje();
 
@@ -157,7 +159,7 @@ public class BannerVisualizacaoService {
         // ✅ Zera o contador
         usuario.setBannersVistos(0);
         usuario.setDataUltimaVisualizacao(hoje); // Reinicia também a data de visualização se quiser resetar
-
+        limiteMissao =0;
         usuarioRepository.save(usuario);
 
         log.info("Recompensa entregue: usuário {} recebeu {} tokens. Novo saldo: {}",
@@ -186,7 +188,7 @@ public class BannerVisualizacaoService {
         int limiteMax = 15;
 
         int limiteHoje = limiteMin + random.nextInt(limiteMax - limiteMin + 1);
-        log.info("Limite missão para {}: {}", hoje, limiteHoje); // ADICIONE ISSO
+        log.info("Limite missão para {}: {}", hoje, limiteHoje); 
         return limiteHoje;
     }
 
@@ -197,7 +199,7 @@ public class BannerVisualizacaoService {
 
         if (bannersAtivos == 0) return limiteHoje;
 
-        int resultado = limiteHoje / bannersAtivos + 2;
+        int resultado = limiteHoje / bannersAtivos + 5;
 
         if (resultado < 1) {
             return limiteHoje;
