@@ -12,7 +12,6 @@ public class CryptoAdzApplication {
 	
     public static void main(String[] args) {
      
-
         SpringApplication.run(CryptoAdzApplication.class, args);
     }
 }
@@ -25,4 +24,5 @@ Dotenv dotenv = Dotenv.load();
 dotenv.entries().forEach(entry -> {
     System.setProperty(entry.getKey(), entry.getValue());
 });
+
  */

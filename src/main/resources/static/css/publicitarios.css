@@ -2,7 +2,7 @@
 .ads-section {
     margin-top: 10px;
   
-    width: 420px; /* largura fixa para manter o tamanho */
+    width: 400px; /* largura fixa para manter o tamanho */
     background-color:#333;
     border-radius: 10px;
     box-shadow: 2px 2px 10px rgba(0,0,0,0.1);

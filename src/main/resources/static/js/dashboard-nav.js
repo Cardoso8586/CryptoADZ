@@ -61,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (adsSection) {
         if (secaoId === 'bannersPublicitarios' 
 			|| secaoId === 'wallet-container'
-		    || secaoId === 'painelUsuario' 
+		  
 		
 			
 			) {
