@@ -102,7 +102,11 @@ public class SecurityConfig {
                             "/api/ranking-semanal/**",
                             "/api/usuario/*/premio-pendente/**",
                             "/api/usuario/*/confirmar-premio/**",
-                            "/api/minha-posicao/**"
+                            "/api/minha-posicao/**",
+                            "/api/anuncio/listar-anuncios/**",
+                            "/api/anuncio/editar-anuncios/**",
+                            "/api/anuncio/carregar-anuncio/**"
+                          
 
                             
                            

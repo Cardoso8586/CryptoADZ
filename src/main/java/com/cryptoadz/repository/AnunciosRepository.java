@@ -19,4 +19,8 @@ public interface AnunciosRepository extends JpaRepository<Anuncios, Long> {
     
     List<Anuncios> findByUsuario(Usuario usuario);
 
+    List<Anuncios> findByUsuarioId(Long usuarioId);
+    
+    List<Anuncios> findByUsuarioUsername(String username);
+
 }

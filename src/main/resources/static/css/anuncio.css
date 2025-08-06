@@ -37,6 +37,7 @@
 
 /* Título */
 .anuncio-card h3 {
+  color: #2c3e50;
   max-height: 5.4em;
   overflow: hidden;
   text-overflow: ellipsis;

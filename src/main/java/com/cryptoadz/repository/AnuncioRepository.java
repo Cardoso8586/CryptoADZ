@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.cryptoadz.model.Anuncios;
+import com.cryptoadz.model.Usuario;
 
 @Repository
 public interface AnuncioRepository extends JpaRepository<Anuncios, Long> {
@@ -25,6 +26,9 @@ public interface AnuncioRepository extends JpaRepository<Anuncios, Long> {
 	
 	 List<Anuncios> findByUsuario_Username(String username);
 	
+
+	 List<Anuncios> findByUsuario(Usuario usuario);
+
 
 	
 

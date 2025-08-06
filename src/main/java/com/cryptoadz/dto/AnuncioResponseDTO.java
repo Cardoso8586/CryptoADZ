@@ -12,7 +12,7 @@ public class AnuncioResponseDTO {
     private LocalDate dataPublicacao;
     private BigDecimal tokensGastos;
     private BigDecimal saldoAtualUsuario;
-    private int bloqueioHoras; // <- Novo campo
+    private int bloqueioHoras; 
 
     public AnuncioResponseDTO(Anuncios anuncio, BigDecimal tokensGastos, BigDecimal saldoAtualUsuario) {
         this.setTitulo(anuncio.getTitulo());
@@ -95,4 +95,3 @@ public class AnuncioResponseDTO {
         this.bloqueioHoras = bloqueioHoras;
     }
 }
-

@@ -294,4 +294,3 @@ tituloBannerInput.addEventListener('input', () => {
     restantesTituloBanner.style.color = 'gray';
   }
 });
-
