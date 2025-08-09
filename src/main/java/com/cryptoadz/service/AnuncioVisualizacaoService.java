@@ -81,13 +81,13 @@ public class AnuncioVisualizacaoService {
 
 	            creditarTokens(usuario, anuncioId, BigDecimal.ZERO);
 
-	            processarVisualizacaoRestante(anuncio);
+	         
 
 	            usuario.setQuantidadeVisualizacaoSemanal(usuario.getQuantidadeVisualizacaoSemanal() + 1);
 
 	            visualizacaoRepo.save(nova);
 	            usuarioRepo.save(usuario);
-
+                processarVisualizacaoRestante(anuncio);
 	            return anuncio.getTempoVisualizacao() != null ? anuncio.getTempoVisualizacao() : 20;
 	        }
 	    }
@@ -95,9 +95,12 @@ public class AnuncioVisualizacaoService {
 //===================================== processarVisualizacaoRestante =============================================
 	    private void processarVisualizacaoRestante(Anuncios anuncio) {
 	        int max = anuncio.getMaxVisualizacoes();
-	        if (max <= 0) throw new RuntimeException("Anúncio sem visualizações restantes");
+	        if (max <= 0) {
+	            throw new RuntimeException("Anúncio sem visualizações restantes");
+	        }
 
 	        if (max == 1) {
+	       
 	            visualizacaoRepo.deleteByAnuncio_Id(anuncio.getId());
 	            anuncioRepo.delete(anuncio);
 	        } else {
@@ -105,6 +108,7 @@ public class AnuncioVisualizacaoService {
 	            anuncioRepo.save(anuncio);
 	        }
 	    }
+
 //============================================================================
 
 

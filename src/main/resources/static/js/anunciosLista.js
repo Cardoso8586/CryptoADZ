@@ -54,11 +54,28 @@ async function salvarEdicao(event, id) {
     });
 
     if (response.ok) {
-        alert("Anúncio atualizado com sucesso!");
+      
+		Swal.fire({
+		    icon: 'success',
+		    title: '✅ Anúncio atualizado com sucesso!',
+		    text: 'Seu anúncio estará disponível em breve.',
+		    timer: 5000,
+		    timerProgressBar: true,
+		    showConfirmButton: false
+		});
+
+
         carregarAnuncios();
     } else {
-        const erro = await response.text();
-        alert("Erro ao editar o anúncio: " + erro);
+      
+		Swal.fire({
+		  icon: 'warning',
+		  title: '⚠️ Erro',
+		  text: 'Erro ao editar o anúncio:',
+		  timer: 5000,
+		  timerProgressBar: true,
+		  showConfirmButton: false
+		});
     }
 }
 
