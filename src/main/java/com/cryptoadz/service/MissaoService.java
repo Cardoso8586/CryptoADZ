@@ -2,9 +2,12 @@ package com.cryptoadz.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Optional;
 
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.cryptoadz.dto.MissaoDTO;
 import com.cryptoadz.model.MissaoDiaria;
@@ -18,6 +21,8 @@ public class MissaoService {
     @Autowired
     private MissaoDiariaRepository missaoRepo;
 
+	@Autowired
+	private UsuarioRepository  usuarioRepository;
     @Autowired
     private UsuarioRepository usuarioRepo;
 
@@ -25,7 +30,7 @@ public class MissaoService {
     private static final int REQUISITO_CADASTRAR = 1;
 
     private static final BigDecimal RECOMPENSA_ASSISTIR = new BigDecimal("10");
-    private static final BigDecimal RECOMPENSA_CADASTRAR = new BigDecimal("100");
+    private static final BigDecimal RECOMPENSA_CADASTRAR = new BigDecimal("250");
 
     public MissaoDiaria getOuCriarMissao(Usuario usuario) {
         LocalDate hoje = LocalDate.now();
@@ -114,5 +119,12 @@ public class MissaoService {
         }
 
         return "Você se registrou com sucesso." + missao.getContadorCadastrar() + "/" + REQUISITO_CADASTRAR + ". Continue assim!";
+    }
+    
+    //========================
+    public BigDecimal getQuantidadeMeusAnuncios(String username) {
+        Usuario usuario = usuarioRepository.findByUsername(username)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.SC_NOT_FOUND, "Usuário não encontrado", null));
+        return Optional.ofNullable(usuario.getMeusAnuncios()).orElse(BigDecimal.ZERO);
     }
 }

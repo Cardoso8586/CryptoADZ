@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const withdrawForm = document.getElementById('withdrawForm');
   const withdrawAmountInput = document.getElementById('withdrawAmount');
   const valorReceberFeedback = document.getElementById('valorReceberFeedback'); // Campo de feedback
-  const TAXA_SAQUE = 1.0; // taxa fixa em USDT
+  const TAXA_SAQUE = 0.50; // taxa fixa em USDT
 
   const botaoSaque = withdrawForm.querySelector('button[type="submit"]');
 

@@ -71,7 +71,9 @@ public class SaqueService {
         BigInteger saldoUSDT = consultarSaldoUSDT(carteiraOrigem);
 
         // Valor a enviar na blockchain = valor solicitado menos taxa fixa 1 USDT
-        BigDecimal taxaFixa = BigDecimal.ONE;
+       // BigDecimal taxaFixa = BigDecimal.ONE;
+        BigDecimal taxaFixa = new BigDecimal("0.50");
+
         BigDecimal valorEnviar = valorUSDT.subtract(taxaFixa);
         if (valorEnviar.compareTo(BigDecimal.ZERO) <= 0) {
             throw new Exception("Valor a enviar após taxa fixa deve ser maior que zero.");

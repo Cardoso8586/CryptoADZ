@@ -53,15 +53,15 @@ public class CadastroAnuncioService {
         } 
         else if (dto.getTempoVisualizacao() >= 30) {
         tokensPorVisualizacao = new BigDecimal("0.40");
-        bloqueioHoras = 18;
+        bloqueioHoras = 12;
         }
         else if (dto.getTempoVisualizacao() >= 20) {
         tokensPorVisualizacao = new BigDecimal("0.30");
-        bloqueioHoras = 20;
+        bloqueioHoras = 8;
        } 
         else if (dto.getTempoVisualizacao() >= 10) {
             tokensPorVisualizacao = new BigDecimal("0.20");
-            bloqueioHoras =24;
+            bloqueioHoras = 4;
        } 
        else {
        tokensPorVisualizacao = new BigDecimal("0.15");

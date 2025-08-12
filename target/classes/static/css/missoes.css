@@ -3,7 +3,7 @@
   display: none;
   background-color:  #1e2733;
   border-radius: 16px;
-  padding: 30px 205px;
+  padding: 30px 255px;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
   margin-top: 30px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -37,6 +37,9 @@
   flex-direction: column;
   gap: 10px;
   transition: transform 0.2s ease;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
 }
 
 #secaoMissoes li:hover {
@@ -48,16 +51,24 @@
   font-size: 1.1rem;
   color: #2d3436;
   display: flex;
+  flex-wrap: wrap;      /* permite quebrar linhas */
   align-items: center;
-  gap: 10px;
+  gap: 6px;              /* espaço entre texto e ícones */
+  line-height: 1.5;
 }
 
-/* Ícones de token dentro dos títulos */
+/* Ícones e spans dentro do título */
+#secaoMissoes li strong span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
 #secaoMissoes li strong img {
   width: 22px;
   height: 22px;
+  flex-shrink: 0;
   vertical-align: middle;
-  margin-left: 6px;
 }
 
 /* Status da missão (ex: 0/20) */
@@ -67,9 +78,12 @@
   background-color: #f1f3f5;
   padding: 6px 12px;
   border-radius: 8px;
-  display: inline-block;
+  display: flex;
   width: fit-content;
   font-weight: 500;
+  word-wrap: break-word;
+  overflow-wrap: anywhere;
+  line-height: 1.5;
 }
 
 /* Botões "Resgatar" escondidos por padrão */
@@ -110,12 +124,14 @@
 
   #secaoMissoes li {
     padding: 16px;
+    gap: 8px;
   }
 
   #secaoMissoes li strong {
     font-size: 1rem;
     flex-direction: column;
     align-items: flex-start;
+    text-align: left;
   }
 
   #secaoMissoes li button {
@@ -138,12 +154,11 @@
 /* Imagem grande e responsiva */
 #bannerSecaoMissoesRodape img {
   width: 100%;
-  max-width: 1200px; /* imagem bem grande */
+  max-width: 1200px;
   height: auto;
   border-radius: 12px;
   display: block;
   margin: 0 auto;
   object-fit: contain;
 }
-
 
