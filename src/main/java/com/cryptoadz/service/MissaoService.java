@@ -87,7 +87,8 @@ public class MissaoService {
             missao.setRecompensaAssistiu(true);
             usuarioRepo.save(usuario);
             missaoRepo.save(missao);
-            return "🎉 Parabéns! Você completou 20 visualizações e ganhou +10 tokens!";
+            return "🎉 Parabéns! Você completou " + REQUISITO_ASSISTIR + " visualizações e ganhou " + RECOMPENSA_ASSISTIR + " ADZ tokens!";
+
         }
 
         return "Você assistiu" + missao.getContadorAssistir() + "/" + REQUISITO_ASSISTIR + ". Continue assim!" ;
@@ -115,7 +116,8 @@ public class MissaoService {
             missao.setRecompensaCadastrou(true);
             usuarioRepo.save(usuario);
             missaoRepo.save(missao);
-            return "🎉 Parabéns! Seu anúncio está ativo e você ganhou +100 tokens!";
+            return "🎉 Parabéns! Seu anúncio está ativo e você ganhou +" + RECOMPENSA_CADASTRAR + " ADZ tokens!";
+
         }
 
         return "Você se registrou com sucesso." + missao.getContadorCadastrar() + "/" + REQUISITO_CADASTRAR + ". Continue assim!";

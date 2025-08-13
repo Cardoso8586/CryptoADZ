@@ -171,7 +171,16 @@ formAnuncio.addEventListener('submit', async e => {
 		});
 
       } else {
-        feedback.textContent = 'Erro: ' + err;
+		Swal.fire({
+		  icon: 'warning',
+		  title: 'Ops!',
+		  text: `⛔ Parece que alguns campos ficaram vazios. Se você copiou o texto, confira se é permitido. Caso prefira, digite manualmente para evitar problemas.`,
+		  confirmButtonText: 'Beleza!',
+		  background: '#fff',
+		  color: '#000'
+		});
+
+
       }
 
       feedback.style.color = 'red';
