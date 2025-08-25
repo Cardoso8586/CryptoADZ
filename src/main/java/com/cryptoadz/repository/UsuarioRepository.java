@@ -44,6 +44,12 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
 	List<Usuario> findTop3ByOrderByQuantidadeVisualizacaoSemanalDesc();
 
+
+	Optional<Usuario> findByReferralCode(String referredBy);
+
+	List<Usuario> findByReferredBy(Long referredBy);
+
+
 	
 
 

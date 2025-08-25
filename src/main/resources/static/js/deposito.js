@@ -104,7 +104,7 @@ async function depositUSDT(amount) {
     }
 
   } catch (err) {
-    console.error("Erro detalhado:", err);
+    console.error("Verifique seu saldo de USDT (BEP20) ou feche a carteira MetaMask e tente novamente.");
     Swal.close();
     if (err.message === "Tempo esgotado") {
       status.innerText = "⏱️ Tempo esgotado. Tente novamente.";
@@ -119,11 +119,11 @@ async function depositUSDT(amount) {
         color: '#000'
       });
     } else {
-      status.innerText = "❌ Erro ao fazer depósito: " + (err.reason || err.message);
+      status.innerText = "❌ Erro ao fazer depósito: ";
       Swal.fire({
         icon: 'error',
         title: 'Erro',
-        text: err.reason || err.message,
+		text: 'Verifique seu saldo de USDT (BEP20) ou feche a carteira MetaMask e tente novamente.',
         confirmButtonText: 'OK',
         background: '#fff',
         color: '#000'

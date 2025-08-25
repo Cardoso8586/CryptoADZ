@@ -30,6 +30,8 @@ public class AnuncioVisualizacaoService {
 	    @Autowired
 	    private UsuarioRepository usuarioRepo;
 
+	    @Autowired
+	    private RecompensaService recompensaService;
 	  
 	    @Transactional
 	    public int registrarVisualizacao(String username, Long anuncioId) {
@@ -66,6 +68,8 @@ public class AnuncioVisualizacaoService {
 	                // Incrementa quantidadeVisualizacaoSemanal do usuário
 	                usuario.setQuantidadeVisualizacaoSemanal(usuario.getQuantidadeVisualizacaoSemanal() + 1);
 
+	                BigDecimal valorDoAnuncio = Optional.ofNullable(anuncio.getTokensPorVisualizacao()).orElse(BigDecimal.ZERO);
+	                recompensaService.adicionarGanho(usuario, valorDoAnuncio);
 	                visualizacaoRepo.save(existente);
 	                usuarioRepo.save(usuario);
 
@@ -82,7 +86,9 @@ public class AnuncioVisualizacaoService {
 	            creditarTokens(usuario, anuncioId, BigDecimal.ZERO);
 
 	         
-
+	            BigDecimal valorDoAnuncio = Optional.ofNullable(anuncio.getTokensPorVisualizacao()).orElse(BigDecimal.ZERO);
+	             // adiciona o ganho para o usuário e para quem o indicou
+	                recompensaService.adicionarGanho(usuario, valorDoAnuncio);
 	            usuario.setQuantidadeVisualizacaoSemanal(usuario.getQuantidadeVisualizacaoSemanal() + 1);
 
 	            visualizacaoRepo.save(nova);

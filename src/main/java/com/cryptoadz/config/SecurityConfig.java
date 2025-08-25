@@ -69,6 +69,7 @@ public class SecurityConfig {
             			    "/login/**",
             			    "/cadastro/**",
             			    "/termosCadastro.html",
+            			    "/apresentacaoStatus.html",
             			    "/css/**",
             			    "/js/**",
             			    "/icones/**",
@@ -105,7 +106,8 @@ public class SecurityConfig {
                             "/api/minha-posicao/**",
                             "/api/anuncio/listar-anuncios/**",
                             "/api/anuncio/editar-anuncios/**",
-                            "/api/anuncio/carregar-anuncio/**"
+                            "/api/anuncio/carregar-anuncio/**",
+                            "/claim/**"
                           
 
                             
@@ -158,7 +160,65 @@ public class SecurityConfig {
  
 }
 
+/**<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        // Pega o valor do Thymeleaf e transforma em número
+        var ganhosPendentes = parseFloat('[[${ganhosPendentesReferral != null ? ganhosPendentesReferral : 0}]]');
+        const claimBtn = document.getElementById("claimBtn");
+        const claimForm = document.getElementById("claimForm");
 
+        // Mostrar o botão apenas se houver saldo
+        if (ganhosPendentes > 0) {
+            claimBtn.style.display = "inline-block";
+        }
+
+        claimForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Confirmar Reivindicação?',
+                text: `Você irá receber ${ganhosPendentes.toFixed(4)} tokens.`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sim, reivindicar!',
+                cancelButtonText: 'Cancelar',
+                background: '#fff',
+                color: '#000'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    try {
+                        const response = await fetch('/claim', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' }
+                        });
+                        if (response.ok) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Sucesso!',
+                                text: 'Seus ganhos foram reivindicados!',
+                                background: '#fff',
+                                color: '#000'
+                            }).then(() => {
+                                location.reload(); // recarrega a página para atualizar saldo
+                            });
+                        } else {
+                            throw new Error('Erro ao reivindicar ganhos.');
+                        }
+                    } catch (err) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Ops!',
+                            text: err.message,
+                            background: '#fff',
+                            color: '#000'
+                        });
+                    }
+                }
+            });
+        });
+    });
+</script>
+*/
 
 
 

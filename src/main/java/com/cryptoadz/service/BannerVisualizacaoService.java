@@ -2,6 +2,7 @@ package com.cryptoadz.service;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,9 +33,11 @@ public class BannerVisualizacaoService {
     @Autowired
     private BannerRepository bannerRepository;
 
+    @Autowired
+    private RecompensaService recompensaService;
   //  private static int LIMITE_MISSAO ;
     
-    private static  BigDecimal RECOMPENSA_MISSAO = BigDecimal.valueOf(10.50);
+    private static  BigDecimal RECOMPENSA_MISSAO = BigDecimal.valueOf(5);
 
     
     
@@ -156,6 +159,10 @@ public class BannerVisualizacaoService {
 
         usuario.setDataUltimaColeta(hoje);
 
+        
+        BigDecimal valor_recompensa = RECOMPENSA_MISSAO;
+        // adiciona o ganho para o usuário e para quem o indicou
+           recompensaService.adicionarGanho(usuario, valor_recompensa);
         // ✅ Zera o contador
         usuario.setBannersVistos(0);
         usuario.setDataUltimaVisualizacao(hoje); // Reinicia também a data de visualização se quiser resetar

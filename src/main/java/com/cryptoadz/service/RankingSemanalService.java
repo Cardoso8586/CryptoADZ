@@ -21,6 +21,9 @@ public class RankingSemanalService {
     @Autowired
     private EmailService emailService;
     
+    @Autowired
+    private RecompensaService recompensaService;
+    
     public RankingSemanalService(UsuarioRepository usuarioRepo) {
         this.usuarioRepo = usuarioRepo;
     }
@@ -54,6 +57,10 @@ public class RankingSemanalService {
             	receberPremio = "🎁 Você recebeu um prêmio especial!";
             }
 
+            
+            BigDecimal valor_premio_semanal = premio;
+            recompensaService.adicionarGanho(u, valor_premio_semanal);
+            
             // Envia e-mail de confirmação
             try {
                 emailService.enviarConfirmacaoPremio(u.getUsername(), u.getEmail(), premio, receberPremio);
@@ -61,6 +68,8 @@ public class RankingSemanalService {
                 System.err.println("Erro ao enviar e-mail de confirmação de depósito: " + e.getMessage());
             }// Zera pendente
             // Em vez de creditar direto no saldo, guardar como pendente
+            
+           
             u.setPremioPendente(premio); 
             usuarioRepo.save(u);
 

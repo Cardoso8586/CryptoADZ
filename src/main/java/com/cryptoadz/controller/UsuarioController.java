@@ -1,5 +1,7 @@
 package com.cryptoadz.controller;
 
+import java.math.BigDecimal;
+import java.util.Base64;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @Controller
 public class UsuarioController {
+	
+
 
 	
 	@Autowired
@@ -57,82 +61,96 @@ public class UsuarioController {
         model.addAttribute("usuario", new Usuario());
         return "cadastro";
     }
-
-   //============================================================================
     
-  /** 
+    @GetMapping("/referidos")
+    public String mostrarCadastro(@RequestParam(required = false) String ref, Model model) {
+        model.addAttribute("usuario", new Usuario());
+        model.addAttribute("ref", ref != null ? ref : "");  // garante que sempre tenha valor
+        return "cadastro";
+    }
+
+/**
     @PostMapping("/cadastro")
     public String cadastrarUsuario(
             @ModelAttribute Usuario usuario,
             @RequestParam(name = "cf-turnstile-response") String captchaToken,
-            Model model
-    ) {
+            @RequestParam(required = false) String ref,
+            Model model) {
+
+        // 1️⃣ Verifica CAPTCHA
         if (!captchaService.isValid(captchaToken)) {
             model.addAttribute("erro", "Falha na verificação do CAPTCHA.");
             return "cadastro";
         }
 
+        if (ref != null && !ref.isBlank()) {
+            try {
+                String decoded = new String(Base64.getUrlDecoder().decode(ref));
+                Long referrerId = Long.parseLong(decoded);
+
+                if (usuarioRepository.existsById(referrerId)) {
+                    usuario.setReferredBy(referrerId); // agora salva como Long
+                    System.out.println("[Cadastro] Usuário referido por: " + referrerId);
+                }
+            } catch (Exception e) {
+                System.out.println("[Cadastro] Erro ao processar ref: " + e.getMessage());
+            }
+        }
+
+        // 3️⃣ Salva usuário
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-        usuarioRepository.save(usuario);
-        
-          // Envia e-mail de boas-vindas
+        usuarioRepository.save(usuario); // aqui o campo referredBy será salvo corretamente
+
+        // 4️⃣ Envia e-mail
         try {
             emailService.enviarEmailBoasVindas(usuario.getUsername(), usuario.getEmail());
         } catch (Exception e) {
             System.err.println("Erro ao enviar e-mail de boas-vindas: " + e.getMessage());
         }
 
-        
         return "redirect:/cadastro?cadastroSucesso=true";
-
-        //return "redirect:/login";
     }
-   
-   */
-    
+
+
+   */ 
    //========================================= Cadastro controlado por IP   ===========================================================
+
     
-  
-   @PostMapping("/cadastro")
-   public String cadastrarUsuario(
+    @PostMapping("/cadastro")
+    public String cadastrarUsuario(
             @ModelAttribute Usuario usuario,
             @RequestParam(name = "cf-turnstile-response") String captchaToken,
             HttpServletRequest request,
-            Model model, @RequestParam(required = false) String ref
-    ) {
+            @RequestParam(required = false) String ref,
+            Model model) {
+
         String ipUsuario = getClientIp(request);
 
-        // Recupera ou cria registro de tentativas
         TentativaCadastro tentativa = tentativaCadastroService.getOuCriarTentativa(ipUsuario);
 
-        // Verifica se o IP está temporariamente bloqueado
         if (tentativaCadastroService.isBloqueado(tentativa)) {
-            model.addAttribute("erroIp", "Este IP está temporariamente bloqueado por excesso de tentativas de cdastrar mais de um Usuário.");
+            model.addAttribute("erroIp", "Este IP está temporariamente bloqueado por excesso de tentativas de cadastrar mais de um Usuário.");
             return "cadastro";
         }
 
-        // Verifica se o CAPTCHA foi resolvido corretamente
         if (!captchaService.isValid(captchaToken)) {
             tentativaCadastroService.registrarTentativa(tentativa);
             model.addAttribute("erroCaptcha", "Falha na verificação do CAPTCHA.");
             return "cadastro";
         }
 
-        // Validação de e-mail/usuário
         if (usuario.getUsername() == null || usuario.getUsername().isEmpty()) {
             tentativaCadastroService.registrarTentativa(tentativa);
             model.addAttribute("erroEmail", "O campo e-mail é obrigatório.");
             return "cadastro";
         }
 
-        // Validação de senha
         if (usuario.getSenha() == null || usuario.getSenha().isEmpty()) {
             tentativaCadastroService.registrarTentativa(tentativa);
             model.addAttribute("erroSenha", "O campo senha é obrigatório.");
             return "cadastro";
         }
 
-        // Verifica se já existe uma conta com esse IP
         if (usuarioRepository.findByIpCadastro(ipUsuario).isPresent()) {
             tentativaCadastroService.registrarTentativa(tentativa);
             model.addAttribute("erroIp", "Já existe uma conta cadastrada com este IP.");
@@ -140,32 +158,44 @@ public class UsuarioController {
         }
 
         
-     
-         // Cadastro bem-sucedido
+        // Recompensa quem indicou (se existir)
+        if (ref != null && !ref.isBlank()) {
+            try {
+                String decoded = new String(Base64.getUrlDecoder().decode(ref));
+                Long referrerId = Long.parseLong(decoded);
 
-        tentativaCadastroService.limparTentativas(tentativa);
-        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
-        usuario.setIpCadastro(ipUsuario);
-        usuarioRepository.save(usuario);
+                if (usuarioRepository.existsById(referrerId)) {
+                    usuario.setReferredBy(referrerId); // agora salva como Long
+                    System.out.println("[Cadastro] Usuário referido por: " + referrerId);
+                }
+            } catch (Exception e) {
+                System.out.println("[Cadastro] Erro ao processar ref: " + e.getMessage());
+            }
+        }
         
+        // Limpa tentativas
+        tentativaCadastroService.limparTentativas(tentativa);
+
+        // Criptografa senha
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+
+        // Salva IP
+        usuario.setIpCadastro(ipUsuario);
+
+   
+        usuarioRepository.save(usuario);
+
      
-      
-         // Envia e-mail de boas-vindas
+
+        // Envia e-mail de boas-vindas
         try {
             emailService.enviarEmailBoasVindas(usuario.getUsername(), usuario.getEmail());
         } catch (Exception e) {
             System.err.println("Erro ao enviar e-mail de boas-vindas: " + e.getMessage());
         }
 
-
         return "redirect:/cadastro?cadastroSucesso=true";
-        //return "redirect:/login";
-   
     }
-    
-   
-   
-
 
 //========================================================================================================
     

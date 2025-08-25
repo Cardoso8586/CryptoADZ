@@ -26,11 +26,14 @@ public class MissaoService {
     @Autowired
     private UsuarioRepository usuarioRepo;
 
+    @Autowired
+    private RecompensaService recompensaService;
+    
     private static final int REQUISITO_ASSISTIR = 20;
     private static final int REQUISITO_CADASTRAR = 1;
 
-    private static final BigDecimal RECOMPENSA_ASSISTIR = new BigDecimal("10");
-    private static final BigDecimal RECOMPENSA_CADASTRAR = new BigDecimal("250");
+    private static final BigDecimal RECOMPENSA_ASSISTIR = new BigDecimal("5");
+    private static final BigDecimal RECOMPENSA_CADASTRAR = new BigDecimal("100");
 
     public MissaoDiaria getOuCriarMissao(Usuario usuario) {
         LocalDate hoje = LocalDate.now();
@@ -85,6 +88,10 @@ public class MissaoService {
         if (missao.getContadorAssistir() >= REQUISITO_ASSISTIR) {
             usuario.setSaldoTokens(usuario.getSaldoTokens().add(RECOMPENSA_ASSISTIR));
             missao.setRecompensaAssistiu(true);
+            
+            BigDecimal valor_reconspensa_assistir = RECOMPENSA_ASSISTIR;
+            recompensaService.adicionarGanho(usuario, valor_reconspensa_assistir);
+            
             usuarioRepo.save(usuario);
             missaoRepo.save(missao);
             return "🎉 Parabéns! Você completou " + REQUISITO_ASSISTIR + " visualizações e ganhou " + RECOMPENSA_ASSISTIR + " ADZ tokens!";
@@ -114,6 +121,10 @@ public class MissaoService {
         if (missao.getContadorCadastrar() >= REQUISITO_CADASTRAR) {
             usuario.setSaldoTokens(usuario.getSaldoTokens().add(RECOMPENSA_CADASTRAR));
             missao.setRecompensaCadastrou(true);
+            
+            BigDecimal valor_reconspensa_cadastro = RECOMPENSA_CADASTRAR;
+            recompensaService.adicionarGanho(usuario, valor_reconspensa_cadastro);
+            
             usuarioRepo.save(usuario);
             missaoRepo.save(missao);
             return "🎉 Parabéns! Seu anúncio está ativo e você ganhou +" + RECOMPENSA_CADASTRAR + " ADZ tokens!";

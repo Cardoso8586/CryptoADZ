@@ -1,7 +1,11 @@
 package com.cryptoadz.controller;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Base64;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -45,9 +49,59 @@ public class DashBoardController {
         model.addAttribute("senha-usuario", usuario.getSenha());
         model.addAttribute("email-usuario", usuario.getEmail());
        
+       
       
-        
+        BigDecimal ganhos = usuario.getGanhosPendentesReferral() != null ? usuario.getGanhosPendentesReferral() : BigDecimal.ZERO;
+        ganhos = ganhos.setScale(4, RoundingMode.HALF_UP);
+        model.addAttribute("ganhosPendentesReferral", ganhos);
 
+        
+        // Constrói link de convite
+        String linkReferencia = "https://cryptoadz.up.railway.app/referidos?ref=" + Base64.getUrlEncoder().encodeToString(usuario.getId().toString().getBytes());
+   //--------------------------------------------------------------------------------------------------------------------------------------------------------------
+       // String linkReferencia = "http://localhost:8080/referidos?ref=" + Base64.getUrlEncoder().encodeToString(usuario.getId().toString().getBytes());
+        model.addAttribute("linkReferencia", linkReferencia);
+
+        
+        List<Usuario> indicados = usuarioRepository.findByReferredBy(usuario.getId());
+        model.addAttribute("indicados", indicados);
+        model.addAttribute("qtdIndicados", indicados.size());
+        // Buscar indicados
+        int qtdIndicados = indicados.size();
+
+     // Calcular nível
+        String nivel;
+        if (qtdIndicados <= 5) {
+            nivel = "Iniciante";
+        } else if (qtdIndicados <= 15) {
+            nivel = "Júnior";
+        } else if (qtdIndicados <= 30) {
+            nivel = "Pleno";
+        } else if (qtdIndicados <= 50) {
+            nivel = "Sênior";
+        } else if (qtdIndicados <= 80) {
+            nivel = "Gestor";
+        } else if (qtdIndicados <= 120) {
+            nivel = "Executivo";
+        } else if (qtdIndicados <= 200) {
+            nivel = "Diretor";
+        } else if (qtdIndicados <= 500) {
+            nivel = "Presidente";
+        } else {
+            nivel = "Lendário";
+        }
+
+        // Atualizar nível do usuário
+        usuario.setNivel(nivel);
+        usuarioRepository.save(usuario);
+
+       
+
+        // Passar dados para a view
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("indicados", indicados);
+        model.addAttribute("qtdIndicados", qtdIndicados);
+        model.addAttribute("nivel", nivel);
 
 
         if (page < 0) {

@@ -28,6 +28,7 @@ public class Usuario {
     
     private int bannersVistos;  // contador de banners vistos
 
+    private String nivel = "Iniciante";  
 
     @Column(name = "meus-anuncios")
     private BigDecimal meusAnuncios = BigDecimal.ZERO;
@@ -48,6 +49,24 @@ public class Usuario {
     @Column(name = "quantidade_visualizacao_semanal")
     private int quantidadeVisualizacaoSemanal;
 
+ // Código único do usuário para convite
+    @Column(name = "referral_code", unique = true)
+    private String referralCode;
+
+    
+    @Column(name = "referred_by")
+    private Long referredBy;
+
+
+    // Ganhos pendentes (acumulando até o usuário "claimar")
+
+    @Column(name = "ganhos_pendentes", precision = 18, scale = 8)
+    private BigDecimal ganhosPendentes = BigDecimal.ZERO;
+
+    @Column(name = "ganhos_pendentes_referral", precision = 18, scale = 8)
+    private BigDecimal ganhosPendentesReferral = BigDecimal.ZERO;
+
+    
     // ... construtores, outros getters e setters ...
 
     public BigDecimal getUsdtSaldo() {
@@ -107,6 +126,15 @@ public class Usuario {
 
     
  // Getter
+    
+    public String getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(String nivel) {
+        this.nivel = nivel;
+    }
+
     public String getIpCadastro() {
         return ipCadastro;
     }
@@ -194,7 +222,38 @@ public class Usuario {
 		this.quantidadeVisualizacaoSemanal = quantidadeVisualizacaoSemanal;
 	}
 
+	public String getReferralCode() {
+	    return referralCode;
+	}
 
+	public void setReferralCode(String referralCode) {
+	    this.referralCode = referralCode;
+	}
+
+	public Long getReferredBy() {
+	    return referredBy;
+	}
+
+	public void setReferredBy(Long referredBy) {
+	    this.referredBy = referredBy;
+	}
+
+	public BigDecimal getGanhosPendentes() {
+	    return ganhosPendentes;
+	}
+
+	public void setGanhosPendentes(BigDecimal ganhosPendentes) {
+	    this.ganhosPendentes = ganhosPendentes;
+	}
+
+
+	public BigDecimal getGanhosPendentesReferral() {
+	    return ganhosPendentesReferral;
+	}
+
+	public void setGanhosPendentesReferral(BigDecimal ganhosPendentesReferral) {
+	    this.ganhosPendentesReferral = ganhosPendentesReferral;
+	}
 
 
 

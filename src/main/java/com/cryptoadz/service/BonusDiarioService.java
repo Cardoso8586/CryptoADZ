@@ -21,17 +21,20 @@ public class BonusDiarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+    
+    @Autowired
+    private RecompensaService recompensaService;
 
     private BigDecimal getValorBonusPorStreak(int streak) {
         switch (streak) {
-            case 1: return new BigDecimal("0.20");
-            case 2: return new BigDecimal("0.30");
-            case 3: return new BigDecimal("0.40");
-            case 4: return new BigDecimal("0.50");
-            case 5: return new BigDecimal("0.60");
-            case 6: return new BigDecimal("0.70");
-            case 7: return new BigDecimal("1.50");
-            default: return new BigDecimal("1");
+            case 1: return new BigDecimal("0.10");
+            case 2: return new BigDecimal("0.20");
+            case 3: return new BigDecimal("0.30");
+            case 4: return new BigDecimal("0.40");
+            case 5: return new BigDecimal("0.50");
+            case 6: return new BigDecimal("0.60");
+            case 7: return new BigDecimal("0.70");
+            default: return new BigDecimal("0.70");
         }
     }
 
@@ -64,9 +67,13 @@ public class BonusDiarioService {
             }
         }
 
+        
         BigDecimal valorBonus = getValorBonusPorStreak(streak);
-
         usuario.setSaldoTokens(usuario.getSaldoTokens().add(valorBonus));
+        
+        BigDecimal valor_bonus_diario = valorBonus;
+        recompensaService.adicionarGanho(usuario, valor_bonus_diario);
+        
         usuarioRepository.save(usuario);
 
         BonusDiario bonus = new BonusDiario();

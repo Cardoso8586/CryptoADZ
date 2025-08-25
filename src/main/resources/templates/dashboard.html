@@ -29,7 +29,8 @@
   <link rel="stylesheet" href="css/bannerModal.css" />
   <link rel="stylesheet" href="css/painelUsuario.css" />
   <link rel="stylesheet" href="css/ranking.css" />
-  <link rel="stylesheet" href="css/modalPremioSemana.css " />
+  <link rel="stylesheet" href="css/modalPremioSemana.css " />    
+   <link rel="stylesheet" href="css/indicacoes.css " /> 
    
     
     
@@ -96,10 +97,16 @@
 <main class="main-content-fixed">
 
 
-    <h1 class="saudacao-usuario">
-      <span id="saudacao" th:text="${saudacao}">Olá</span>,
-      <span id="nomeUsuario" th:text="${usuario.username}">Usuário</span>
-    </h1>
+  <h1 class="saudacao-usuario">
+   <span class="status-label">
+    <span class="nivel-value" th:text="${nivel}" style="font-size:0.85rem; font-weight:bold; color:#1e3a8a;">Iniciante</span>
+</span>
+
+    &nbsp; <!-- espaçamento pequeno -->
+    <span id="saudacao" th:text="${saudacao}">Olá</span>,
+    <span id="nomeUsuario" th:text="${usuario.username}">Usuário</span>
+</h1>
+
 
 <div class="header-saldos-container">
 
@@ -693,28 +700,7 @@ function atualizarIcone(selectId, imgId) {
 </div>
 
 
-<!-- 🔥 Área de Anúncios Patrocinados -->
-<section id="bannersPublicitarios">
-    <h2>🚀 Área de Publicidade</h2>
-    <div id="bannerEsquerdo" style="width:48%; float:left;"></div>
-    <div id="bannerDireito" style="width:48%; float:right;"></div>
-    <div style="clear:both;"></div>
- <p style="font-size: 0.8em; font-weight: bold; color: #666666; margin-top: 100px; margin-bottom: 20px;">
-    © 2025 CryptoADZ. Todos os direitos reservados.
-</p>
-</section>
 
-
-
-<!-- 🔥 Bloco de Anúncios Patrocinados -->
-<div class="ads-section" style="margin-top: 20px;">
-  <div class="ads-container" id="adsContainer">
-    <!-- Os banners serão inseridos aqui dinamicamente pelo backend -->
-  </div>
-  <p style="font-size: 0.8em; font-weight: bold; color: #666666; margin-top: 50px; margin-bottom: 20px;">
-    © 2025 CryptoADZ. Todos os direitos reservados.
-</p>
-</div>
 
 <!-- 👤 Painel do Usuário -->
 <section id="painelUsuario">
@@ -772,17 +758,163 @@ function atualizarIcone(selectId, imgId) {
   
 </div>
 
+<section id="indicacoes">
+  <div>
+    <h3>Seu link de convite:</h3>
+    <input type="text" th:value="${linkReferencia}" readonly />
+    <button id="copyBtn" onclick="
+        const input = document.querySelector('#indicacoes input');
+        navigator.clipboard.writeText(input.value).then(() => {
+            const btn = document.getElementById('copyBtn');
+            const original = btn.textContent;
+            btn.textContent = 'Copiado!';
+            setTimeout(() => { btn.textContent = original; }, 5000);
+        });
+    ">Copiar link</button>
+  </div>
+
+<!-- Mostra o nível atual do usuário -->
+<div class="info-box">
+  <p>
+    <strong>Status atual:</strong> 
+    <span class="nivel-value" th:text="${nivel}"></span>
+  </p>
+  <!-- Link para página de apresentação dos status -->
+  <p>
+    <a href="/apresentacao-status.html" target="_blank">Regras / Status</a>
+  </p>
+</div>
 
 
 
-<script>
 
+
+  <div class="info-box">
+    <p>
+      Bônus de referidos acumulado: 
+      <img src="/icones/adz-token.png" alt="Token ADZ" style="width:18px; height:18px; vertical-align:middle; margin-left:4px;">  
+      <span th:text="${ganhosPendentesReferral}">0</span>
+    </p>
+  </div>
+
+  <!-- Botão de Reivindicar (aparece só se houver saldo) -->
+  <form id="claimForm">
+      <button type="submit" id="claimBtn" style="display: none;">Reivindicar Ganhos</button>
+  </form>
+
+  <h3>Meus indicados: <span th:text="${qtdIndicados}">0</span></h3>
+  <div id="indicados-wrapper">
+    <ul>
+      <li th:each="indicado : ${indicados}">
+          <span th:text="${indicado.username}">Usuário</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        var ganhosPendentes = parseFloat('[[${ganhosPendentesReferral != null ? ganhosPendentesReferral : 0}]]');
+
+        var claimBtn = document.getElementById("claimBtn");
+
+        if (ganhosPendentes > 0) {
+            claimBtn.style.display = "inline-block";
+        }
+    });
 </script>
 
 
- 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    let ganhosPendentes = parseFloat('[[${ganhosPendentesReferral != null ? ganhosPendentesReferral : 0}]]');
+    const claimBtn = document.getElementById("claimBtn");
+    const claimForm = document.getElementById("claimForm");
+    const ganhosSpan = document.querySelector("#ganhosPendentesSpan"); // span que mostra o saldo
+
+    // Mostrar o botão apenas se houver saldo
+    if (ganhosPendentes > 0) {
+        claimBtn.style.display = "inline-block";
+    }
+
+    claimForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        Swal.fire({
+            title: 'Confirmar Reivindicação?',
+            text: `Você irá receber ${ganhosPendentes.toFixed(4)} tokens.`,
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Sim, reivindicar!',
+            cancelButtonText: 'Cancelar',
+            background: '#fff',
+            color: '#000'
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const response = await fetch('/claim', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+
+                    if (response.ok) {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Sucesso!',
+                            text: 'Seus ganhos foram reivindicados!',
+                            background: '#fff',
+                            color: '#000'
+                        }).then(() => {
+                            // aqui escondemos o botão e zeramos o valor
+                            claimBtn.style.display = "none";
+                            document.querySelector("#indicacoes .info-box span").textContent = "0.0000";
+                            ganhosPendentes = 0;
+                        });
+                    } else {
+                        throw new Error('Erro ao reivindicar ganhos.');
+                    }
+                } catch (err) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Ops!',
+                        text: err.message,
+                        background: '#fff',
+                        color: '#000'
+                    });
+                }
+            }
+        });
+    });
+
+});
+</script>
 
 
+
+<!-- 🔥 Área de Anúncios Patrocinados -->
+<section id="bannersPublicitarios">
+    <h2>🚀 Área de Publicidade</h2>
+    <div id="bannerEsquerdo" style="width:48%; float:left;"></div>
+    <div id="bannerDireito" style="width:48%; float:right;"></div>
+    <div style="clear:both;"></div>
+ <p style="font-size: 0.8em; font-weight: bold; color: #666666; margin-top: 100px; margin-bottom: 20px;">
+    © 2025 CryptoADZ. Todos os direitos reservados.
+</p>
+</section>
+
+
+
+<!-- 🔥 Bloco de Anúncios Patrocinados -->
+<div class="ads-section" style="margin-top: 20px;">
+  <div class="ads-container" id="adsContainer">
+    <!-- Os banners serão inseridos aqui dinamicamente pelo backend -->
+  </div>
+  <p style="font-size: 0.8em; font-weight: bold; color: #666666; margin-top: 50px; margin-bottom: 20px;">
+    © 2025 CryptoADZ. Todos os direitos reservados.
+</p>
+</div>
   </main>
   
  
@@ -820,6 +952,7 @@ function atualizarIcone(selectId, imgId) {
 <script src="/js/modalPremioSemanal.js" defer></script> 
 <script src="/js/rankingBanners.js" defer></script> 
 <script src="/js/anunciosLista.js" defer></script> 
+
 
 
 

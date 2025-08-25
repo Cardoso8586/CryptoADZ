@@ -1,0 +1,125 @@
+/* Container principal */
+#indicacoes {
+  background-color: #111; /* fundo escuro */
+  color: #e0fefc;         /* verde claro */
+  border-radius: 16px;
+  padding: 30px;
+  max-width: 800px;
+  margin: 50px auto;
+  font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 0 30px 8px rgba(0, 255, 204, 0.3);
+}
+
+/* Títulos */
+#indicacoes h3 {
+  color: #00ffcc;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #00ffcc33;
+  padding-bottom: 6px;
+}
+
+/* Inputs */
+#indicacoes input[type="text"] {
+  width: calc(100% - 120px);
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #00cc9933;
+  background-color: #222;
+  color: #e0fefc;
+  font-size: 1rem;
+  outline: none;
+  box-shadow: inset 0 0 8px rgba(0, 255, 204, 0.15);
+  margin-right: 10px;
+}
+
+#indicacoes input[type="text"]:focus {
+  border-color: #00ffcc;
+  
+  box-shadow: 0 0 12px rgba(0, 255, 204, 0.5);
+}
+
+/* Botões */
+#indicacoes button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #00cc99;
+  color: #0d0d0d;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 0 18px rgba(0, 255, 204, 0.3);
+}
+
+#indicacoes button:hover {
+  background-color: #00e6b8;
+  transform: scale(1.05);
+}
+
+/* Caixas de informações */
+#indicacoes .info-box {
+  background-color: #222;
+  border-left: 4px solid #00cc99;
+  padding: 15px;
+  margin: 15px 0;
+  border-radius: 10px;
+}
+
+/* Listas */
+#indicados-wrapper {
+  max-height: 300px;       /* altura máxima do container */
+  overflow-y: auto;        /* habilita scroll vertical */
+  padding-right: 10px;     /* evita que o scroll sobreponha o conteúdo */
+  margin-top: 10px;
+  border: 1px solid #00cc99;
+  border-radius: 10px;
+  background-color: #222;
+}
+
+#indicados-wrapper ul {
+  list-style: none;
+  padding: 10px;
+  margin: 0;
+}
+
+#indicados-wrapper li {
+  padding: 8px 5px;
+  border-bottom: 1px solid #00cc9933;
+  color: #e0fefc;
+}
+
+#indicados-wrapper li:last-child {
+  border-bottom: none;
+}
+
+
+/* Ganhos destacados */
+#indicacoes .info-box span {
+  font-weight: bold;
+  color: #00ffcc;
+}
+
+
+
+/* Botão de reivindicação específico */
+#claimBtn {
+  display: none;
+  margin-top: 15px;
+}
+
+/* Responsividade */
+@media (max-width: 480px) {
+  #indicacoes {
+    padding: 20px;
+    margin: 20px 15px;
+  }
+
+  #indicacoes input[type="text"] {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  #indicacoes button {
+    width: 100%;
+  }
+}

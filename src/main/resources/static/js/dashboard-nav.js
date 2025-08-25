@@ -8,16 +8,16 @@ document.addEventListener('DOMContentLoaded', () => {
     btnWallet: 'wallet-container',
     btnMissoes: 'secaoMissoes',
     btnAvisos: 'Avisos',
-	btnUsuario: 'painelUsuario'
-	
+	btnUsuario: 'painelUsuario',
+	btnIndicacoes: 'indicacoes'
 	
   };
 
   const adsSection = document.querySelector('.ads-section');
   const cardAvisos = document.getElementById('cardAvisos');
   const btnAvisos = document.getElementById('btnAvisos');
+  const btnIndicacoes = document.getElementById('indicacoes');
 
-  
 
   if (cardAvisos && btnAvisos) {
     cardAvisos.addEventListener('click', e => {
